@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_03_145802) do
+ActiveRecord::Schema.define(version: 2020_12_03_154145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,5 +45,12 @@ ActiveRecord::Schema.define(version: 2020_12_03_145802) do
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
   end
 
+  create_table "unchecked_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "document_id", null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index ["document_id"], name: "index_unchecked_documents_on_document_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "unchecked_documents", "documents"
 end

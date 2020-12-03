@@ -52,4 +52,7 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
+
+  # To render debugging information preserving the response format
+  config.debug_exception_response_format = :api
 end
