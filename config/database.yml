@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: ccs_conclave_document_upload_production
-  username: ccs_conclave_document_upload
-  password: <%= ENV['CCS_CONCLAVE_DOCUMENT_UPLOAD_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+
+staging:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
