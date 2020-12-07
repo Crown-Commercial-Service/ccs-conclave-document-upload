@@ -7,7 +7,7 @@ RSpec.describe "DocumentUploads", type: :request do
   describe 'POST /document-upload' do
     context 'when success' do
       context 'when posting a file' do
-        let(:valid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: '10mb' } }
+        let(:valid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000 } }
 
         it 'creates a Document' do
           expect{ post '/document-upload', params: valid_attributes }.to change(Document, :count).by(1)
@@ -24,7 +24,7 @@ RSpec.describe "DocumentUploads", type: :request do
       end
 
       context 'when posting a document_file_path' do
-        let(:valid_attributes) { { document_file_path: pdf_file.path, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: '10mb' } }
+        let(:valid_attributes) { { document_file_path: "https://assets.crowncommercial.gov.uk/wp-content/uploads/male-teacher-in-high-school-class-640x427.jpg", service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000 } }
 
         it 'creates a Document' do
           expect{ post '/document-upload', params: valid_attributes }.to change(Document, :count).by(1)
@@ -42,7 +42,7 @@ RSpec.describe "DocumentUploads", type: :request do
     end
 
     context 'when document_file and document_file_path parameters are missing' do
-      let(:invalid_attributes) { { service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: '10mb'  } }
+      let(:invalid_attributes) { { service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000  } }
 
       it 'does not create a Document' do
         expect{ post '/document-upload', params: invalid_attributes }.to_not change(Document, :count)
@@ -59,7 +59,7 @@ RSpec.describe "DocumentUploads", type: :request do
     end
 
     context 'when type validation fails' do
-      let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: %w[csv docx], size_validation: '10mb'  } }
+      let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: %w[csv docx], size_validation: 1000000  } }
 
       it 'does not create a Document' do
         expect{ post '/document-upload', params: invalid_attributes }.to_not change(Document, :count)
@@ -76,7 +76,7 @@ RSpec.describe "DocumentUploads", type: :request do
     end
 
     context 'when size validation fails' do
-      let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: '20kb'  } }
+      let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 2000  } }
 
       it 'does not create a Document' do
         expect{ post '/document-upload', params: invalid_attributes }.to_not change(Document, :count)
