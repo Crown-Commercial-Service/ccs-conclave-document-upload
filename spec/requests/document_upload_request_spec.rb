@@ -66,6 +66,7 @@ RSpec.describe "DocumentUploads", type: :request do
 
       it 'returns status code 422' do
         post '/document-upload', params: invalid_attributes
+        byebug
         expect(response).to have_http_status(422)
       end
     end

@@ -25,6 +25,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # File uploader
 gem 'carrierwave', '~> 2.0'
 
+# Helps you manage translations
+gem 'i18n-tasks', '~> 0.9.31'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 

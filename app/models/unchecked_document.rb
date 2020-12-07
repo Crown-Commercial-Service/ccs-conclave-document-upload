@@ -28,7 +28,7 @@ class UncheckedDocument < ApplicationRecord
 
   def file_xor_file_path
     unless document_file.file.present?
-      errors.add(:base, "Specify document file or a file path")
+      errors.add(:base, t('unchecked_document.base.no_file'))
     end
   end
 
@@ -36,7 +36,7 @@ class UncheckedDocument < ApplicationRecord
     return unless document_file.file.present?
 
     if type_validation.none?{|t| document_file.file.content_type.include?(t)}
-      errors.add(:base, 'Wrong format')
+      errors.add(:base, t('unchecked_document.base.wrong_format'))
     end
   end
 
@@ -44,12 +44,12 @@ class UncheckedDocument < ApplicationRecord
     return unless document_file.file.present?
 
     if document_file.file.size > size_validation.to_i
-      errors.add(:base, 'File too big')
+      errors.add(:base, t('unchecked_document.base.file_too_big'))
     end
   end
 
   def max_size
-    errors.add(:base, 'Maximum file size is 5gb.') if size_validation.to_i > FIVE_GIGABITES_IN_BYTES
+    errors.add(:base, t('unchecked_document.base.max_file_size')) if size_validation.to_i > FIVE_GIGABITES_IN_BYTES
   end
 
   def grab_image
