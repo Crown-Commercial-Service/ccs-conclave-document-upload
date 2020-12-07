@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :document do
-    created_by { 'evidence_locker' }
+    source_app { 'evidence_locker' }
   end
 end

@@ -24,7 +24,19 @@ RSpec.describe "DocumentUploads", type: :request do
       end
 
       context 'when posting a document_file_path' do
-        let(:valid_attributes) { { document_file_path: "https://assets.crowncommercial.gov.uk/wp-content/uploads/male-teacher-in-high-school-class-640x427.jpg", service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000 } }
+        let(:file_path) { "https://www.example.com/test_pdf.pdf" }
+        let(:valid_attributes) { { document_file_path: file_path, service_name: 'evidence_locker', type_validation: ['octet-stream'], size_validation: 1000000 } }
+
+        before do
+          stub_request(:get, "https://www.example.com/test_pdf.pdf").
+            with(
+              headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'User-Agent'=>'CarrierWave/2.1.0'
+              }).
+            to_return(status: 200, body: File.open(pdf_file), headers: {})
+        end
 
         it 'creates a Document' do
           expect{ post '/document-upload', params: valid_attributes }.to change(Document, :count).by(1)

@@ -22,8 +22,8 @@ gem 'puma', '~> 4.1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-# Gemfile
-gem 'mini_magick'
+# File uploader
+gem 'carrierwave', '~> 2.0'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
@@ -50,4 +50,5 @@ group :test do
   gem 'shoulda-matchers', '~> 4.4.1'
   gem 'faker'
   gem 'database_cleaner'
+  gem "webmock"
 end

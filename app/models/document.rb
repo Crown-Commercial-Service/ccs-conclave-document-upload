@@ -1,5 +1,5 @@
 class Document < ApplicationRecord
 
-  has_one_attached :document_file
+  mount_uploader :document_file, DocumentFileUploader
 
 end
