@@ -66,8 +66,12 @@ RSpec.describe "DocumentUploads", type: :request do
 
       it 'returns status code 422' do
         post '/document-upload', params: invalid_attributes
-        byebug
         expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes
+        expect(response.body).to include(I18n.t('unchecked_document.base.no_file'))
       end
     end
 
@@ -86,6 +90,12 @@ RSpec.describe "DocumentUploads", type: :request do
         post '/document-upload', params: invalid_attributes
         expect(response).to have_http_status(422)
       end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes
+        expect(response.body).to include(I18n.t('unchecked_document.base.wrong_format'))
+      end
+
     end
 
     context 'when size validation fails' do
@@ -102,6 +112,33 @@ RSpec.describe "DocumentUploads", type: :request do
       it 'returns status code 422' do
         post '/document-upload', params: invalid_attributes
         expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes
+        expect(response.body).to include(I18n.t('unchecked_document.base.file_too_big'))
+      end
+    end
+
+    context 'when size validation is larger than 5gb' do
+      let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1  } }
+
+      it 'does not create a Document' do
+        expect{ post '/document-upload', params: invalid_attributes }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect{ post '/document-upload', params: invalid_attributes }.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes
+        expect(response.body).to include(I18n.t('unchecked_document.base.max_file_size'))
       end
     end
 
