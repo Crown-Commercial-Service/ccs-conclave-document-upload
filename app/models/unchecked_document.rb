@@ -5,12 +5,12 @@ class UncheckedDocument < ApplicationRecord
   FIVE_GIGABITES_IN_BYTES = 5368709120
 
   belongs_to :document
+  belongs_to :client
   mount_uploader :document_file, DocumentFileUploader
 
   attr_accessor :document_file_path
   attr_accessor :type_validation
   attr_accessor :size_validation
-  attr_accessor :source_app
 
   [:type_validation ,:size_validation].each do |column|
     validates_presence_of column
@@ -33,7 +33,7 @@ class UncheckedDocument < ApplicationRecord
   end
 
   def document_type
-    return unless document_file.file.present?
+    return unless document_file.file.present? && type_validation.present?
 
     if type_validation.none?{|t| document_file.file.content_type.include?(t)}
       errors.add(:base, I18n.t('unchecked_document.base.wrong_format'))
@@ -57,6 +57,6 @@ class UncheckedDocument < ApplicationRecord
   end
 
   def create_document
-    self.document = Document.new(source_app: source_app)
+    self.document = Document.new(source_app: client.source_app)
   end
 end

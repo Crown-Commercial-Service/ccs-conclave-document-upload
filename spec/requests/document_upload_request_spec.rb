@@ -5,20 +5,27 @@ RSpec.describe "DocumentUploads", type: :request do
 
   # Test suite for POST /document-upload
   describe 'POST /document-upload' do
+    let(:client) { create(:client, source_app: 'evidence_locker') }
+
+    let(:headers) {{
+      "ACCEPT" => "application/json",
+      "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app, client.api_key)
+    }}
+
     context 'when success' do
       context 'when posting a file' do
         let(:valid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000 } }
 
         it 'creates a Document' do
-          expect{ post '/document-upload', params: valid_attributes }.to change(Document, :count).by(1)
+          expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
-          expect{ post '/document-upload', params: valid_attributes }.to change(UncheckedDocument, :count).by(1)
+          expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes
+          post '/document-upload', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -39,15 +46,15 @@ RSpec.describe "DocumentUploads", type: :request do
         end
 
         it 'creates a Document' do
-          expect{ post '/document-upload', params: valid_attributes }.to change(Document, :count).by(1)
+          expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
-          expect{ post '/document-upload', params: valid_attributes }.to change(UncheckedDocument, :count).by(1)
+          expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes
+          post '/document-upload', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -57,20 +64,20 @@ RSpec.describe "DocumentUploads", type: :request do
       let(:invalid_attributes) { { service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000  } }
 
       it 'does not create a Document' do
-        expect{ post '/document-upload', params: invalid_attributes }.to_not change(Document, :count)
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
-        expect{ post '/document-upload', params: invalid_attributes }.to_not change(UncheckedDocument, :count)
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes
+        post '/document-upload', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes
+        post '/document-upload', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.base.no_file'))
       end
     end
@@ -79,20 +86,20 @@ RSpec.describe "DocumentUploads", type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: %w[csv docx], size_validation: 1000000  } }
 
       it 'does not create a Document' do
-        expect{ post '/document-upload', params: invalid_attributes }.to_not change(Document, :count)
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
-        expect{ post '/document-upload', params: invalid_attributes }.to_not change(UncheckedDocument, :count)
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes
+        post '/document-upload', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes
+        post '/document-upload', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.base.wrong_format'))
       end
 
@@ -102,20 +109,20 @@ RSpec.describe "DocumentUploads", type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 2000  } }
 
       it 'does not create a Document' do
-        expect{ post '/document-upload', params: invalid_attributes }.to_not change(Document, :count)
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
-        expect{ post '/document-upload', params: invalid_attributes }.to_not change(UncheckedDocument, :count)
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes
+        post '/document-upload', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes
+        post '/document-upload', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.base.file_too_big'))
       end
     end
@@ -124,20 +131,20 @@ RSpec.describe "DocumentUploads", type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1  } }
 
       it 'does not create a Document' do
-        expect{ post '/document-upload', params: invalid_attributes }.to_not change(Document, :count)
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
-        expect{ post '/document-upload', params: invalid_attributes }.to_not change(UncheckedDocument, :count)
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes
+        post '/document-upload', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes
+        post '/document-upload', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.base.max_file_size'))
       end
     end
