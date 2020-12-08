@@ -141,18 +141,6 @@ RSpec.describe "DocumentUploads", type: :request do
         expect(response.body).to include(I18n.t('unchecked_document.base.max_file_size'))
       end
     end
-
-    # context 'when unauthorized' do
-    #   before { post '/document-upload' }
-    #
-    #   it 'returns Document' do
-    #     expect(document).to_be be_empty
-    #   end
-    #
-    #   it 'returns status code 01' do
-    #     expect(response).to have_http_status(401)
-    #   end
-    # end
   end
 
 end
