@@ -1,0 +1,9 @@
+---
+applications:
+  - name: ccs-conclave-document-upload
+    services:
+      - ccs-conclave-document-upload-pg-service
+      - ccs-conclave-document-upload-s3-service
+    memory: 256M
+    buildpacks:
+      - https://github.com/cloudfoundry/ruby-buildpack.git
