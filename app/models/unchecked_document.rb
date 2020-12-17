@@ -13,7 +13,7 @@ class UncheckedDocument < ApplicationRecord
   attr_accessor :size_validation
 
   [:type_validation ,:size_validation].each do |column|
-    validates_presence_of column
+    validates column, presence: true, allow_blank: false
   end
 
   validate :file_xor_file_path
@@ -35,6 +35,8 @@ class UncheckedDocument < ApplicationRecord
   def document_type
     return unless document_file.file.present? && type_validation.present?
 
+    errors.add(:type_validation, I18n.t('errors.messages.blank')) && return unless type_validation.reject { |c| c.empty? }.any?
+
     if type_validation.none?{|t| document_file.file.content_type.include?(t)}
       errors.add(:base, I18n.t('unchecked_document.base.wrong_format'))
     end
@@ -42,6 +44,8 @@ class UncheckedDocument < ApplicationRecord
 
   def document_size
     return unless document_file.file.present?
+
+    errors.add(:size_validation, I18n.t('unchecked_document.size_validation.not_a_number')) && return unless size_validation.to_i.to_s == size_validation.to_s
 
     if document_file.file.size > size_validation.to_i
       errors.add(:base, I18n.t('unchecked_document.base.file_too_big'))

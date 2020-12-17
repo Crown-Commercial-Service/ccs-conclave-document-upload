@@ -14,7 +14,7 @@ RSpec.describe "DocumentUploads", type: :request do
 
     context 'when success' do
       context 'when posting a file' do
-        let(:valid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000 } }
+        let(:valid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
 
         it 'creates a Document' do
           expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
@@ -32,7 +32,7 @@ RSpec.describe "DocumentUploads", type: :request do
 
       context 'when file is csv' do
         let(:csv_file) { fixture_file_upload('test_csv.csv', 'text/csv') }
-        let(:valid_attributes) { { document_file: csv_file, service_name: 'evidence_locker', type_validation: ['csv'], size_validation: 1000000 } }
+        let(:valid_attributes) { { document_file: csv_file, type_validation: ['csv'], size_validation: 1000000 } }
 
         it 'creates a Document' do
           expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
@@ -50,7 +50,7 @@ RSpec.describe "DocumentUploads", type: :request do
 
       context 'when file is xlsx' do
         let(:xlsx_file) { fixture_file_upload('test_xlsx.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
-        let(:valid_attributes) { { document_file: xlsx_file, service_name: 'evidence_locker', type_validation: ['spreadsheet'], size_validation: 1000000 } }
+        let(:valid_attributes) { { document_file: xlsx_file, type_validation: ['spreadsheet'], size_validation: 1000000 } }
 
         it 'creates a Document' do
           expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
@@ -68,7 +68,7 @@ RSpec.describe "DocumentUploads", type: :request do
 
       context 'when file is docx' do
         let(:docx_file) { fixture_file_upload('test_docx.docx', 'text/docx') }
-        let(:valid_attributes) { { document_file: docx_file, service_name: 'evidence_locker', type_validation: ['docx'], size_validation: 1000000 } }
+        let(:valid_attributes) { { document_file: docx_file, type_validation: ['docx'], size_validation: 1000000 } }
 
         it 'creates a Document' do
           expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
@@ -86,7 +86,7 @@ RSpec.describe "DocumentUploads", type: :request do
 
       context 'when posting a document_file_path' do
         let(:file_path) { "https://www.example.com/test_pdf.pdf" }
-        let(:valid_attributes) { { document_file_path: file_path, service_name: 'evidence_locker', type_validation: ['octet-stream'], size_validation: 1000000 } }
+        let(:valid_attributes) { { document_file_path: file_path, type_validation: ['octet-stream'], size_validation: 1000000 } }
 
         before do
           stub_request(:get, "https://www.example.com/test_pdf.pdf").
@@ -115,7 +115,7 @@ RSpec.describe "DocumentUploads", type: :request do
     end
 
     context 'when document_file and document_file_path parameters are missing' do
-      let(:invalid_attributes) { { service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000  } }
+      let(:invalid_attributes) { {type_validation: ['pdf'], size_validation: 1000000  } }
 
       it 'does not create a Document' do
         expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -137,7 +137,7 @@ RSpec.describe "DocumentUploads", type: :request do
     end
 
     context 'when type validation fails' do
-      let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: %w[csv docx], size_validation: 1000000  } }
+      let(:invalid_attributes) { { document_file: pdf_file, type_validation: %w[csv docx], size_validation: 1000000  } }
 
       it 'does not create a Document' do
         expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -159,8 +159,140 @@ RSpec.describe "DocumentUploads", type: :request do
 
     end
 
+    context 'when type_validation is a blank array' do
+      let(:invalid_attributes) { { document_file: pdf_file, type_validation: [""], size_validation: 1000000  } }
+
+      it 'does not create a Document' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response.body).to include("can't be blank")
+      end
+    end
+
+    context 'when type_validation is a nil' do
+      let(:invalid_attributes) { { document_file: pdf_file, type_validation: nil, size_validation: 1000000  } }
+
+      it 'does not create a Document' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response.body).to include("can't be blank")
+      end
+    end
+
+    context 'when type_validation is not sent through' do
+      let(:invalid_attributes) { { document_file: pdf_file, size_validation: 1000000  } }
+
+      it 'does not create a Document' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response.body).to include("can't be blank")
+      end
+    end
+
+    context 'when size_validation is blank' do
+      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: nil  } }
+
+      it 'does not create a Document' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response.body).to include("can't be blank")
+      end
+    end
+
+    context 'when size_validation is not sent through' do
+      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf']  } }
+
+      it 'does not create a Document' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response.body).to include("can't be blank")
+      end
+    end
+
+    context 'when size_validation is not a number' do
+      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 'test'  } }
+
+      it 'does not create a Document' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response.body).to include(I18n.t('unchecked_document.size_validation.not_a_number'))
+      end
+    end
+
     context 'when size validation fails' do
-      let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 2000  } }
+      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 2000  } }
 
       it 'does not create a Document' do
         expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -182,7 +314,7 @@ RSpec.describe "DocumentUploads", type: :request do
     end
 
     context 'when size validation is larger than 5gb' do
-      let(:invalid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1  } }
+      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1  } }
 
       it 'does not create a Document' do
         expect{ post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -210,7 +342,7 @@ RSpec.describe "DocumentUploads", type: :request do
       }}
 
       context 'when posting a file' do
-        let(:valid_attributes) { { document_file: pdf_file, service_name: 'evidence_locker', type_validation: ['pdf'], size_validation: 1000000 } }
+        let(:valid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
 
         it 'creates a Document' do
           expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(0)
