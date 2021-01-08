@@ -114,6 +114,35 @@ RSpec.describe "DocumentUploads", type: :request do
       end
     end
 
+    context 'when document_file_path is missing protocol' do
+      let(:file_path) { "www.example.com/test_pdf.pdf" }
+      let(:valid_attributes) { { document_file_path: file_path, service_name: 'evidence_locker', type_validation: ['octet-stream'], size_validation: 1000000 } }
+
+      before do
+        stub_request(:get, "http://www.example.com/test_pdf.pdf").
+          with(
+            headers: {
+              'Accept'=>'*/*',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'User-Agent'=>'CarrierWave/2.1.0'
+            }).
+          to_return(status: 200, body: File.open(pdf_file), headers: {})
+      end
+
+      it 'creates a Document' do
+        expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+      end
+
+      it 'creates an UncheckedDocument' do
+        expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+      end
+
+      it 'returns status code 201' do
+        post '/document-upload', params: valid_attributes, headers: headers
+        expect(response).to have_http_status(201)
+      end
+    end
+
     context 'when document_file and document_file_path parameters are missing' do
       let(:invalid_attributes) { {type_validation: ['pdf'], size_validation: 1000000  } }
 

@@ -21,6 +21,7 @@ class UncheckedDocument < ApplicationRecord
   validate :document_size
   validate :max_size
 
+  before_validation :add_url_protocol, if: :document_file_path
   before_validation :grab_image, if: :document_file_path
   before_validation :create_document
 
@@ -62,5 +63,11 @@ class UncheckedDocument < ApplicationRecord
 
   def create_document
     self.document = Document.new(source_app: client.source_app)
+  end
+
+  def add_url_protocol
+    unless document_file_path[/\Ahttp:\/\//] || document_file_path[/\Ahttps:\/\//]
+      self.document_file_path = "http://#{document_file_path}"
+    end
   end
 end
