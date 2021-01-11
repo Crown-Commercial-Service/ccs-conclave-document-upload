@@ -6,7 +6,7 @@ if Rails.env.development? || Rails.env.test?
 else
   CarrierWave.configure do |config|
     config.storage    = :aws
-    config.aws_bucket = ENV['BUCKET_NAME']
+    config.aws_bucket = ENV['BUCKET_NAME_PUBLIC']
     config.aws_acl    = 'private'
 
     # Set custom options such as cache control to leverage browser caching.
@@ -18,8 +18,8 @@ else
 
     config.aws_credentials = {
       region: ENV['AWS_REGION'],
-      access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      access_key_id: ENV['AWS_ACCESS_KEY_ID_PUBLIC'],
+      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY_PUBLIC']
     }
   end
 end
