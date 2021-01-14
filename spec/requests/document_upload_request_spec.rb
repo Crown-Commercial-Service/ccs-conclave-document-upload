@@ -112,6 +112,23 @@ RSpec.describe "DocumentUploads", type: :request do
           expect(response).to have_http_status(201)
         end
       end
+
+      context 'when posting a file and document_file_path is blank' do
+        let(:valid_attributes) { { document_file_path: "", document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
+
+        it 'creates a Document' do
+          expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect{ post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
     end
 
     context 'when document_file_path is missing protocol' do
