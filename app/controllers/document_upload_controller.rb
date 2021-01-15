@@ -5,7 +5,7 @@ class DocumentUploadController < ApplicationController
   before_action :authenticate
 
   def create
-    unchecked_document = @client.unchecked_documents.new(document_parameters)
+    unchecked_document = @client.unchecked_documents.new(document_parameters.reject{|_, v| v.blank?})
 
     if unchecked_document.save
       render json: unchecked_document.document.to_json, status: :created
