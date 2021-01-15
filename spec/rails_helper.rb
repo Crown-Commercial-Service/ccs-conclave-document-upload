@@ -88,4 +88,12 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  # delete test files
+  config.after(:suite) do
+    # Get rid of the linked images
+    if Rails.env.test?
+      FileUtils.rm_rf(Rails.root.join('public','uploads','test'))
+    end
+  end
 end
