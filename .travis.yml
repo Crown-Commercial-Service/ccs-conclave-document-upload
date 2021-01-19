@@ -26,3 +26,5 @@ deploy:
   password: "$CF_PASS"
   organization: "$CF_ORG"
   space: $SPACE"
+  on:
+    branch: sandbox
