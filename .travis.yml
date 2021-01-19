@@ -17,6 +17,8 @@ env:
   - secure: QPomowEvM3Q9DvOToruLTuwbTnFR061H4p3dfs529AB+GWz5p8fV18MV+Ej1t2q7lomgmMoSKNi4ctK+gSjjLV7LV3KD8I9HFH6uxFkkyBGtLKniWxGptnSeMUf9Xx/ht+0VpsKxsLL5EzgLrkbBcUKvS6Um9RNl6Wf/SVXRM+U2Wrf2N2kCbes/Ynm9CkyXrO/ZY+1loF3bWgABgCpBVYq6dI+R/RPzIuAjI48nIZwTvmisZIEoMxvU5QJS1xdyJg1CygP4A4p/0aH+bUunr6/a46uOMhHJ8Cj7jcs+wP2CcKUOpmQK124uaZ7YQCZCRZqwQpHIkFaT3ZI5WqkaO/juJ2WRzK7Yu5We+uLoLufM0pKlBz+wWfqEM18V2g3Sq1DYhYC9/FgzMcm4si96lMj3l5tzkBYAhxMrgklE2Y64+E0fgXKtKcNESZSagylFHcluDxuyOF5oy4jp+eIOVXwJtFkT+Plwy+LfikJcQnDyTxhlAferkwT8KJYo/tPvKMpVkApIYV1LxgbiFBlpZ6Xxy1IpmK+xQwudsCaqRkxqkMcVVFhOGtKaToIF3T64N5NUaLjAVUcVxY/JdfUOUm1PIMF9P3GKON7rVgybmRT7u5JodS6l4OI4EUphGXbV7UmnUQFn9ZHQ3gYfnuR9ieOkIMVDvuH6po1GM8qF5HE=
 install:
   - bundle install --jobs=3 --retry=3
+before_script:
+  - bundle exec rake db:create && rake db:migrate 
 deploy:
   provider: cloudfoundry
   api: "$API_URI"
