@@ -7,7 +7,7 @@ else
   CarrierWave.configure do |config|
     config.storage    = :aws
     config.aws_bucket = JSON.parse(ENV['VCAP_SERVICES'])['aws-s3-bucket'][0]['credentials']['bucket_name']
-    config.aws_acl    = 'private'
+    config.aws_acl    = 'public-read'
 
     config.aws_credentials = {
       region: JSON.parse(ENV['VCAP_SERVICES'])['aws-s3-bucket'][0]['credentials']['aws_region'],
