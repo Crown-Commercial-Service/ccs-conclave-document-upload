@@ -24,6 +24,7 @@ before_install:
 install:
   - bundle install --jobs=3 --retry=3
 before_script:
+  - psql -c 'create database ccs_conclave_document_upload_test;' -U postgres
   - bundle exec rails db:migrate RAILS_ENV=test
 deploy:
   provider: cloudfoundry
