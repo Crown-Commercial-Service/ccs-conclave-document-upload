@@ -18,7 +18,7 @@ env:
 install:
   - bundle install --jobs=3 --retry=3
 before_script:
-  - bundle exec rake db:schema:load
+  - bundle exec rails db:migrate RAILS_ENV=test
 deploy:
   provider: cloudfoundry
   api: "$API_URI"
