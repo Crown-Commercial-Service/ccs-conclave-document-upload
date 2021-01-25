@@ -1,0 +1,40 @@
+dist: bionic
+language: ruby
+rvm:
+- 2.7.2
+services:
+- postgresql
+addons:
+  postgresql: '10'
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
+cache:
+  - bundler
+env:
+  global:
+  - CF_ORG=ccs-document-upload
+  - CF_USER=ccs-cdu-travis-deploy@crowncommercial.gov.uk
+  #CF_PASS
+  - secure: "BMFW6PwyPWoXVgsyK8gRwl7B/m8RDYmUZ0miN+TH72xxz4ZOhO+yVYhjteLZhtmXMNsj7TawhyoCbteryI2DrFjjh9mrXoLHyrMai/Lv2CCZ4PrytaevuL3PTYmpFumVDl7hNIwLmtiQ0zLs//ShjS8A1mXre499Y8jSp0MW8hVD/klRul631M6OiQaN0MSA0mqmAs7YuefvmmtJrFrOaq2xj+VauG+yTBT2yTBAD1jnzVFOPovOFCKbJlEzxLNTFOBDZXPjO2bSmF8ud6ovKwwlw71K+RosJEMPwlG/ckXjQsX6eY5ltcF/hmv3nPnUT5yp/69a6xi+HHRYNF5IKlThtFpBdZYjuhE9VTrAu9yiSy0hUOExuXSjTXca2mmHaS8q/SGQpNLjLwz9hAw38KtzyTXXpi6TOXLHc9kEtozfmaHMqyYnXYfQsQycKlZQL+AQq5HZ3emCbMa+EMnlv02YRpTmZ6zic8ME4kEf3hAvrY44kVH4Tb8K3jktnd1pI7da83bft1zNYBt62JYgmI6btNefLAxtkXBQOmi5kZfkmL67y4yOl6K8c+q5Wc0ReBlzPKa6c3oYla/EPd/OZudiYiqg+7TtyTO4D3TPIa07JGJusFVBf6XML3o7n5SJOQw6wmzdb7bW7vbOq7pMsIbqXwakyimXmdz7dgWWzfM="
+before_install:
+  - gem install bundler -v 2.1.4
+install:
+  - bundle install --jobs=3 --retry=3
+before_script:
+  - psql -c 'create database ccs_conclave_document_upload_test;' -U postgres
+  - bundle exec rails db:migrate
+before_deploy:
+  - echo "install cloudfoundry cli"
+  - wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+  - echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+  - sudo apt-get update -qq
+  - sudo apt-get install cf-cli
+  - cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
+  - cf install-plugin blue-green-deploy -f -r CF-Community
+deploy:
+  - provider: script
+    script: bash deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s sandbox
+    on:
+      branch: sandbox
