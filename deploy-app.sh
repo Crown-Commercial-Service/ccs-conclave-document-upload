@@ -46,6 +46,10 @@ done
 # if required arguments are not passed exit with usage
 if [[ -z "$CF_USER" || -z "$CF_PASS" || -z "$CF_ORG" || -z "$CF_SPACE" ]]; then
   echo "Some or all of the required parameters are empty";
+  echo "$CF_USER"
+  echo "$CF_PASS"
+  echo "$CF_ORG"
+  echo "$CF_SPACE"
   usage
 fi
 
