@@ -16,6 +16,8 @@ env:
   global:
   - CF_ORG=ccs-document-upload
   - CF_USER=ccs-cdu-travis-deploy@crowncommercial.gov.uk
+  - CHECK_ENDPOINT_URL=localhost:3000/document-check
+  - AUTH_TOKEN=test
   #CF_PASS
   - secure: "BMFW6PwyPWoXVgsyK8gRwl7B/m8RDYmUZ0miN+TH72xxz4ZOhO+yVYhjteLZhtmXMNsj7TawhyoCbteryI2DrFjjh9mrXoLHyrMai/Lv2CCZ4PrytaevuL3PTYmpFumVDl7hNIwLmtiQ0zLs//ShjS8A1mXre499Y8jSp0MW8hVD/klRul631M6OiQaN0MSA0mqmAs7YuefvmmtJrFrOaq2xj+VauG+yTBT2yTBAD1jnzVFOPovOFCKbJlEzxLNTFOBDZXPjO2bSmF8ud6ovKwwlw71K+RosJEMPwlG/ckXjQsX6eY5ltcF/hmv3nPnUT5yp/69a6xi+HHRYNF5IKlThtFpBdZYjuhE9VTrAu9yiSy0hUOExuXSjTXca2mmHaS8q/SGQpNLjLwz9hAw38KtzyTXXpi6TOXLHc9kEtozfmaHMqyYnXYfQsQycKlZQL+AQq5HZ3emCbMa+EMnlv02YRpTmZ6zic8ME4kEf3hAvrY44kVH4Tb8K3jktnd1pI7da83bft1zNYBt62JYgmI6btNefLAxtkXBQOmi5kZfkmL67y4yOl6K8c+q5Wc0ReBlzPKa6c3oYla/EPd/OZudiYiqg+7TtyTO4D3TPIa07JGJusFVBf6XML3o7n5SJOQw6wmzdb7bW7vbOq7pMsIbqXwakyimXmdz7dgWWzfM="
 before_install:
