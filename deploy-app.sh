@@ -16,7 +16,6 @@ usage() {
 }
 
 CF_API_ENDPOINT="https://api.london.cloud.service.gov.uk"
-# CF_SPACE="sandbox"
 
 while getopts "a:u:p:o:s:h" opt; do
   case $opt in
