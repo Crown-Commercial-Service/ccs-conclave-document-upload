@@ -15,10 +15,9 @@ cache:
 env:
   global:
   - CF_ORG=ccs-document-upload
-  #CF_USER
-  - secure: xhJtJZ5ggRfiZY9n51eVLMAoOT/05DdjoBJYMMRM7JUhuZLtyj3lWluR3P4ywHTLoHIzQk8ymx+vwQxy4dr3d/zoBRZqndbLIvbV0eKboTDDRx51vU8bvQbrr2PX9nMU4rdr2RbLDIXADo/cho6XZCRgsQ8NDMtTo4T/b9vdS1Ggh9rV/u+w0h4WEylVzAgCevMGXlP99vNdLlNXVsHT1gznC7oyqiOlvAgdYVAeS491uQrVuMEfHuOMuRBCNtAEYNSYh0GKuLlWcuSkEe7+VmDGkUJ5cO9dCVQIxC2RQfcC/5AORG+0CI2pP4t1dYxKIuDVc3Jz1yjYiT98xjvzr/zPpZBRnL1kVbic+iWqVtJtGNGNtPJIyH8ZidvPwmP/3ljraEh7XgNsEL5iObAkMTqbNEcleYbw/adKUXkZJd8d5Dj3UiL5Tf7EMSaofOdifFJcpbQN2zoGE+KLB7AVcQqa/tiXmRf7u1QcMAu2AJxJXY9CNRTyeYZWDqUA4Vzf2KXVDdQmVkPtF/OFFMYJ6uc0XOJQUpvAWOUMe/yGLHlWILXlM4RhcNsFpkuwPY/4uj4GEzjTG9rFs4YR7AAowhQGA4HY1zdoH2bbCTo1+w9Oj7wH+qIUP9VYlC+v26vXAg5Buaz91oxJfi+x57uitO6mw+EpDbIgdjlgCyQkBTY=
+  - CF_USER=ccs-cdu-travis-deploy@crowncommercial.gov.uk
   #CF_PASS
-  - secure: DNWbewn+hFba4bW2Bykg60WZnG9YBwm9qy4PdnXrvmmuoZZM/JjEqsbZTHzMX4Uq7NRGVWI/C92BWLPSK6fZ/zS8/jJLZVySuZcSxt02CNCu5EUjsnUUR+B/P0a24Z+Lzykb+PcURZK2G7tIKh91xsEH/p9uX5tC9BDBbErNtzRSJHgOhXbQtqsYGyx4i6zj9wGjycUxJCSxsckSR8uSTb8q68H6NbErJFY7s4hUb7JhX6ihfrTAEu5j76jAEnqRFKqRYAhYQEEa8FLHY/BOR8KlKytQVAmxX2HSLChmR9Nw/pMALnNTCUTP/77W4w3lFJfuieUjRx8+q00SeyRt5NYivYWVhuZaYdRGd54uuWcozyErd/g2qATOlbeGpd94cY1EF3dClFxE054CfYt9EXXOPsNUsJBIxs3G5x2CxxSkfrhaDx/efHqyqXbYdf0cahhHY6FhH6SjjTjV1Ko5ZUSWZ//oAeVwcPs0CkC2eAuvCrPZuGe4e+LTZRFD8Exf9AfGm/6dr7Vk81TjGszNJq8TKnhqKXyPNCrzUEVJCd3iiQIa2PnkfbAr90+4V4ppHXDT8Yzs1KAw8C1SSbFbtFUDEKgIzimep5xLd2bt3xAFFijwci0CYehoRQmVh+EzW9dVEf59TdR6d12Zk9drP5ADkzbKsQMhKPB7o/m3l/w=
+  - secure: "BMFW6PwyPWoXVgsyK8gRwl7B/m8RDYmUZ0miN+TH72xxz4ZOhO+yVYhjteLZhtmXMNsj7TawhyoCbteryI2DrFjjh9mrXoLHyrMai/Lv2CCZ4PrytaevuL3PTYmpFumVDl7hNIwLmtiQ0zLs//ShjS8A1mXre499Y8jSp0MW8hVD/klRul631M6OiQaN0MSA0mqmAs7YuefvmmtJrFrOaq2xj+VauG+yTBT2yTBAD1jnzVFOPovOFCKbJlEzxLNTFOBDZXPjO2bSmF8ud6ovKwwlw71K+RosJEMPwlG/ckXjQsX6eY5ltcF/hmv3nPnUT5yp/69a6xi+HHRYNF5IKlThtFpBdZYjuhE9VTrAu9yiSy0hUOExuXSjTXca2mmHaS8q/SGQpNLjLwz9hAw38KtzyTXXpi6TOXLHc9kEtozfmaHMqyYnXYfQsQycKlZQL+AQq5HZ3emCbMa+EMnlv02YRpTmZ6zic8ME4kEf3hAvrY44kVH4Tb8K3jktnd1pI7da83bft1zNYBt62JYgmI6btNefLAxtkXBQOmi5kZfkmL67y4yOl6K8c+q5Wc0ReBlzPKa6c3oYla/EPd/OZudiYiqg+7TtyTO4D3TPIa07JGJusFVBf6XML3o7n5SJOQw6wmzdb7bW7vbOq7pMsIbqXwakyimXmdz7dgWWzfM="
 before_install:
   - gem install bundler -v 2.1.4
 install:
@@ -32,6 +31,8 @@ before_deploy:
   - echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
   - sudo apt-get update -qq
   - sudo apt-get install cf-cli
+  - cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
+  - cf install-plugin blue-green-deploy -f -r CF-Community
 deploy:
   - provider: script
     script: bash deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s sandbox
