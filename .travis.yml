@@ -14,8 +14,8 @@ cache:
   - bundler
 env:
   global:
-  - CF_ORG=ccs-document-upload
   - CF_USER=ccs-cdu-travis-deploy@crowncommercial.gov.uk
+  - CF_ORG=ccs-document-upload
   - secure: "eYJoHRSLzSiDQVNdnIiizYj7eqN//iXZJP+C6qA2uFNjKGzDYgFxhAksqmwavVW2/I8cgEfwo1UmWIrEPIV+9DiYg5AwyQBunYn7N9C/pWoqLRGS1/xbOxGQ8a2vL8hLQAC/ARYDm58ykFHdFKEvdT94yDGVATiOjVL9xkQAaqv8R67Jo0c9ReARyaIHrklA90e9XxG0GGj20UsGsV7UBd62TJhXaAC454XIw598J0olOL2j8AVcQfAsd5IOCXj7q+azYIJFudGpWWCT2Gs1iB6F+SORSYK0cuNSjJkU/KktP9uZ6gdTUYHnQ5q701+GICrc82HSEBc8wS0qWy+pMixXJsNM2k1GXInaLXFglVRYMfIzVgEGrH+4ooc8eq6B53BG6OA2ghuJKtPcjjneXHU/nu6+C2p36JtSB+lWZRxRQMmaWrUdovmi1k7Mn3yJuVuANJAaFdp9HkSG90WDCvxR+j/60fOtjAC5xU5Q5ru5VhvwURhNpua5QxJd04zMlcaRB68C7vDM9ssmyiFuwT8JDXuehASZJUfAgtoI/Km46yiBXMvFJFZY2XFxlOHJIPnW3B32LvOQjufdv5eewbN/wa+ZDmO2l/DCK3zEMoI5YtUk8p/ARTjekA4BtkSsz/cDubw1Lj1V1maHk0upzyKtQcMKgp7hatvx7ZcB9so="
 before_install:
   - gem install bundler -v 2.1.4
