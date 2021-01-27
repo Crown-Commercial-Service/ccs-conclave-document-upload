@@ -1,8 +1,11 @@
+require 'cf-app-utils'
+
 Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
 
-  config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
+  credentials = CF::App::Credentials.find_by_service_name('API_ROLLBAR')
+  config.access_token = credentials['ROLLBAR_ACCESS_TOKEN']
 
   # Disable Rollbar in 'test' and 'development' environments
   config.enabled = false if Rails.env.test? || Rails.env.development?
