@@ -6,7 +6,6 @@ class DocumentUploadController < ApplicationController
 
   def create
     unchecked_document = @client.unchecked_documents.new(document_parameters.reject{|_, v| v.blank?})
-    Rollbar.info("Document received")
 
     if unchecked_document.save
       send_check_request(unchecked_document.id)
