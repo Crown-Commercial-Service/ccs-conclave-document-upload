@@ -4,6 +4,7 @@ applications:
     services:
       - ccs-conclave-document-upload-pg-service
       - ccs-conclave-document-s3-service
+      - API_ROLLBAR
     memory: 256M
     buildpacks:
       - https://github.com/cloudfoundry/ruby-buildpack.git
