@@ -69,3 +69,4 @@ Rollbar.configure do |config|
 
   config.anonymize_user_ip = true
 end
+Rollbar.error('Hello world')
