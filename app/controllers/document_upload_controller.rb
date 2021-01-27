@@ -30,6 +30,7 @@ class DocumentUploadController < ApplicationController
 
   def send_check_request(unchecked_document_id)
     return unless ENV['CHECK_ENDPOINT_URL']
+    Rollbar.info("Checking document with id: #{unchecked_document_id}")
 
     HTTParty.put(ENV['CHECK_ENDPOINT_URL'], body:
       { unchecked_document_id: unchecked_document_id }, headers: {"Authorization" => ENV["AUTH_TOKEN"]})
