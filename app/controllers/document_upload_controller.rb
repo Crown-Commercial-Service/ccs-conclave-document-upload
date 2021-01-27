@@ -6,6 +6,7 @@ class DocumentUploadController < ApplicationController
 
   def create
     unchecked_document = @client.unchecked_documents.new(document_parameters.reject{|_, v| v.blank?})
+    Rollbar.info("Document received")
 
     if unchecked_document.save
       send_check_request(unchecked_document.id)
@@ -30,7 +31,6 @@ class DocumentUploadController < ApplicationController
 
   def send_check_request(unchecked_document_id)
     return unless ENV['CHECK_ENDPOINT_URL']
-    Rollbar.info("Checking document with id: #{unchecked_document_id}")
 
     HTTParty.put(ENV['CHECK_ENDPOINT_URL'], body:
       { unchecked_document_id: unchecked_document_id }, headers: {"Authorization" => ENV["AUTH_TOKEN"]})
