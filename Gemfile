@@ -66,4 +66,5 @@ group :test do
   gem 'faker'
   gem 'database_cleaner'
   gem "webmock"
+  gem 'simplecov', '0.20', require: false
 end
