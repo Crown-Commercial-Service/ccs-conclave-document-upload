@@ -19,6 +19,7 @@ env:
   - AUTH_TOKEN=test
   - CF_ORG=ccs-document-upload
   - secure: "gjODf9ho+cAZNhQ+VUf1G1HvkEGeCNfRRBMEqK42SM2T/Ppcw8r8NbmVW+tOuXzRIRuGLAkLvdXc4/rVbiJcYZUG4v2PMGlV4cwp0/w484TFwoK+rJSIDMrMaKI498+yEVhN3XeRfmqyoqTxRLV3J8QuULOdZej5imX3jGrIFSxYGVhzMG7NwX6wXg5hEZvwU6NI65JHzIRYa0RnI43YrwCNRQeciaRkx25Kyl79wJtXkv/wooYtbHerB06cOrEjB1kRTFvNVvQSbVWzHNUxwsuk1sIaoHY1sg4qdeN8YsnPK+aykjxXtHObweC7BwZw1D6h/rer6ZYLmWtMldKzgjFR7e6dXgeXIpfhd7Gfrgr8M7+IlFIQfvCXFCn7ruxGQpF/t+ZmVbHxgH7CS84AAwdKOwfis9GORdVKIEwAdkBNQkhPtSWwTO6zQCTmYpTYUkUl/h5bIQb/HKu6P2UOTyk5U0DOpI4guy1syD0JXm+UP7ETTJiVH0Lf/UyE5kumRdj2NBgHakcVIxYUo9B5Wywwf/mhsbX6oc37l+665FAqZUdNQ55iXT6vLObAWgH8RQ6731EW3iMHg/I9m9yCQ7l9gQ4qNd3HhRJviJzAqaZZSmzoJY1pm6GUJP8k/j8hQl8GaI9GJTNqJuixoEEBgeyLR2LMpBDQFXHj5lyUB8M="
+  - CC_TEST_REPORTER_ID=c1380b4e5bf82da8938699b86218991860fc5a652a76fad390f74d6214dc55b7
 before_install:
   - gem install bundler -v 2.1.4
 install:
@@ -26,6 +27,9 @@ install:
 before_script:
   - psql -c 'create database ccs_conclave_document_upload_test;' -U postgres
   - bundle exec rails db:migrate
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 before_deploy:
   - echo "install cloudfoundry cli"
   - wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
@@ -39,3 +43,5 @@ deploy:
     script: bash deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s sandbox
     on:
       branch: sandbox
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
