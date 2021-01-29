@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe UncheckedDocument, type: :model do
   let(:document_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
-  let(:file_path) { "http://www.example.com/test_pdf.pdf" }
+  let(:file_path) { 'http://www.example.com/test_pdf.pdf' }
 
   describe 'callbacks' do
     let(:unchecked_document) { build(:unchecked_document, document_file_path: file_path, type_validation: ['pdf'], size_validation: 1000000) }
 
     before do
-      stub_request(:get, "http://www.example.com/test_pdf.pdf").
+      stub_request(:get, 'http://www.example.com/test_pdf.pdf').
         with(
           headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'CarrierWave/2.1.0'
+            'Accept' => '*/*',
+            'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent' => 'CarrierWave/2.1.0'
           }).
         to_return(status: 200, body: File.open(document_file), headers: {})
     end
@@ -34,9 +34,9 @@ RSpec.describe UncheckedDocument, type: :model do
         end
       end
     end
-    
+
     context '.add_url_protocol' do
-      let(:file_path) { "www.example.com/test_pdf.pdf" }
+      let(:file_path) { 'www.example.com/test_pdf.pdf' }
 
       context 'when document_file_path is missing protocol' do
         it 'adds the protocol automatically and updates document_file record' do
@@ -49,7 +49,7 @@ RSpec.describe UncheckedDocument, type: :model do
 
   describe 'relationship' do
     it 'has a connection to a client' do
-      client = create(:client, source_app: "myapp", api_key: "RbZHfHtD1h9XZvs4fGPJUgtt")
+      client = create(:client, source_app: 'myapp', api_key: 'RbZHfHtD1h9XZvs4fGPJUgtt')
       unchecked_doc = client.unchecked_documents.create!(document_file: document_file, type_validation: ['pdf'], size_validation: 1000000)
       expect(unchecked_doc.document.source_app).to eq('myapp')
     end

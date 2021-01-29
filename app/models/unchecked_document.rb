@@ -1,18 +1,15 @@
 require 'open-uri'
 
 class UncheckedDocument < ApplicationRecord
-
   FIVE_GIGABITES_IN_BYTES = 5368709120
 
   belongs_to :document
   belongs_to :client
   mount_uploader :document_file, DocumentFileUploader
 
-  attr_accessor :document_file_path
-  attr_accessor :type_validation
-  attr_accessor :size_validation
+  attr_accessor :document_file_path, :type_validation, :size_validation
 
-  [:type_validation ,:size_validation].each do |column|
+  %i[type_validation size_validation].each do |column|
     validates column, presence: true, allow_blank: false
   end
 
@@ -28,7 +25,7 @@ class UncheckedDocument < ApplicationRecord
   private
 
   def file_xor_file_path
-    unless document_file.file.present?
+    if document_file.file.blank?
       errors.add(:base, I18n.t('unchecked_document.base.no_file'))
     end
   end
@@ -38,13 +35,13 @@ class UncheckedDocument < ApplicationRecord
 
     errors.add(:type_validation, I18n.t('errors.messages.blank')) && return unless type_validation.reject { |c| c.empty? }.any?
 
-    if type_validation.none?{|t| document_file.file.content_type.include?(t)}
+    if type_validation.none? { |t| document_file.file.content_type.include?(t) }
       errors.add(:base, I18n.t('unchecked_document.base.wrong_format'))
     end
   end
 
   def document_size
-    return unless document_file.file.present?
+    return if document_file.file.blank?
 
     errors.add(:size_validation, I18n.t('unchecked_document.size_validation.not_a_number')) && return unless size_validation.to_i.to_s == size_validation.to_s
 

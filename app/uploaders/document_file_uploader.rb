@@ -4,7 +4,7 @@ class DocumentFileUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  storage Rails.env.development? || Rails.env.test? ? :file : :aws
+  storage (Rails.env.development? || Rails.env.test?) ? :file : :aws
 
   def size_range
     1.byte..5.gigabytes
@@ -23,6 +23,6 @@ class DocumentFileUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_whitelist
-    %w(pdf csv docx xlsx)
+    %w[pdf csv docx xlsx]
   end
 end

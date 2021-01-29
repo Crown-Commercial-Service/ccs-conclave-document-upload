@@ -38,17 +38,18 @@ gem 'i18n-tasks', '~> 0.9.31'
 gem 'httparty', '~> 0.18.1'
 
 # Manage secret keys on local
-gem "figaro", '~> 1.2.0'
+gem 'figaro', '~> 1.2.0'
 
 # Exception tracking
 gem 'rollbar'
 
 # static code analyzer
 gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Rspec
   gem 'rspec-rails', '~> 4.0.1'
 end
@@ -61,13 +62,13 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :test do
   gem 'factory_bot_rails', '~> 6.1.0'
   gem 'shoulda-matchers', '~> 4.4.1'
   gem 'faker'
   gem 'database_cleaner'
-  gem "webmock"
+  gem 'webmock'
   gem 'simplecov', '0.20', require: false
 end
