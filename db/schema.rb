@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_08_133417) do
+ActiveRecord::Schema.define(version: 2021_01_29_161430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2020_12_08_133417) do
     t.string "api_key", limit: 255
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["api_key"], name: "index_clients_on_api_key", unique: true
+    t.index ["source_app"], name: "index_clients_on_source_app", unique: true
   end
 
   create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

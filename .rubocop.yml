@@ -1,0 +1,36 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 2.7
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'db/seeds.rb'
+    - 'bin/**/*'
+    - 'config/initializers/carrierwave.rb'
+
+Rails:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false
+
+Metrics/BlockLength:
+    Max: 40
+    Exclude:
+        - 'spec/**/*'

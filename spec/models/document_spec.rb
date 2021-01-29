@@ -13,7 +13,7 @@ RSpec.describe Document, type: :model do
 
     context 'when the record is updated' do
       it 'should not change the state' do
-        document.update_attributes(state: 'safe')
+        document.update(state: 'safe')
         expect(document.state).to_not eq 'processing'
       end
     end
