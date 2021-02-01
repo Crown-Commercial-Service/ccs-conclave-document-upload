@@ -25,33 +25,43 @@ class UncheckedDocument < ApplicationRecord
   private
 
   def file_xor_file_path
-    if document_file.file.blank?
-      errors.add(:base, I18n.t('unchecked_document.base.no_file'))
-    end
+    errors.add(:base, I18n.t('unchecked_document.base.no_file')) if document_file.file.blank?
   end
 
   def document_type
     return unless document_file.file.present? && type_validation.present?
 
-    errors.add(:type_validation, I18n.t('errors.messages.blank')) && return unless type_validation.reject { |c| c.empty? }.any?
+    valid_type
+    return if @errors.any?
 
-    if type_validation.none? { |t| document_file.file.content_type.include?(t) }
-      errors.add(:base, I18n.t('unchecked_document.base.wrong_format'))
-    end
+    errors.add(:base, I18n.t('unchecked_document.base.wrong_format')) if type_validation.none? do |t|
+                                                                           document_file.file.content_type.include?(t)
+                                                                         end
   end
 
   def document_size
     return if document_file.file.blank?
 
-    errors.add(:size_validation, I18n.t('unchecked_document.size_validation.not_a_number')) && return unless size_validation.to_i.to_s == size_validation.to_s
+    valid_number
+    return if @errors.any?
 
-    if document_file.file.size > size_validation.to_i
-      errors.add(:base, I18n.t('unchecked_document.base.file_too_big'))
-    end
+    errors.add(:base, I18n.t('unchecked_document.base.file_too_big')) if document_file.file.size > size_validation.to_i
   end
 
   def max_size
     errors.add(:base, I18n.t('unchecked_document.base.max_file_size')) if size_validation.to_i > FIVE_GIGABITES_IN_BYTES
+  end
+
+  def valid_number
+    return if size_validation.to_i.to_s == size_validation.to_s
+
+    errors.add(:size_validation, I18n.t('unchecked_document.size_validation.not_a_number'))
+  end
+
+  def valid_type
+    return if type_validation.reject(&:empty?).any?
+
+    errors.add(:type_validation, I18n.t('errors.messages.blank'))
   end
 
   def grab_image
@@ -63,8 +73,8 @@ class UncheckedDocument < ApplicationRecord
   end
 
   def add_url_protocol
-    unless document_file_path[/\Ahttp:\/\//] || document_file_path[/\Ahttps:\/\//]
-      self.document_file_path = "http://#{document_file_path}"
-    end
+    return if document_file_path[%r{\Ahttp://}] || document_file_path[%r{\Ahttps://}]
+
+    self.document_file_path = "http://#{document_file_path}"
   end
 end

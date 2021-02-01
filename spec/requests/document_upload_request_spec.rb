@@ -12,7 +12,8 @@ RSpec.describe 'DocumentUploads', type: :request do
     let(:headers) do
       {
         'ACCEPT' => 'application/json',
-        'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app, client.api_key)
+        'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app,
+                                                                                               client.api_key)
       }
     end
 
@@ -25,11 +26,15 @@ RSpec.describe 'DocumentUploads', type: :request do
         let(:valid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
 
         it 'creates a Document' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'does the PUT request' do
@@ -49,11 +54,15 @@ RSpec.describe 'DocumentUploads', type: :request do
         let(:valid_attributes) { { document_file: csv_file, type_validation: ['csv'], size_validation: 1000000 } }
 
         it 'creates a Document' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'does the PUT request' do
@@ -69,15 +78,23 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is xlsx' do
-        let(:xlsx_file) { fixture_file_upload('test_xlsx.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
-        let(:valid_attributes) { { document_file: xlsx_file, type_validation: ['spreadsheet'], size_validation: 1000000 } }
+        let(:xlsx_file) do
+          fixture_file_upload('test_xlsx.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        end
+        let(:valid_attributes) do
+          { document_file: xlsx_file, type_validation: ['spreadsheet'], size_validation: 1000000 }
+        end
 
         it 'creates a Document' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'does the PUT request' do
@@ -97,11 +114,15 @@ RSpec.describe 'DocumentUploads', type: :request do
         let(:valid_attributes) { { document_file: docx_file, type_validation: ['docx'], size_validation: 1000000 } }
 
         it 'creates a Document' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'does the PUT request' do
@@ -118,7 +139,9 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       context 'when posting a document_file_path' do
         let(:file_path) { 'https://www.example.com/test_pdf.pdf' }
-        let(:valid_attributes) { { document_file_path: file_path, type_validation: ['octet-stream'], size_validation: 1000000 } }
+        let(:valid_attributes) do
+          { document_file_path: file_path, type_validation: ['octet-stream'], size_validation: 1000000 }
+        end
 
         before do
           stub_request(:get, 'https://www.example.com/test_pdf.pdf')
@@ -133,11 +156,15 @@ RSpec.describe 'DocumentUploads', type: :request do
         end
 
         it 'creates a Document' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'does the PUT request' do
@@ -153,14 +180,20 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when posting a file and document_file_path is blank' do
-        let(:valid_attributes) { { document_file_path: '', document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
+        let(:valid_attributes) do
+          { document_file_path: '', document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 }
+        end
 
         it 'creates a Document' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'does the PUT request' do
@@ -178,7 +211,10 @@ RSpec.describe 'DocumentUploads', type: :request do
 
     context 'when document_file_path is missing protocol' do
       let(:file_path) { 'www.example.com/test_pdf.pdf' }
-      let(:valid_attributes) { { document_file_path: file_path, service_name: 'evidence_locker', type_validation: ['octet-stream'], size_validation: 1000000 } }
+      let(:valid_attributes) do
+        { document_file_path: file_path, service_name: 'evidence_locker', type_validation: ['octet-stream'],
+          size_validation: 1000000 }
+      end
 
       before do
         stub_request(:get, 'http://www.example.com/test_pdf.pdf')
@@ -197,7 +233,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'creates an UncheckedDocument' do
-        expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(1)
+        expect do
+          post '/document-upload', params: valid_attributes, headers: headers
+        end.to change(UncheckedDocument, :count).by(1)
       end
 
       it 'does the PUT request' do
@@ -220,7 +258,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -247,7 +287,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -274,7 +316,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -301,7 +345,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -328,7 +374,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -355,7 +403,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -382,7 +432,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -409,7 +461,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -436,7 +490,9 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -456,14 +512,19 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when size validation is larger than 5gb' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1 } }
+      let(:invalid_attributes) do
+        { document_file: pdf_file, type_validation: ['pdf'],
+          size_validation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1 }
+      end
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(UncheckedDocument, :count)
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not do the PUT request' do
@@ -494,11 +555,15 @@ RSpec.describe 'DocumentUploads', type: :request do
         let(:valid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
 
         it 'creates a Document' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(0)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(0)
         end
 
         it 'creates an UncheckedDocument' do
-          expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(UncheckedDocument, :count).by(0)
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(0)
         end
 
         it 'does not do the PUT request' do

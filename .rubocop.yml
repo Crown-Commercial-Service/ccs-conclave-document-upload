@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 require:
   - rubocop-rails
 
@@ -11,14 +9,18 @@ AllCops:
     - 'db/seeds.rb'
     - 'bin/**/*'
     - 'config/initializers/carrierwave.rb'
+    - 'config/puma.rb'
 
 Rails:
   Enabled: true
 
-Style/FrozenStringLiteralComment:
+Rails/FilePath:
   Enabled: false
 
 Bundler/OrderedGems:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/Documentation:
@@ -27,8 +29,12 @@ Style/Documentation:
 Style/NumericLiterals:
   Enabled: false
 
-Rails/FilePath:
-  Enabled: false
+Style/ClassAndModuleChildren:
+    Enabled: false
+
+Style/GlobalStdStream:
+  Exclude:
+    - 'config/environments/production.rb'
 
 Metrics/BlockLength:
     Max: 40
