@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Document, type: :model do
-
   describe 'set_initial_state' do
     let(:document) { create(:document) }
 

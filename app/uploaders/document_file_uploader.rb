@@ -4,7 +4,7 @@ class DocumentFileUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  storage (Rails.env.development? || Rails.env.test?) ? :file : :aws
+  storage Rails.env.production? ? :aws : :file
 
   def size_range
     1.byte..5.gigabytes

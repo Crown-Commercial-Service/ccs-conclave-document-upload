@@ -5,17 +5,20 @@ RSpec.describe UncheckedDocument, type: :model do
   let(:file_path) { 'http://www.example.com/test_pdf.pdf' }
 
   describe 'callbacks' do
-    let(:unchecked_document) { build(:unchecked_document, document_file_path: file_path, type_validation: ['pdf'], size_validation: 1000000) }
+    let(:unchecked_document) do
+      build(:unchecked_document, document_file_path: file_path, type_validation: ['pdf'], size_validation: 1000000)
+    end
 
     before do
-      stub_request(:get, 'http://www.example.com/test_pdf.pdf').
-        with(
+      stub_request(:get, 'http://www.example.com/test_pdf.pdf')
+        .with(
           headers: {
             'Accept' => '*/*',
             'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'User-Agent' => 'CarrierWave/2.1.0'
-          }).
-        to_return(status: 200, body: File.open(document_file), headers: {})
+          }
+        )
+        .to_return(status: 200, body: File.open(document_file), headers: {})
     end
 
     context '.grab_image' do
@@ -50,7 +53,8 @@ RSpec.describe UncheckedDocument, type: :model do
   describe 'relationship' do
     it 'has a connection to a client' do
       client = create(:client, source_app: 'myapp', api_key: 'RbZHfHtD1h9XZvs4fGPJUgtt')
-      unchecked_doc = client.unchecked_documents.create!(document_file: document_file, type_validation: ['pdf'], size_validation: 1000000)
+      unchecked_doc = client.unchecked_documents.create!(document_file: document_file, type_validation: ['pdf'],
+                                                         size_validation: 1000000)
       expect(unchecked_doc.document.source_app).to eq('myapp')
     end
   end
@@ -58,7 +62,10 @@ RSpec.describe UncheckedDocument, type: :model do
   describe 'validations' do
     let(:type_validation) { %w[pdf docx] }
     let(:size_validation) { 1000000 }
-    let(:unchecked_document) { build(:unchecked_document, document_file: document_file, type_validation: type_validation, size_validation: size_validation) }
+    let(:unchecked_document) do
+      build(:unchecked_document, document_file: document_file, type_validation: type_validation,
+                                 size_validation: size_validation)
+    end
 
     context 'when path and file are missing' do
       let(:document_file) { nil }
