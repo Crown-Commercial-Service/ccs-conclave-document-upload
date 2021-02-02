@@ -1,8 +1,8 @@
 class Client < ApplicationRecord
-  validates_presence_of :source_app, :api_key
-  validates_uniqueness_of :source_app, :api_key
+  validates :source_app, :api_key, presence: true
+  validates :source_app, :api_key, uniqueness: true
 
-  has_many :unchecked_documents
+  has_many :unchecked_documents, dependent: :restrict_with_exception
 
   before_validation :set_api_key
 
