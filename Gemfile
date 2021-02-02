@@ -41,7 +41,10 @@ gem 'httparty', '~> 0.18.1'
 gem 'figaro', '~> 1.2.0'
 
 # Exception tracking
-gem 'rollbar'
+gem 'rollbar', '~> 3.1.1'
+
+# Environment variables management
+gem 'vault', '~> 0.15.0'
 
 # static code analyzer
 gem 'rubocop', require: false

@@ -261,6 +261,8 @@ GEM
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
+    vault (0.15.0)
+      aws-sigv4
     webmock (3.10.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -288,7 +290,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
-  rollbar
+  rollbar (~> 3.1.1)
   rspec-rails (~> 4.0.1)
   rubocop
   rubocop-rails
@@ -297,6 +299,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  vault (~> 0.15.0)
   webmock
 
 RUBY VERSION
