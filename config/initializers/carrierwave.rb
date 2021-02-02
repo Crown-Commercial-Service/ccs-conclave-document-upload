@@ -10,8 +10,8 @@ else
     config.aws_acl    = 'private'
 
     config.aws_attributes = -> { {
-      expires: 3.months.from_now.httpdate,
-      cache_control: 'max-age=7884000'
+      expires: 1.day.from_now.httpdate,
+      cache_control: 'max-age=86400'
     } }
 
     config.aws_credentials = {
