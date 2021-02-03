@@ -308,6 +308,83 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
+    context 'when file unsupported type' do
+      let(:xls_file) { fixture_file_upload('test_xls.xls', 'application/vnd.ms-excel') }
+      let(:invalid_attributes) do
+        { document_file_path: '', document_file: xls_file, type_validation: ['xls'], size_validation: 1000000 }
+      end
+
+      it 'does not create a Document' do
+        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'does not do the PUT request' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(HTTParty).not_to have_received(:put)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response.body).to include('You are not allowed to upload') 
+      end
+    end
+
+    context 'when file path unsupported type' do
+      let(:xls_file) { fixture_file_upload('test_xls.xls', 'application/vnd.ms-excel') }
+      let(:file_path) { 'https://www.example.com/test_xls.xls' }
+      let(:invalid_attributes) do
+        { document_file_path: file_path, type_validation: ['xls'], size_validation: 1000000 }
+      end
+
+      before do
+        stub_request(:get, 'https://www.example.com/test_xls.xls')
+          .with(
+            headers: {
+              'Accept' => '*/*',
+              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'User-Agent' => 'CarrierWave/2.1.0'
+            }
+          )
+          .to_return(status: 200, body: File.open(xls_file), headers: {})
+      end
+
+      it 'does not create a Document' do
+        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+      end
+
+      it 'does not create a UncheckedDocument' do
+        expect do
+          post '/document-upload', params: invalid_attributes, headers: headers
+        end.to_not change(UncheckedDocument, :count)
+      end
+
+      it 'does not do the PUT request' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(HTTParty).not_to have_received(:put)
+      end
+
+      it 'returns status code 422' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do
+        post '/document-upload', params: invalid_attributes, headers: headers
+        expect(response.body).to include('You are not allowed to upload') 
+      end
+    end
+
     context 'when type_validation is a blank array' do
       let(:invalid_attributes) { { document_file: pdf_file, type_validation: [''], size_validation: 1000000 } }
 
