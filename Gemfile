@@ -74,4 +74,5 @@ group :test do
   gem 'database_cleaner'
   gem 'webmock'
   gem 'simplecov', '0.20', require: false
+  gem 'climate_control'
 end
