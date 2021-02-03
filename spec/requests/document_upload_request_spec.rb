@@ -336,7 +336,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(response.body).to include('You are not allowed to upload') 
+        expect(response.body).to include('You are not allowed to upload')
       end
     end
 
@@ -381,7 +381,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(response.body).to include('You are not allowed to upload') 
+        expect(response.body).to include('You are not allowed to upload')
       end
     end
 
