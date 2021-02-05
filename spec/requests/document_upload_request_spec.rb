@@ -22,8 +22,12 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when success' do
-      context 'when posting a file' do
-        let(:valid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
+      let(:file) { fixture_file_upload(file_name, mime_type) }
+      let(:valid_attributes) { { document_file: file, type_validation: [mime_type], size_validation: 1000000 } }
+
+      context 'when posting a pdf file' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdf.pdf' }
 
         it 'creates a Document' do
           expect do
@@ -50,8 +54,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is csv' do
-        let(:csv_file) { fixture_file_upload('test_csv.csv', 'text/csv') }
-        let(:valid_attributes) { { document_file: csv_file, type_validation: ['csv'], size_validation: 1000000 } }
+        let(:mime_type) { 'text/csv' }
+        let(:file_name) { 'test_csv.csv' }
 
         it 'creates a Document' do
           expect do
@@ -78,12 +82,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is xlsx' do
-        let(:xlsx_file) do
-          fixture_file_upload('test_xlsx.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        end
-        let(:valid_attributes) do
-          { document_file: xlsx_file, type_validation: ['spreadsheet'], size_validation: 1000000 }
-        end
+        let(:mime_type) { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }
+        let(:file_name) { 'test_xlsx.xlsx' }
 
         it 'creates a Document' do
           expect do
@@ -110,8 +110,64 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is docx' do
-        let(:docx_file) { fixture_file_upload('test_docx.docx', 'text/docx') }
-        let(:valid_attributes) { { document_file: docx_file, type_validation: ['docx'], size_validation: 1000000 } }
+        let(:mime_type) { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }
+        let(:file_name) { 'test_docx.docx' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is odt' do
+        let(:mime_type) { 'application/vnd.oasis.opendocument.text' }
+        let(:file_name) { 'test_odt.odt' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is odp' do
+        let(:mime_type) { 'application/vnd.oasis.opendocument.spreadsheet' }
+        let(:file_name) { 'test_odp.odp' }
 
         it 'creates a Document' do
           expect do
