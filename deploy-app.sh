@@ -53,8 +53,5 @@ fi
 cf login -u "$CF_USER" -p "$CF_PASS" -o "$CF_ORG" -a "$CF_API_ENDPOINT" -s "$CF_SPACE"
 cf target -o "$CF_ORG" -s "$CF_SPACE"
 
-# create an app idempotently with the v3 cli
-cf v3-create-app ccs-conclave-document-upload
-cf v3-apply-manifest -f manifest.yml
-# do a zero down time deployment with the v3 cli
-cf v3-zdt-push ccs-conclave-document-upload
+# deploy
+cf push ccs-conclave-document-upload -f manifest.yml --strategy rolling
