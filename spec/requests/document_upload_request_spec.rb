@@ -23,7 +23,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
     context 'when success' do
       let(:file) { fixture_file_upload(file_name, mime_type) }
-      let(:valid_attributes) { { document_file: file, type_validation: [mime_type], size_validation: 1000000 } }
+      let(:valid_attributes) { { document_file: file, type_validation: [mime_type], size_validation: 10000000 } }
 
       context 'when posting a pdf file' do
         let(:mime_type) { 'text/pdf' }
@@ -166,8 +166,176 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is odp' do
-        let(:mime_type) { 'application/vnd.oasis.opendocument.spreadsheet' }
+        let(:mime_type) { 'application/vnd.oasis.opendocument.presentation' }
         let(:file_name) { 'test_odp.odp' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is ods' do
+        let(:mime_type) { 'application/vnd.oasis.opendocument.spreadsheet' }
+        let(:file_name) { 'test_ods.ods' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is odg' do
+        let(:mime_type) { 'application/vnd.oasis.opendocument.graphics' }
+        let(:file_name) { 'test_odg.odg' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is zip' do
+        let(:mime_type) { 'application/zip' }
+        let(:file_name) { 'test_zip.zip' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is rar' do
+        let(:mime_type) { 'application/vnd.rar' }
+        let(:file_name) { 'test_rar.rar' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is tar.gz' do
+        let(:mime_type) { 'application/tar+gzip' }
+        let(:file_name) { 'test_targz.tar.gz' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is tgz' do
+        let(:mime_type) { 'application/tar+gzip' }
+        let(:file_name) { 'test_tgz.tgz' }
 
         it 'creates a Document' do
           expect do
