@@ -306,7 +306,7 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is tar.gz' do
-        let(:mime_type) { 'application/tar+gzip' }
+        let(:mime_type) { 'application/gzip' }
         let(:file_name) { 'test_targz.tar.gz' }
 
         it 'creates a Document' do
