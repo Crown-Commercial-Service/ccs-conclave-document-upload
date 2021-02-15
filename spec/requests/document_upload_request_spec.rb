@@ -589,7 +589,10 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file unsupported type' do
-      let(:pptx_file) { fixture_file_upload('test_pptx.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation') }
+      let(:pptx_file) do
+        fixture_file_upload('test_pptx.pptx',
+                            'application/vnd.openxmlformats-officedocument.presentationml.presentation')
+      end
       let(:invalid_attributes) do
         { document_file_path: '', document_file: pptx_file, type_validation: ['pptx'], size_validation: 1000000 }
       end
@@ -621,7 +624,10 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file path unsupported type' do
-      let(:pptx_file) { fixture_file_upload('test_pptx.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation') }
+      let(:pptx_file) do
+        fixture_file_upload('test_pptx.pptx',
+                            'application/vnd.openxmlformats-officedocument.presentationml.presentation')
+      end
       let(:file_path) { 'https://www.example.com/test_pptx.pptx' }
       let(:invalid_attributes) do
         { document_file_path: file_path, type_validation: ['pptx'], size_validation: 1000000 }
