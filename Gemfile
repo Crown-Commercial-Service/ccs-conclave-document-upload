@@ -50,6 +50,9 @@ gem 'vault', '~> 0.15.0'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 
+# Validate PDF/A files
+gem 'verapdf', '~> 0.1.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

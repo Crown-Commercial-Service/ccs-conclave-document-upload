@@ -2,6 +2,7 @@ require 'open-uri'
 
 class UncheckedDocument < ApplicationRecord
   FIVE_GIGABITES_IN_BYTES = 5368709120
+  PDF_MIME_TYPE = 'text/pdf'.freeze
 
   belongs_to :document
   belongs_to :client
@@ -15,6 +16,7 @@ class UncheckedDocument < ApplicationRecord
 
   validate :file_xor_file_path
   validate :document_type
+  validate :pdfa_format
   validate :document_size
   validate :max_size
 
@@ -76,5 +78,12 @@ class UncheckedDocument < ApplicationRecord
     return if document_file_path[%r{\Ahttp://}] || document_file_path[%r{\Ahttps://}]
 
     self.document_file_path = "http://#{document_file_path}"
+  end
+
+  def pdfa_format
+    return unless document_file.content_type == 'text/pdf'
+    return if Verapdf::Validator.new(document_file.path).valid?(0)
+
+    errors.add(:document_file, I18n.t('unchecked_document.base.not_pdfa_format'))
   end
 end

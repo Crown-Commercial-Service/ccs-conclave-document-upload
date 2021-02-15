@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'DocumentUploads', type: :request do
-  let(:pdf_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
+  let(:csv_file) { fixture_file_upload('test_csv.csv', 'text/csv') }
 
   # Test suite for POST /document-upload
   describe 'POST /document-upload' do
@@ -24,10 +24,209 @@ RSpec.describe 'DocumentUploads', type: :request do
     context 'when success' do
       let(:file) { fixture_file_upload(file_name, mime_type) }
       let(:valid_attributes) { { document_file: file, type_validation: [mime_type], size_validation: 10000000 } }
+      before do
+        allow_any_instance_of(Verapdf::Validator).to receive(:valid?).and_return(true)
+      end
 
-      context 'when posting a pdf file' do
+      context 'when posting a pdfa1a file' do
         let(:mime_type) { 'text/pdf' }
-        let(:file_name) { 'test_pdf.pdf' }
+        let(:file_name) { 'test_pdfa1a.pdf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when posting a pdfa1b file' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfa1b.pdf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when posting a pdfa2a file' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfa2a.pdf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when posting a pdfa2b file' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfa2b.pdf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when posting a pdfa2u file' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfa2u.pdf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when posting a pdfa3a file' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfa3a.pdf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when posting a pdfa3b file' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfa3b.pdf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when posting a pdfa3u file' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfa3u.pdf' }
 
         it 'creates a Document' do
           expect do
@@ -558,13 +757,13 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when posting a document_file_path' do
-        let(:file_path) { 'https://www.example.com/test_pdf.pdf' }
+        let(:file_path) { 'https://www.example.com/test_csv.csv' }
         let(:valid_attributes) do
-          { document_file_path: file_path, type_validation: ['octet-stream'], size_validation: 1000000 }
+          { document_file_path: file_path, type_validation: ['text/csv'], size_validation: 1000000 }
         end
 
         before do
-          stub_request(:get, 'https://www.example.com/test_pdf.pdf')
+          stub_request(:get, 'https://www.example.com/test_csv.csv')
             .with(
               headers: {
                 'Accept' => '*/*',
@@ -572,7 +771,7 @@ RSpec.describe 'DocumentUploads', type: :request do
                 'User-Agent' => 'CarrierWave/2.1.0'
               }
             )
-            .to_return(status: 200, body: File.open(pdf_file), headers: {})
+            .to_return(status: 200, body: File.open(csv_file), headers: { 'Content-Type' => 'text/csv' })
         end
 
         it 'creates a Document' do
@@ -601,7 +800,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       context 'when posting a file and document_file_path is blank' do
         let(:valid_attributes) do
-          { document_file_path: '', document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 }
+          { document_file_path: '', document_file: csv_file, type_validation: ['text/csv'], size_validation: 1000000 }
         end
 
         it 'creates a Document' do
@@ -629,15 +828,88 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
+    context 'when unsuccessful' do
+      let(:file) { fixture_file_upload(file_name, mime_type) }
+      let(:valid_attributes) { { document_file: file, type_validation: [mime_type], size_validation: 10000000 } }
+
+      before do
+        allow_any_instance_of(Verapdf::Validator).to receive(:valid?).and_return(false)
+      end
+
+      context 'when document is of type pdf/e' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfe.pdf' }
+
+        it 'does not create a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(0)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(0)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to_not have_received(:put)
+        end
+
+        it 'returns status code 422' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(422)
+        end
+
+        it 'returns error message' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response.body).to include(I18n.t('unchecked_document.base.not_pdfa_format'))
+        end
+      end
+
+      context 'when document is of type pdf/x' do
+        let(:mime_type) { 'text/pdf' }
+        let(:file_name) { 'test_pdfx.pdf' }
+
+        it 'does not create a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(0)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(0)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to_not have_received(:put)
+        end
+
+        it 'returns status code 422' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(422)
+        end
+
+        it 'returns error message' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response.body).to include(I18n.t('unchecked_document.base.not_pdfa_format'))
+        end
+      end
+    end
+
     context 'when document_file_path is missing protocol' do
-      let(:file_path) { 'www.example.com/test_pdf.pdf' }
+      let(:file_path) { 'www.example.com/test_csv.csv' }
       let(:valid_attributes) do
-        { document_file_path: file_path, service_name: 'evidence_locker', type_validation: ['octet-stream'],
+        { document_file_path: file_path, service_name: 'evidence_locker', type_validation: ['text/csv'],
           size_validation: 1000000 }
       end
 
       before do
-        stub_request(:get, 'http://www.example.com/test_pdf.pdf')
+        stub_request(:get, 'http://www.example.com/test_csv.csv')
           .with(
             headers: {
               'Accept' => '*/*',
@@ -645,7 +917,7 @@ RSpec.describe 'DocumentUploads', type: :request do
               'User-Agent' => 'CarrierWave/2.1.0'
             }
           )
-          .to_return(status: 200, body: File.open(pdf_file), headers: {})
+          .to_return(status: 200, body: File.open(csv_file), headers: { 'Content-Type' => 'text/csv' })
       end
 
       it 'creates a Document' do
@@ -671,7 +943,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when document_file and document_file_path parameters are missing' do
-      let(:invalid_attributes) { { type_validation: ['pdf'], size_validation: 1000000 } }
+      let(:invalid_attributes) { { type_validation: ['text/csv'], size_validation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -700,7 +972,11 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when type validation fails' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: %w[csv docx], size_validation: 1000000 } }
+      let(:invalid_attributes) do
+        { document_file: csv_file,
+          type_validation: %w[text/pdf application/vnd.openxmlformats-officedocument.wordprocessingml.document],
+          size_validation: 1000000 }
+      end
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -806,7 +1082,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when type_validation is a blank array' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: [''], size_validation: 1000000 } }
+      let(:invalid_attributes) { { document_file: csv_file, type_validation: [''], size_validation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -835,7 +1111,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when type_validation is a nil' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: nil, size_validation: 1000000 } }
+      let(:invalid_attributes) { { document_file: csv_file, type_validation: nil, size_validation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -864,7 +1140,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when type_validation is not sent through' do
-      let(:invalid_attributes) { { document_file: pdf_file, size_validation: 1000000 } }
+      let(:invalid_attributes) { { document_file: csv_file, size_validation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -893,7 +1169,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when size_validation is blank' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: nil } }
+      let(:invalid_attributes) { { document_file: csv_file, type_validation: ['text/csv'], size_validation: nil } }
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -922,7 +1198,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when size_validation is not sent through' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'] } }
+      let(:invalid_attributes) { { document_file: csv_file, type_validation: ['text/csv'] } }
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -951,7 +1227,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when size_validation is not a number' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 'test' } }
+      let(:invalid_attributes) { { document_file: csv_file, type_validation: ['text/csv'], size_validation: 'test' } }
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -980,7 +1256,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when size validation fails' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 2000 } }
+      let(:invalid_attributes) { { document_file: csv_file, type_validation: ['text/csv'], size_validation: 2000 } }
 
       it 'does not create a Document' do
         expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -1010,7 +1286,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
     context 'when size validation is larger than 5gb' do
       let(:invalid_attributes) do
-        { document_file: pdf_file, type_validation: ['pdf'],
+        { document_file: csv_file, type_validation: ['text/csv'],
           size_validation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1 }
       end
 
@@ -1049,7 +1325,7 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when posting a file' do
-        let(:valid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
+        let(:valid_attributes) { { document_file: csv_file, type_validation: ['text/csv'], size_validation: 1000000 } }
 
         it 'creates a Document' do
           expect do

@@ -264,6 +264,8 @@ GEM
     unicode-display_width (1.7.0)
     vault (0.15.0)
       aws-sigv4
+    verapdf (0.1.0)
+      nokogiri
     webmock (3.10.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -302,6 +304,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
   vault (~> 0.15.0)
+  verapdf (~> 0.1.0)
   webmock
 
 RUBY VERSION

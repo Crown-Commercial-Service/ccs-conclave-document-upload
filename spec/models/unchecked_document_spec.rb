@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe UncheckedDocument, type: :model do
-  let(:document_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
-  let(:file_path) { 'http://www.example.com/test_pdf.pdf' }
+  let(:document_file) { fixture_file_upload('test_csv.csv', 'text/csv') }
+  let(:file_path) { 'http://www.example.com/test_csv.csv' }
 
   describe 'callbacks' do
     let(:unchecked_document) do
-      build(:unchecked_document, document_file_path: file_path, type_validation: ['pdf'], size_validation: 1000000)
+      build(:unchecked_document, document_file_path: file_path, type_validation: ['text/csv'], size_validation: 1000000)
     end
 
     before do
-      stub_request(:get, 'http://www.example.com/test_pdf.pdf')
+      stub_request(:get, 'http://www.example.com/test_csv.csv')
         .with(
           headers: {
             'Accept' => '*/*',
@@ -39,7 +39,7 @@ RSpec.describe UncheckedDocument, type: :model do
     end
 
     context '.add_url_protocol' do
-      let(:file_path) { 'www.example.com/test_pdf.pdf' }
+      let(:file_path) { 'www.example.com/test_csv.csv' }
 
       context 'when document_file_path is missing protocol' do
         it 'adds the protocol automatically and updates document_file record' do
@@ -53,14 +53,14 @@ RSpec.describe UncheckedDocument, type: :model do
   describe 'relationship' do
     it 'has a connection to a client' do
       client = create(:client, source_app: 'myapp', api_key: 'RbZHfHtD1h9XZvs4fGPJUgtt')
-      unchecked_doc = client.unchecked_documents.create!(document_file: document_file, type_validation: ['pdf'],
+      unchecked_doc = client.unchecked_documents.create!(document_file: document_file, type_validation: ['text/csv'],
                                                          size_validation: 1000000)
       expect(unchecked_doc.document.source_app).to eq('myapp')
     end
   end
 
   describe 'validations' do
-    let(:type_validation) { %w[pdf docx] }
+    let(:type_validation) { %w[csv docx] }
     let(:size_validation) { 1000000 }
     let(:unchecked_document) do
       build(:unchecked_document, document_file: document_file, type_validation: type_validation,

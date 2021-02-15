@@ -6,5 +6,6 @@ en:
       max_file_size: Maximum file size validation is 5gb.
       no_file: Specify document file or a file path.
       wrong_format: Wrong format.
+      not_pdfa_format: PDF/A is the only type of allowed PDF files.
     size_validation:
       not_a_number: is not a number
