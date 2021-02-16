@@ -417,6 +417,202 @@ RSpec.describe 'DocumentUploads', type: :request do
         end
       end
 
+      context 'when file is jpg' do
+        let(:mime_type) { 'image/jpeg' }
+        let(:file_name) { 'test_jpg.jpg' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is jpeg' do
+        let(:mime_type) { 'image/jpeg' }
+        let(:file_name) { 'test_jpeg.jpeg' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is bmp' do
+        let(:mime_type) { 'image/bmp' }
+        let(:file_name) { 'test_bmp.bmp' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is png' do
+        let(:mime_type) { 'image/png' }
+        let(:file_name) { 'test_png.png' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is tiff' do
+        let(:mime_type) { 'image/tiff' }
+        let(:file_name) { 'test_tiff.tiff' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is tif' do
+        let(:mime_type) { 'image/tiff' }
+        let(:file_name) { 'test_tif.tif' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is eps' do
+        let(:mime_type) { 'application/eps' }
+        let(:file_name) { 'test_eps.eps' }
+
+        it 'creates a Document' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/document-upload', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'does the PUT request' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
+            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        end
+
+        it 'returns status code 201' do
+          post '/document-upload', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
       context 'when posting a document_file_path' do
         let(:file_path) { 'https://www.example.com/test_pdf.pdf' }
         let(:valid_attributes) do
