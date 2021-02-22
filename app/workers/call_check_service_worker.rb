@@ -1,6 +1,6 @@
 class CallCheckServiceWorker
   include Sidekiq::Worker
-  sidekiq_options retry: 5, dead: false
+  sidekiq_options retry: 5, dead: false, queue: :upload
 
   def perform(unchecked_document_id)
     return unless ENV['CHECK_ENDPOINT_URL']
