@@ -6,8 +6,6 @@ RSpec.describe 'DocumentUploads', type: :request do
   # Test suite for POST /document-upload
   describe 'POST /document-upload' do
     let(:client) { create(:client, source_app: 'evidence_locker') }
-    let(:put_response) { instance_double(HTTParty::Response, body: put_response_body) }
-    let(:put_response_body) { 'response_body' }
 
     let(:headers) do
       {
@@ -15,10 +13,6 @@ RSpec.describe 'DocumentUploads', type: :request do
         'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app,
                                                                                                client.api_key)
       }
-    end
-
-    before do
-      allow(HTTParty).to receive(:put).and_return(put_response)
     end
 
     context 'when success' do
@@ -41,10 +35,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -69,10 +62,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -97,10 +89,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -125,10 +116,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -153,10 +143,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -181,10 +170,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -209,10 +197,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -237,10 +224,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -265,10 +251,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -293,10 +278,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -321,10 +305,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -349,10 +332,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -377,10 +359,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -405,10 +386,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -433,10 +413,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -461,10 +440,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -489,10 +467,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -517,10 +494,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -545,10 +521,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -573,10 +548,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -601,10 +575,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -643,10 +616,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -672,10 +644,9 @@ RSpec.describe 'DocumentUploads', type: :request do
           end.to change(UncheckedDocument, :count).by(1)
         end
 
-        it 'does the PUT request' do
+        it 'starts the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-            { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
@@ -714,10 +685,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to change(UncheckedDocument, :count).by(1)
       end
 
-      it 'does the PUT request' do
+      it 'starts the check request background job' do
         post '/document-upload', params: valid_attributes, headers: headers
-        expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-          { unchecked_document_id: UncheckedDocument.last.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
       end
 
       it 'returns status code 201' do
@@ -739,9 +709,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -768,9 +738,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -803,9 +773,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -851,9 +821,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -880,9 +850,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -909,9 +879,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -938,9 +908,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -967,9 +937,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -996,9 +966,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -1025,9 +995,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'starts the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -1054,9 +1024,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -1086,9 +1056,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end.to_not change(UncheckedDocument, :count)
       end
 
-      it 'does not do the PUT request' do
+      it 'does not start the check request background job' do
         post '/document-upload', params: invalid_attributes, headers: headers
-        expect(HTTParty).not_to have_received(:put)
+        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
@@ -1113,24 +1083,24 @@ RSpec.describe 'DocumentUploads', type: :request do
       context 'when posting a file' do
         let(:valid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
 
-        it 'creates a Document' do
+        it 'does not create a Document' do
           expect do
             post '/document-upload', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(0)
         end
 
-        it 'creates an UncheckedDocument' do
+        it 'does not create an UncheckedDocument' do
           expect do
             post '/document-upload', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(0)
         end
 
-        it 'does not do the PUT request' do
+        it 'does not start the check request background job' do
           post '/document-upload', params: valid_attributes, headers: headers
-          expect(HTTParty).not_to have_received(:put)
+          expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
         end
 
-        it 'returns status code 201' do
+        it 'returns status code 401' do
           post '/document-upload', params: valid_attributes, headers: headers
           expect(response).to have_http_status(401)
         end
