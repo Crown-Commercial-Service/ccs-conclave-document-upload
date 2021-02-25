@@ -1,7 +1,7 @@
-require 'rails_helper' 
-include ActiveSupport::Testing::TimeHelpers
+require 'rails_helper'
 
 RSpec.describe FileRemovalWorker, type: :worker do
+  include ActiveSupport::Testing::TimeHelpers
   describe 'File removal worker' do
     tmp_dir = Rails.root.join 'public/uploads/tmp'
 
