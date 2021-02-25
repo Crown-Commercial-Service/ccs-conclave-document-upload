@@ -50,6 +50,11 @@ gem 'vault', '~> 0.15.0'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 
+# Sidekiq - using an older version that works with redis v3.2.6
+gem 'sidekiq', '~> 5.0.0.rc1'
+
+gem 'sidekiq-scheduler', '~> 3.0.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -75,4 +80,5 @@ group :test do
   gem 'webmock'
   gem 'simplecov', '0.20', require: false
   gem 'climate_control'
+  gem 'rspec-sidekiq', '~> 2.2'
 end
