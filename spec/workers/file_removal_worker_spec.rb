@@ -1,5 +1,4 @@
 require 'rails_helper' 
-require 'sidekiq/testing'
 include ActiveSupport::Testing::TimeHelpers
 
 RSpec.describe FileRemovalWorker, type: :worker do
