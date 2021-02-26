@@ -43,9 +43,6 @@ gem 'figaro', '~> 1.2.0'
 # Exception tracking
 gem 'rollbar', '~> 3.1.1'
 
-# Sidekiq - using an older version that works with redis v3.2.6
-gem 'sidekiq', '~> 5.0.0.rc1'
-
 # Environment variables management
 gem 'vault', '~> 0.15.0'
 
