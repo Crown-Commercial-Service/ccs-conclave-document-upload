@@ -7,7 +7,7 @@ class DocumentUploadController < ApplicationController
     unchecked_document = @client.unchecked_documents.new(document_parameters.reject { |_, v| v.blank? })
 
     if unchecked_document.save
-      send_check_request(unchecked_document.id)
+      CallCheckServiceWorker.perform_async(unchecked_document.id)
       render json: unchecked_document.document.to_json, status: :created
     else
       render json: unchecked_document.errors, status: :unprocessable_entity
@@ -25,12 +25,5 @@ class DocumentUploadController < ApplicationController
       @client = Client.find_by(source_app: source_app)
       @client && @client.api_key == api_key
     end
-  end
-
-  def send_check_request(unchecked_document_id)
-    return unless ENV['CHECK_ENDPOINT_URL']
-
-    HTTParty.put(ENV['CHECK_ENDPOINT_URL'], body:
-      { unchecked_document_id: unchecked_document_id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
   end
 end
