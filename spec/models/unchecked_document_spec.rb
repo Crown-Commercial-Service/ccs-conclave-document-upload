@@ -10,12 +10,13 @@ RSpec.describe UncheckedDocument, type: :model do
     end
 
     before do
-      stub_request(:get, 'http://www.example.com/test_pdf.pdf')
+      stub_request(:get, 'http://93.184.216.34/test_pdf.pdf')
         .with(
           headers: {
             'Accept' => '*/*',
             'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent' => 'CarrierWave/2.1.0'
+            'Host' => 'www.example.com',
+            'User-Agent' => 'CarrierWave/2.1.1'
           }
         )
         .to_return(status: 200, body: File.open(document_file), headers: {})
