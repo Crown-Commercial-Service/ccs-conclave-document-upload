@@ -75,9 +75,9 @@ then
     fi
   fi
 
-  if [[ "$CF_SPACE" == "preview" ]]
+  if [[ "$CF_SPACE" == "sandbox" ]]
   then
-    if [[ ! "$BRANCH" == "$release_branch_re" ]]
+    if [[ ! "$BRANCH" =~ "$release_branch_re" ]]
     then
       echo "We only deploy the 'preview' branch to $CF_SPACE"
       echo "if you want to deploy $BRANCH to $CF_SPACE use -f"
