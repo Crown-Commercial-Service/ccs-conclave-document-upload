@@ -61,7 +61,7 @@ then
 fi
 BRANCH=$(git symbolic-ref --short HEAD)
 echo "INFO: deploying $BRANCH to $CF_SPACE"
-release_branch_re='\<release\>'
+release_branch_re='^release/.*'
 if [[ ! "$FORCE" == "yes" ]]
 then
 
