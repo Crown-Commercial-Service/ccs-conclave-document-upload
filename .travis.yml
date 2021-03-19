@@ -40,7 +40,7 @@ deploy:
     on:
       branch: develop
   - provider: script
-    script: bash CF/deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s preview
+    script: bash CF/deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s preprod
     on:
       all_branches: true
       condition: ${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} =~ ^release\/.*$
