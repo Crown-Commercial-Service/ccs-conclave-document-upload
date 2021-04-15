@@ -1,15 +1,12 @@
 def config_vault
   vcap_services = JSON.parse(ENV['VCAP_SERVICES'])
   key_store_path = ''
+  key = vcap_services['hashicorp-vault'].first
+  vault_engine = key['credentials']['backends_shared']['space']
   Vault.configure do |config|
-    vcap_services['user-provided'].each do |key, _value|
-      next unless key['name'].to_s == 'vault-service-broker'
-
-      key_store_path = "#{key['credentials']['vault_engine']}/#{ENV['SERVER_ENV_NAME']}"
-      config.address = key['credentials']['vault_addr']
-      config.token = key['credentials']['vault_token']
-    end
-
+    key_store_path = "#{vault_engine}/#{ENV['SERVER_ENV_NAME']}"
+    config.address = key['credentials']['address']
+    config.token = key['credentials']['auth']['token']
     config.ssl_verify = false # only false until live is setup
   end
   set_env(key_store_path)
