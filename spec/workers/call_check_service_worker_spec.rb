@@ -21,7 +21,7 @@ RSpec.describe CallCheckServiceWorker do
     it 'calls the put request' do
       CallCheckServiceWorker.new.perform(unchecked_document.id)
       expect(HTTParty).to have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-        { unchecked_document_id: unchecked_document.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        { unchecked_document_id: unchecked_document.id }, headers: { 'x-api-key' => ENV['AUTH_TOKEN'] })
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.describe CallCheckServiceWorker do
       ENV['CHECK_ENDPOINT_URL'] = nil
       CallCheckServiceWorker.new.perform(unchecked_document.id)
       expect(HTTParty).to_not have_received(:put).with(ENV['CHECK_ENDPOINT_URL'], body:
-        { unchecked_document_id: unchecked_document.id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+        { unchecked_document_id: unchecked_document.id }, headers: { 'x-api-key' => ENV['AUTH_TOKEN'] })
     end
   end
 end
