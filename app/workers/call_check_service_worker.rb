@@ -6,6 +6,6 @@ class CallCheckServiceWorker
     return unless ENV['CHECK_ENDPOINT_URL']
 
     HTTParty.put(ENV['CHECK_ENDPOINT_URL'], body:
-      { unchecked_document_id: unchecked_document_id }, headers: { 'Authorization' => ENV['AUTH_TOKEN'] })
+      { unchecked_document_id: unchecked_document_id }, headers: { 'x-api-key' => ENV['AUTH_TOKEN'] })
   end
 end
