@@ -21,7 +21,7 @@ class UncheckedDocument < ApplicationRecord
   before_validation :add_url_protocol, if: :document_file_path
   before_validation :grab_image, if: :document_file_path
   before_validation :create_document
-  after_create :call_check_service
+  after_commit :call_check_service, on: :create
 
   private
 
