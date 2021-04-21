@@ -21,7 +21,6 @@ class UncheckedDocument < ApplicationRecord
   before_validation :add_url_protocol, if: :document_file_path
   before_validation :grab_image, if: :document_file_path
   before_validation :create_document
-  after_commit :call_check_service, on: :create
 
   private
 
@@ -77,9 +76,5 @@ class UncheckedDocument < ApplicationRecord
     return if document_file_path[%r{\Ahttp://}] || document_file_path[%r{\Ahttps://}]
 
     self.document_file_path = "http://#{document_file_path}"
-  end
-
-  def call_check_service
-    CallCheckServiceWorker.perform_async(id)
   end
 end
