@@ -47,8 +47,8 @@ gem 'rollbar', '~> 3.1.1'
 gem 'vault', '~> 0.15.0'
 
 # static code analyzer
-gem 'rubocop', require: false
-gem 'rubocop-rails', require: false
+gem 'rubocop', '>= 1.7.0', require: false
+gem 'rubocop-rails', '>= 2.9.1', require: false
 
 # Sidekiq - using an older version that works with redis v3.2.6
 gem 'sidekiq', '~> 5.0.0.rc1'
