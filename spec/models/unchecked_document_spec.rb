@@ -49,17 +49,6 @@ RSpec.describe UncheckedDocument, type: :model do
         end
       end
     end
-
-    context '.call_check_service' do
-      let(:unchecked_document) do
-        create(:unchecked_document, document_file: document_file, type_validation: ['pdf'], size_validation: 1000000)
-      end
-
-      it 'starts a CallCheckServiceWorker job' do
-        unchecked_document.save
-        expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(unchecked_document.id)
-      end
-    end
   end
 
   describe 'relationship' do
