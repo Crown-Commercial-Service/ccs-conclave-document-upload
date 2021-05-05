@@ -36,6 +36,10 @@ before_deploy:
   - sudo apt-get install cf7-cli
 deploy:
   - provider: script
+    script: bash CF/deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s sandbox
+    on:
+      branch: sandbox
+  - provider: script
     script: bash CF/deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s development
     on:
       branch: develop

@@ -65,6 +65,16 @@ release_branch_re='^release/.*'
 if [[ ! "$FORCE" == "yes" ]]
 then
 
+  if [[ "$CF_SPACE" == "sandbox" ]]
+  then
+    if [[ ! "$BRANCH" == "sandbox" ]]
+    then
+      echo "We only deploy the 'sandbox' branch to $CF_SPACE"
+      echo "if you want to deploy $BRANCH to $CF_SPACE use -f"
+      exit 1
+    fi
+  fi
+
   if [[ "$CF_SPACE" == "development" ]]
   then
     if [[ ! "$BRANCH" == "develop" ]]
