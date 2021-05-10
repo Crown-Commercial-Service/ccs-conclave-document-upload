@@ -4,7 +4,8 @@ class DocumentUploadController < ApplicationController
 
     if unchecked_document.save
       CallCheckServiceWorker.perform_async(unchecked_document.id)
-      render json: unchecked_document.document.to_json, status: :created
+      document = unchecked_document.document.as_json.deep_transform_keys! { |key| key.camelize(:lower) }
+      render json: document, status: :created
     else
       render json: unchecked_document.errors, status: :unprocessable_entity
     end
