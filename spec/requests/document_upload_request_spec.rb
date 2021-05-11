@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'DocumentUploads', type: :request do
   let(:pdf_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
 
-  # Test suite for POST /document-upload
-  describe 'POST /document-upload' do
+  # Test suite for POST /documents
+  describe 'POST /documents' do
     let(:client) { create(:client, source_app: 'evidence_locker') }
 
     let(:headers) do
@@ -25,23 +25,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -52,23 +52,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -79,23 +79,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -106,23 +106,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -133,23 +133,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -160,23 +160,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -187,23 +187,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -214,23 +214,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -241,23 +241,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -268,23 +268,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -295,23 +295,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -322,23 +322,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -349,23 +349,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -376,23 +376,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -403,23 +403,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -430,23 +430,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -457,23 +457,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -484,23 +484,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -511,23 +511,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -538,23 +538,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -565,23 +565,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -607,23 +607,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -635,23 +635,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'creates a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(1)
         end
 
         it 'creates an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(1)
         end
 
         it 'starts the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
         end
 
         it 'returns status code 201' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(201)
         end
       end
@@ -678,22 +678,22 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'creates a Document' do
-        expect { post '/document-upload', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
+        expect { post '/documents', params: valid_attributes, headers: headers }.to change(Document, :count).by(1)
       end
 
       it 'creates an UncheckedDocument' do
         expect do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
         end.to change(UncheckedDocument, :count).by(1)
       end
 
       it 'starts the check request background job' do
-        post '/document-upload', params: valid_attributes, headers: headers
+        post '/documents', params: valid_attributes, headers: headers
         expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
       end
 
       it 'returns status code 201' do
-        post '/document-upload', params: valid_attributes, headers: headers
+        post '/documents', params: valid_attributes, headers: headers
         expect(response).to have_http_status(201)
       end
     end
@@ -702,27 +702,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { type_validation: ['pdf'], size_validation: 1000000 } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.base.no_file'))
       end
     end
@@ -731,27 +731,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, type_validation: %w[csv docx], size_validation: 1000000 } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.base.wrong_format'))
       end
     end
@@ -766,27 +766,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include('You are not allowed to upload')
       end
     end
@@ -815,27 +815,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include('You are not allowed to upload')
       end
     end
@@ -844,27 +844,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, type_validation: [''], size_validation: 1000000 } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include("can't be blank")
       end
     end
@@ -873,27 +873,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, type_validation: nil, size_validation: 1000000 } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include("can't be blank")
       end
     end
@@ -902,27 +902,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, size_validation: 1000000 } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include("can't be blank")
       end
     end
@@ -931,27 +931,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: nil } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include("can't be blank")
       end
     end
@@ -960,27 +960,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'] } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include("can't be blank")
       end
     end
@@ -989,27 +989,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 'test' } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'starts the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.size_validation.not_a_number'))
       end
     end
@@ -1018,27 +1018,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 2000 } }
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.base.file_too_big'))
       end
     end
@@ -1050,27 +1050,27 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       it 'does not create a Document' do
-        expect { post '/document-upload', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
       end
 
       it 'does not create a UncheckedDocument' do
         expect do
-          post '/document-upload', params: invalid_attributes, headers: headers
+          post '/documents', params: invalid_attributes, headers: headers
         end.to_not change(UncheckedDocument, :count)
       end
 
       it 'does not start the check request background job' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
       end
 
       it 'returns status code 422' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response).to have_http_status(422)
       end
 
       it 'returns error message' do
-        post '/document-upload', params: invalid_attributes, headers: headers
+        post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include(I18n.t('unchecked_document.base.max_file_size'))
       end
     end
@@ -1088,23 +1088,23 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'does not create a Document' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(Document, :count).by(0)
         end
 
         it 'does not create an UncheckedDocument' do
           expect do
-            post '/document-upload', params: valid_attributes, headers: headers
+            post '/documents', params: valid_attributes, headers: headers
           end.to change(UncheckedDocument, :count).by(0)
         end
 
         it 'does not start the check request background job' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
         end
 
         it 'returns status code 401' do
-          post '/document-upload', params: valid_attributes, headers: headers
+          post '/documents', params: valid_attributes, headers: headers
           expect(response).to have_http_status(401)
         end
       end

@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.5'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.7'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -47,8 +47,8 @@ gem 'rollbar', '~> 3.1.1'
 gem 'vault', '~> 0.15.0'
 
 # static code analyzer
-gem 'rubocop', require: false
-gem 'rubocop-rails', require: false
+gem 'rubocop', '>= 1.7.0', require: false
+gem 'rubocop-rails', '>= 2.9.1', require: false
 
 # Sidekiq - using an older version that works with redis v3.2.6
 gem 'sidekiq', '~> 5.0.0.rc1'
