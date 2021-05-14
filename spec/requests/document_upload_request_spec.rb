@@ -17,7 +17,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
     context 'when success' do
       let(:file) { fixture_file_upload(file_name, mime_type) }
-      let(:valid_attributes) { { document_file: file, type_validation: [mime_type], size_validation: 10000000 } }
+      let(:valid_attributes) { { documentFile: file, typeValidation: [mime_type], sizeValidation: 10000000 } }
 
       context 'when posting a pdf file' do
         let(:mime_type) { 'text/pdf' }
@@ -586,10 +586,10 @@ RSpec.describe 'DocumentUploads', type: :request do
         end
       end
 
-      context 'when posting a document_file_path' do
+      context 'when posting a documentFilePath' do
         let(:file_path) { 'https://www.example.com/test_pdf.pdf' }
         let(:valid_attributes) do
-          { document_file_path: file_path, type_validation: ['octet-stream'], size_validation: 1000000 }
+          { documentFilePath: file_path, typeValidation: ['octet-stream'], sizeValidation: 1000000 }
         end
 
         before do
@@ -628,9 +628,9 @@ RSpec.describe 'DocumentUploads', type: :request do
         end
       end
 
-      context 'when posting a file and document_file_path is blank' do
+      context 'when posting a file and documentFilePath is blank' do
         let(:valid_attributes) do
-          { document_file_path: '', document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 }
+          { documentFilePath: '', documentFile: pdf_file, typeValidation: ['pdf'], sizeValidation: 1000000 }
         end
 
         it 'creates a Document' do
@@ -657,11 +657,11 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when document_file_path is missing protocol' do
+    context 'when documentFilePath is missing protocol' do
       let(:file_path) { 'www.example.com/test_pdf.pdf' }
       let(:valid_attributes) do
-        { document_file_path: file_path, service_name: 'evidence_locker', type_validation: ['octet-stream'],
-          size_validation: 1000000 }
+        { documentFilePath: file_path, service_name: 'evidence_locker', typeValidation: ['octet-stream'],
+          sizeValidation: 1000000 }
       end
 
       before do
@@ -698,8 +698,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when document_file and document_file_path parameters are missing' do
-      let(:invalid_attributes) { { type_validation: ['pdf'], size_validation: 1000000 } }
+    context 'when documentFile and documentFilePath parameters are missing' do
+      let(:invalid_attributes) { { typeValidation: ['pdf'], sizeValidation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -728,7 +728,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when type validation fails' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: %w[csv docx], size_validation: 1000000 } }
+      let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: %w[csv docx], sizeValidation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -762,7 +762,7 @@ RSpec.describe 'DocumentUploads', type: :request do
                             'application/vnd.openxmlformats-officedocument.presentationml.presentation')
       end
       let(:invalid_attributes) do
-        { document_file_path: '', document_file: pptx_file, type_validation: ['pptx'], size_validation: 1000000 }
+        { documentFilePath: '', documentFile: pptx_file, typeValidation: ['pptx'], sizeValidation: 1000000 }
       end
 
       it 'does not create a Document' do
@@ -798,7 +798,7 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
       let(:file_path) { 'https://www.example.com/test_pptx.pptx' }
       let(:invalid_attributes) do
-        { document_file_path: file_path, type_validation: ['pptx'], size_validation: 1000000 }
+        { documentFilePath: file_path, typeValidation: ['pptx'], sizeValidation: 1000000 }
       end
 
       before do
@@ -840,8 +840,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when type_validation is a blank array' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: [''], size_validation: 1000000 } }
+    context 'when typeValidation is a blank array' do
+      let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: [''], sizeValidation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -869,8 +869,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when type_validation is a nil' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: nil, size_validation: 1000000 } }
+    context 'when typeValidation is a nil' do
+      let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: nil, sizeValidation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -898,8 +898,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when type_validation is not sent through' do
-      let(:invalid_attributes) { { document_file: pdf_file, size_validation: 1000000 } }
+    context 'when typeValidation is not sent through' do
+      let(:invalid_attributes) { { documentFile: pdf_file, sizeValidation: 1000000 } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -927,8 +927,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when size_validation is blank' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: nil } }
+    context 'when sizeValidation is blank' do
+      let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: ['pdf'], sizeValidation: nil } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -956,8 +956,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when size_validation is not sent through' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'] } }
+    context 'when sizeValidation is not sent through' do
+      let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: ['pdf'] } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -985,8 +985,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when size_validation is not a number' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 'test' } }
+    context 'when sizeValidation is not a number' do
+      let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: ['pdf'], sizeValidation: 'test' } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -1015,7 +1015,7 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when size validation fails' do
-      let(:invalid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 2000 } }
+      let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: ['pdf'], sizeValidation: 2000 } }
 
       it 'does not create a Document' do
         expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
@@ -1045,8 +1045,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
     context 'when size validation is larger than 5gb' do
       let(:invalid_attributes) do
-        { document_file: pdf_file, type_validation: ['pdf'],
-          size_validation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1 }
+        { documentFile: pdf_file, typeValidation: ['pdf'],
+          sizeValidation: UncheckedDocument::FIVE_GIGABITES_IN_BYTES + 1 }
       end
 
       it 'does not create a Document' do
@@ -1084,7 +1084,7 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when posting a file' do
-        let(:valid_attributes) { { document_file: pdf_file, type_validation: ['pdf'], size_validation: 1000000 } }
+        let(:valid_attributes) { { documentFile: pdf_file, typeValidation: ['pdf'], sizeValidation: 1000000 } }
 
         it 'does not create a Document' do
           expect do
