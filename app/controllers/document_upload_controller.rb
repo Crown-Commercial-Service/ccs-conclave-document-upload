@@ -14,6 +14,7 @@ class DocumentUploadController < ApplicationController
   private
 
   def document_parameters
-    params.permit(:document_file, :document_file_path, :source_app, :size_validation, type_validation: [])
+    params.permit(:documentFile, :documentFilePath, :sourceApp, :sizeValidation,
+                  typeValidation: []).transform_keys!(&:underscore)
   end
 end
