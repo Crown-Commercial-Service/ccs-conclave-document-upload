@@ -22,7 +22,7 @@ class DocumentFileUploader < CarrierWave::Uploader::Base
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  def extension_whitelist
+  def extension_allowlist
     %w[pdf csv docx xlsx odt odp ods odg zip rar tar.gz tgz jpg jpeg png bmp tiff tif eps doc xls]
   end
 end

@@ -23,13 +23,13 @@ gem 'puma', '~> 4.3', '>= 4.3.8'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # File uploader
-gem 'carrierwave', '~> 2.1'
+gem 'carrierwave', '~> 2.1', '>= 2.1.1'
 
 # for S3 storage of files
 gem 'carrierwave-aws', '~> 1.5.0'
 
 # Helps you manage translations
-gem 'i18n-tasks', '~> 0.9.31'
+gem 'i18n-tasks', '~> 0.9.34'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
@@ -59,7 +59,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Rspec
-  gem 'rspec-rails', '~> 4.0.1'
+  gem 'rspec-rails', '~> 4.0.2'
 end
 
 group :development do
