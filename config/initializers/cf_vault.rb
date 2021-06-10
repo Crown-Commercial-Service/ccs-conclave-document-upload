@@ -6,7 +6,8 @@ def config_vault
   Vault.configure do |config|
     key_store_path = "#{vault_engine}/#{ENV['SERVER_ENV_NAME']}"
     config.address = key['credentials']['address']
-    config.token = key['credentials']['auth']['token']
+    key['credentials']['auth']['token'] = ENV['VAULT_TOKEN']
+    ENV['VCAP_SERVICES'] = JSON.generate(vcap_services)
     config.ssl_verify = false # only false until live is setup
   end
   set_env(key_store_path)
