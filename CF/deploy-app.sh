@@ -61,7 +61,7 @@ then
 fi
 BRANCH=$(git symbolic-ref --short HEAD)
 echo "INFO: deploying $BRANCH to $CF_SPACE"
-release_branch_re='^release/.*'
+# release_branch_re='^release/.*'
 if [[ ! "$FORCE" == "yes" ]]
 then
 
@@ -87,7 +87,7 @@ then
 
   if [[ "$CF_SPACE" == "pre-production" ]]
   then
-    if [[ ! "$BRANCH" == $release_branch_re ]]
+    if [[ ! "$BRANCH" == "preprod" ]]
     then
       echo "We only deploy 'release/*' branches to $CF_SPACE"
       echo "if you want to deploy $BRANCH to $CF_SPACE use -f"
