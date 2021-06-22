@@ -85,7 +85,7 @@ then
     fi
   fi
 
-  if [[ "$CF_SPACE" == "preprod" ]]
+  if [[ "$CF_SPACE" == "pre-production" ]]
   then
     if [[ ! "$BRANCH" == $release_branch_re ]]
     then
