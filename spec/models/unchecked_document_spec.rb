@@ -16,7 +16,7 @@ RSpec.describe UncheckedDocument, type: :model do
             'Accept' => '*/*',
             'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Host' => 'www.example.com',
-            'User-Agent' => 'CarrierWave/2.2.1'
+            'User-Agent' => 'CarrierWave/2.2.2'
           }
         )
         .to_return(status: 200, body: File.open(document_file), headers: {})
