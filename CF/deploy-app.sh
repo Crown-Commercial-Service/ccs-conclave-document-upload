@@ -121,4 +121,4 @@ sed "s/CF_SPACE/$CF_SPACE/g" manifest.yml | sed "s/MEMORY_LIMIT/$MEMORY_LIMIT/g"
 # deploy
 cd .. || exit
 
-cf push ccs-conclave-document-upload -f CF/"$CF_SPACE".manifest.yml
+cf push "$CF_SPACE"-ccs-conclave-document-upload -f CF/"$CF_SPACE".manifest.yml

@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: ccs-conclave-document-upload
+  - name: CF_SPACE-ccs-conclave-document-upload
     sidecars:
       - name: sidekiq
         process_types: [ 'worker' ]
