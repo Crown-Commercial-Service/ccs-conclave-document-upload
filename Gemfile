@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.7'
@@ -23,7 +23,7 @@ gem 'puma', '~> 4.3', '>= 4.3.8'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # File uploader
-gem 'carrierwave', '~> 2.1', '>= 2.1.1'
+gem 'carrierwave', '~> 2.2', '>= 2.2.1'
 
 # for S3 storage of files
 gem 'carrierwave-aws', '~> 1.5.0'
@@ -77,7 +77,7 @@ group :test do
   gem 'shoulda-matchers', '~> 4.4.1'
   gem 'faker'
   gem 'database_cleaner'
-  gem 'webmock'
+  gem 'webmock', '>= 3.10.0'
   gem 'rspec-sidekiq'
   gem 'simplecov', '0.20', require: false
   gem 'climate_control'
