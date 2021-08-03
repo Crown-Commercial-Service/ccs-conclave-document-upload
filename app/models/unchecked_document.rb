@@ -13,18 +13,21 @@ class UncheckedDocument < ApplicationRecord
     validates column, presence: true, allow_blank: false
   end
 
+  before_validation :add_url_protocol, if: :document_file_path
+  before_validation :grab_image, if: :document_file_path
+  before_validation :create_document
+
   validate :file_xor_file_path
   validate :document_type
   validate :document_size
   validate :max_size
 
-  before_validation :add_url_protocol, if: :document_file_path
-  before_validation :grab_image, if: :document_file_path
-  before_validation :create_document
-
   private
 
   def file_xor_file_path
+    valid_file_path
+
+    return if @errors.present?
     errors.add(:base, I18n.t('unchecked_document.base.no_file')) if document_file.file.blank?
   end
 
@@ -32,7 +35,7 @@ class UncheckedDocument < ApplicationRecord
     return unless document_file.file.present? && type_validation.present?
 
     valid_type
-    return if @errors.any?
+    return if @errors.present?
 
     errors.add(:base, I18n.t('unchecked_document.base.wrong_format')) if type_validation.none? do |t|
                                                                            document_file.file.content_type.include?(t)
@@ -43,13 +46,18 @@ class UncheckedDocument < ApplicationRecord
     return if document_file.file.blank?
 
     valid_number
-    return if @errors.any?
+    return if @errors.present?
 
-    errors.add(:base, I18n.t('unchecked_document.base.file_too_big')) if document_file.file.size > size_validation.to_i
+    errors.add(:base, I18n.t('unchecked_document.base.file_too_big')) && errors.add(:base, I18n.t('unchecked_document.base.file_must_be_under_max')) if document_file.file.size > size_validation.to_i
   end
 
   def max_size
     errors.add(:base, I18n.t('unchecked_document.base.max_file_size')) if size_validation.to_i > FIVE_GIGABITES_IN_BYTES
+  end
+
+  def valid_file_path
+    errors.messages[:document_file] = "File not found" if document_file.file.blank? && document_file_path.present? 
+    errors.add(:base, I18n.t('unchecked_document.base.check_file_path')) && errors.add(:base, I18n.t('unchecked_document.base.check_file_type')) && errors.add(:base, I18n.t('unchecked_document.base.contact_customer_service')) if document_file.file.blank? && document_file_path.present? 
   end
 
   def valid_number
@@ -59,7 +67,7 @@ class UncheckedDocument < ApplicationRecord
   end
 
   def valid_type
-    return if type_validation.reject(&:empty?).any?
+    return if type_validation.reject(&:empty?).present?
 
     errors.add(:type_validation, I18n.t('errors.messages.blank'))
   end
