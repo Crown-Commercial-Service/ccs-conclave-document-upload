@@ -28,6 +28,7 @@ class UncheckedDocument < ApplicationRecord
     valid_file_path
 
     return if @errors.present?
+
     errors.add(:base, I18n.t('unchecked_document.base.no_file')) if document_file.file.blank?
   end
 
@@ -48,7 +49,9 @@ class UncheckedDocument < ApplicationRecord
     valid_number
     return if @errors.present?
 
-    errors.add(:base, I18n.t('unchecked_document.base.file_too_big')) && errors.add(:base, I18n.t('unchecked_document.base.file_must_be_under_max')) if document_file.file.size > size_validation.to_i
+    if document_file.file.size > size_validation.to_i
+      errors.add(:base, I18n.t('unchecked_document.base.file_too_big')) && errors.add(:base, I18n.t('unchecked_document.base.file_must_be_under_max'))
+    end
   end
 
   def max_size
@@ -56,8 +59,12 @@ class UncheckedDocument < ApplicationRecord
   end
 
   def valid_file_path
-    errors.messages[:document_file] = "File not found" if document_file.file.blank? && document_file_path.present? 
-    errors.add(:base, I18n.t('unchecked_document.base.check_file_path')) && errors.add(:base, I18n.t('unchecked_document.base.check_file_type')) && errors.add(:base, I18n.t('unchecked_document.base.contact_customer_service')) if document_file.file.blank? && document_file_path.present? 
+    if document_file.file.blank? && document_file_path.present?
+      errors.messages[:document_file] = 'File not found'
+      errors.add(:base, I18n.t('unchecked_document.base.check_file_path'))
+      errors.add(:base, I18n.t('unchecked_document.base.check_file_type'))
+      errors.add(:base, I18n.t('unchecked_document.base.contact_customer_service'))
+    end
   end
 
   def valid_number

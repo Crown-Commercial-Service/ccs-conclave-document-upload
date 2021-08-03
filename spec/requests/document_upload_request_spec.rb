@@ -868,7 +868,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("Fill in the field")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
@@ -897,7 +897,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("Fill in the field")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
@@ -926,7 +926,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("Fill in the field")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
@@ -955,7 +955,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("Fill in the field")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
@@ -984,7 +984,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("Fill in the field")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
