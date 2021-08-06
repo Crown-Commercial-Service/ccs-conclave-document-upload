@@ -39,6 +39,18 @@ Style/GlobalStdStream:
   Exclude:
     - 'config/environments/production.rb'
 
+Style/GuardClause:
+  Exclude:
+    - 'app/models/unchecked_document.rb'
+
+Layout/LineLength:
+  Exclude:
+    - 'app/models/unchecked_document.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/models/unchecked_document.rb'
+
 Metrics/BlockLength:
     Max: 40
     Exclude:
