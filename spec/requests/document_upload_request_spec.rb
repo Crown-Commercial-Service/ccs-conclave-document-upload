@@ -787,7 +787,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include('You are not allowed to upload')
+        expect(response.body).to include('Your document must be in ')
       end
     end
 
@@ -836,7 +836,10 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include('You are not allowed to upload')
+        expect(response.body).to include('File not found')
+        expect(response.body).to include('If you typed the file path, check it is correct')
+        expect(response.body).to include('Check that your file type is in')
+        expect(response.body).to include('If the file type and path are correct contact')
       end
     end
 
@@ -865,7 +868,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("can't be blank")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
@@ -894,7 +897,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("can't be blank")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
@@ -923,7 +926,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("can't be blank")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
@@ -952,7 +955,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("can't be blank")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
@@ -981,7 +984,7 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include("can't be blank")
+        expect(response.body).to include('Fill in the field')
       end
     end
 
