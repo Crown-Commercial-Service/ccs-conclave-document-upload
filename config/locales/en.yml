@@ -2,9 +2,27 @@
 en:
   unchecked_document:
     base:
-      file_too_big: File too big.
-      max_file_size: Maximum file size validation is 5gb.
-      no_file: Specify document file or a file path.
+      check_file_path: If you typed the file path, check it is correct.
+      check_file_type: Check that your file type is in pdf csv docx xlsx odt odp ods odg zip rar tar.gz tgz jpg jpeg png bmp tiff tif eps doc or xls format.
+      contact_customer_service: If the file type and path are correct contact the <a href="mailto:info@crowncommercial.gov.uk">CCS Customer Service Centre</a>
+      customer_service_centre_link: mailto:info@crowncommercial.gov.uk
+      file_too_big: File is too big.
+      file_must_be_under_max: Files must be under 5GB
+      max_file_size: Maximum file size is 5GB.
+      no_file: Select a file to upload.
       wrong_format: Wrong format.
     size_validation:
-      not_a_number: is not a number
+      not_a_number: Enter your document’s file size using numbers only
+  errors:
+    messages:
+      blank: Fill in the field
+      carrierwave_processing_error: failed to be processed
+      carrierwave_integrity_error: is not of an allowed file type
+      carrierwave_download_error: could not be downloaded
+      extension_allowlist_error: Your document must be in pdf csv docx xlsx odt odp ods odg zip rar tar.gz tgz jpg jpeg png bmp tiff tif eps doc or xls format.
+      extension_denylist_error: "You are not allowed to upload %{extension} files, prohibited types: %{prohibited_types}"
+      content_type_allowlist_error: "You are not allowed to upload %{content_type} files, allowed types: %{allowed_types}"
+      content_type_denylist_error: "You are not allowed to upload %{content_type} files"
+      processing_error: "Failed to manipulate, maybe it is not an image?"
+      min_size_error: "File size should be greater than %{min_size}"
+      max_size_error: "File size should be less than %{max_size}"
