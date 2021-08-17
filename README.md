@@ -29,10 +29,10 @@ This is a Ruby on Rails application that takes a file or a file path, saves it i
 `echo 'eval "$(rbenv init -)"' >> ~/.bash_profile`
 `source ~/.bash_profile`
 
-##### 3. Build ruby 2.7.3 with rbenv
+##### 3. Build ruby 2.7.4 with rbenv
 
-`rbenv install 2.7.3`
-`rbenv global 2.7.3`
+`rbenv install 2.7.4`
+`rbenv global 2.7.4`
 
 ##### 4. Install rails 6.0.3
 `gem install rails -v 6.0.3`
