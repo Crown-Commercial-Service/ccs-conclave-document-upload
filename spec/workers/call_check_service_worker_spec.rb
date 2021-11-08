@@ -10,7 +10,9 @@ RSpec.describe CallCheckServiceWorker do
   let(:put_response) { instance_double(HTTParty::Response, body: put_response_body) }
   let(:put_response_body) { 'response_body' }
   let(:request_url) { "#{ENV['CHECK_ENDPOINT_URL']}/#{unchecked_document.document_id}" }
-  let(:headers) { { 'x-api-key' => ENV['AUTH_TOKEN'] } }
+  let(:client) { create(:client, source_app: 'test_app') }
+  let(:jwt_token) { JWT.encode({ aud: ENV['CLIENT_ID'] }, 'test') }
+  let(:headers) { { 'x-api-key' => client.api_key, 'Authorization' => "Bearer #{jwt_token}" } }
 
   before do
     allow(HTTParty).to receive(:put).and_return(put_response)
@@ -21,7 +23,7 @@ RSpec.describe CallCheckServiceWorker do
 
   context 'when CHECK_ENDPOINT_URL is present' do
     it 'calls the put request' do
-      CallCheckServiceWorker.new.perform(unchecked_document.id)
+      CallCheckServiceWorker.new.perform(unchecked_document.id, client.api_key, "Bearer #{jwt_token}")
       expect(HTTParty).to have_received(:put).with(request_url, headers: headers)
     end
   end
@@ -29,7 +31,7 @@ RSpec.describe CallCheckServiceWorker do
   context 'when CHECK_ENDPOINT_URL is not present' do
     it 'does not call the put request' do
       ENV['CHECK_ENDPOINT_URL'] = nil
-      CallCheckServiceWorker.new.perform(unchecked_document.id)
+      CallCheckServiceWorker.new.perform(unchecked_document.id, client.api_key, "Bearer #{jwt_token}")
       expect(HTTParty).to_not have_received(:put).with(request_url, headers: headers)
     end
   end

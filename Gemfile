@@ -40,6 +40,9 @@ gem 'httparty', '~> 0.18.1'
 # Manage secret keys on local
 gem 'figaro', '~> 1.2.0'
 
+# Handle json web tokens
+gem 'jwt'
+
 # Exception tracking
 gem 'rollbar', '~> 3.1.1'
 
