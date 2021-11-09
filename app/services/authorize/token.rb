@@ -1,11 +1,5 @@
 module Authorize
   module Token
-    def payload
-      {
-        error: 'API key not provided'
-      }
-    end
-
     def api_key_to_string
       request.headers['x-api-key'].to_s if request.headers['x-api-key'].present?
     end
