@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
 
   def authenticate
     logger.info 'Testing headers::::::::::::::::'
-    logger.debug "#{request.headers}"
+    logger.debug "#{request.headers.inspect}"
     request.headers['Authorization'] = request.headers['x-api-key']
     authenticate_or_request_with_http_basic do |source_app, api_key|
       @client = Client.find_by(source_app: source_app)
