@@ -13,7 +13,6 @@ AllCops:
     - 'config/initializers/cf_vault.rb'
     - 'config/initializers/redis.rb'
     - 'config/puma.rb'
-    - 'controllers/application_controller.rb'
 
 Rails:
   Enabled: true
