@@ -329,7 +329,7 @@ DEPENDENCIES
   rubocop (>= 1.7.0)
   rubocop-rails (>= 2.9.1)
   shoulda-matchers (~> 4.4.1)
-  sidekiq (~> 6.4.0.0)
+  sidekiq (~> 6.4.0)
   sidekiq-scheduler (~> 3.0.1)
   simplecov (= 0.20)
   spring
