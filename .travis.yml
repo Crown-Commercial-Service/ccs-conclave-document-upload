@@ -1,0 +1,55 @@
+dist: bionic
+language: ruby
+rvm:
+- 2.7.3
+services:
+- postgresql
+addons:
+  postgresql: '10'
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
+cache:
+  - bundler
+env:
+  global:
+  - CHECK_ENDPOINT_URL=localhost:3000/documents
+  - AUTH_TOKEN=test
+  - CF_ORG=ccs-document-upload
+  - secure: "ahYZ5fvMa5jFOfH1Gj15K46Luj815P8e60H+tTnXPjfZYsY2Z0GI75zpf5gwkrrjNJxVuge0A4iLKRMFD88s6oHaUi09c6A0s4ogk6RS9k39mHsZnHQoBWYk/G7mIiqKBSCa5Z+4BMxwS3+01tz6CQHEGcO/5pRpknKw01YnqhpxIxiXJKTYMl5P6iDBlwq46Rqw7Jz8J8EXsymerDAmE3DCN19IuBfcOXIky2kOlZwdrjfu8gN70rcQkL1p+4gY3e93cEUUFA9UkydvGAtekWBYzfD2VCmaD4p2X15/A22UjDLqUPV9DVvtgp12VEckq76ZI71ihmZDWXn1Tt/X3LNXyGmTYk1jWv6DlN86T2bgAVY6lPZS5adqiGiART/7S64dIqmuV2IyblZt5Xk3mYAdU3gb2tH3uyEYSXgPIfjoiQtzCA1YNiYaDw9bQMocMwjbfKEsXL9D1O4FrrojONGfUg5SJT0MineLLgr9vBJ8WO5pKmOy9xymlfzTySNnb9OSIzcJ2C8rK/RUeN2uo1F9paIqhAqlzsm6/iVMZ9si36SGfKkt3Gq2Z9fP1rhMyG8t1LmfiAAiSIiEvSZRDEc5joyGhv0jBWbNGcP8wCZERLXNv1zMhh7K5mx18WUxlUPHw2BZr6yFfMuoct6khTsdped1nKmkmOmaQfU1U/E="
+before_install:
+  - gem install bundler -v 2.1.4
+install:
+  - bundle install --jobs=3 --retry=3
+before_script:
+  - psql -c 'create database ccs_conclave_document_upload_test;' -U postgres
+  - bundle exec rails db:migrate
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+before_deploy:
+  - echo "install cloudfoundry cli"
+  - wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+  - echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+  - sudo apt-get update -qq
+  - sudo apt-get install cf7-cli
+deploy:
+  - provider: script
+    script: bash CF/deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s sandbox
+    on:
+      branch: sandbox
+  - provider: script
+    script: bash CF/deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s development
+    on:
+      branch: develop
+  - provider: script
+    script: bash CF/deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s pre-production
+    on:
+      branch: preprod
+  - provider: script
+    script: bash CF/deploy-app.sh -u $CF_USER -o $CF_ORG -p $CF_PASS -s production
+    on:
+      branch: main
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

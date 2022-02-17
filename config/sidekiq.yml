@@ -1,0 +1,8 @@
+---
+:concurrency:  2
+:queues:
+  - upload
+:schedule:
+  file_removal_worker:
+    every: '5m'   # Runs once per 5 minutes
+    class: FileRemovalWorker

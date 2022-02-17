@@ -25,3 +25,15 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore .idea folder created by Rubymine
+.idea/*
+
+# Ignore files uploaded by carrierwave
+/public/uploads/*
+
+# Ignore application configuration
+/config/application.yml
+
+# Ignore test artifacts
+coverage
