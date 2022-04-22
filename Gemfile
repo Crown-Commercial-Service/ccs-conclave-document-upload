@@ -23,7 +23,7 @@ gem 'puma', '~> 4.3', '>= 4.3.12'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # File uploader
-gem 'carrierwave', '~> 2.2', '>= 2.2.1'
+gem 'carrierwave', '~> 2.2', '>= 2.2.2'
 
 # for S3 storage of files
 gem 'carrierwave-aws', '~> 1.5.0'
