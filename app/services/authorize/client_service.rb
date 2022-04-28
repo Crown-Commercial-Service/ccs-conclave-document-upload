@@ -47,7 +47,7 @@ module Authorize
 
     def validate_client_or_api_key
       return if validate_api_key
-      
+
       validate_client_id
       validate_access_token
     end
