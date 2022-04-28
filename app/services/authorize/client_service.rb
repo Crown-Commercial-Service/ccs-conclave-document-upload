@@ -34,7 +34,20 @@ module Authorize
       {}
     end
 
-    def validate_client
+    def api_key_to_string
+      request.headers['x-api-key'].to_s if request.headers['x-api-key'].present?
+    end
+
+    def validate_api_key
+      api_token = api_key_to_string
+      return false if Client.find_by(api_key: api_token.to_s)&.id.blank?
+
+      true
+    end
+
+    def validate_client_or_api_key
+      return if validate_api_key
+      
       validate_client_id
       validate_access_token
     end
