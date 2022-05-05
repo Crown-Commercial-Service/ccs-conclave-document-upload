@@ -19,6 +19,9 @@ gem 'puma', '~> 4.3', '>= 4.3.12'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+# aws ssm
+gem 'aws-sdk-ssm'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
