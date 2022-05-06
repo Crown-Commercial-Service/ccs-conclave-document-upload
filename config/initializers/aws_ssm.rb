@@ -17,7 +17,7 @@ def config_aws
       secret_access_key: user_service['credentials']['aws_secret_access_key']
     )
   end
-  set_env(ssm_client, params_list) if ssm_client && params_list.any?
+  set_env(ssm_client, params_list) if ssm_client && params_list
 end
 
 def set_env(ssm_client, params_list)
