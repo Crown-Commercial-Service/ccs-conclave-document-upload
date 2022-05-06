@@ -21,7 +21,7 @@ def config_aws
 end
 
 def set_env(ssm_client, params_list)
-  params_list.each do |param_name| # The below line should change
+  params_list.split(/,/).each do |param_name|
     ENV[param_name] =
       ssm_client.get_parameter({ name: "/conclave-document-upload/#{param_name}",
                                  with_decryption: true })[:parameter][:value]
