@@ -73,6 +73,9 @@ GEM
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
+    aws-sdk-ssm (1.136.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
     aws-sigv4 (1.4.0)
       aws-eventstream (~> 1, >= 1.0.2)
     bootsnap (1.5.1)
@@ -308,6 +311,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-ssm
   bootsnap (>= 1.4.2)
   byebug
   carrierwave (~> 2.2, >= 2.2.2)
