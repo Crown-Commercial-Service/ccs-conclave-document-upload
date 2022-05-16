@@ -35,7 +35,7 @@ gem 'carrierwave-aws', '~> 1.5.0'
 gem 'i18n-tasks', '~> 0.9.37'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
 # Make http requests
 gem 'httparty', '~> 0.18.1'
