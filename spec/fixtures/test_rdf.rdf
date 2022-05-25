@@ -1,0 +1,12 @@
+ <?xml version="1.0"?>
+
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:si="https://www.crowncommercial.gov.uk/rdf/">
+
+<rdf:Description rdf:about="https://www.crowncommercial.gov.uk/">
+  <si:title>Crown Commercial</si:title>
+  <si:author>CCS Refsnes</si:author>
+</rdf:Description>
+
+</rdf:RDF>
