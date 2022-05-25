@@ -3,7 +3,7 @@ en:
   unchecked_document:
     base:
       check_file_path: If you typed the file path, check it is correct.
-      check_file_type: Check that your file type is in pdf csv docx xlsx odt odp ods odg zip rar tar.gz tgz jpg jpeg png bmp tiff tif eps doc or xls format.
+      check_file_type: Check that your file type is in pdf ppt pptx csv xls xlsx doc docx odt odp ods odg zip rar tar.gz tgz kml jpg jpeg png bmp tiff tif eps rdf rtf txt or xml format.
       contact_customer_service: If the file type and path are correct contact the <a href="mailto:info@crowncommercial.gov.uk">CCS Customer Service Centre</a>
       customer_service_centre_link: mailto:info@crowncommercial.gov.uk
       file_too_big: File is too big.
@@ -19,7 +19,7 @@ en:
       carrierwave_processing_error: failed to be processed
       carrierwave_integrity_error: is not of an allowed file type
       carrierwave_download_error: could not be downloaded
-      extension_allowlist_error: Your document must be in pdf csv docx xlsx odt odp ods odg zip rar tar.gz tgz jpg jpeg png bmp tiff tif eps doc or xls format.
+      extension_allowlist_error: Your document must be in pdf ppt pptx csv xls xlsx doc docx odt odp ods odg zip rar tar.gz tgz kml jpg jpeg png bmp tiff tif eps rdf rtf txt or xml format.
       extension_denylist_error: "You are not allowed to upload %{extension} files, prohibited types: %{prohibited_types}"
       content_type_allowlist_error: "You are not allowed to upload %{content_type} files, allowed types: %{allowed_types}"
       content_type_denylist_error: "You are not allowed to upload %{content_type} files"
