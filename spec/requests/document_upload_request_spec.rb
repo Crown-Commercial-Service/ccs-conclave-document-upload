@@ -946,12 +946,12 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file unsupported type' do
-      let(:pptx_file) do
-        fixture_file_upload('test_pptx.pptx',
-                            'application/vnd.openxmlformats-officedocument.presentationml.presentation')
+      let(:html_file) do
+        fixture_file_upload('test_html.html',
+                            'text/html')
       end
       let(:invalid_attributes) do
-        { documentFilePath: '', documentFile: pptx_file, typeValidation: ['pptx'], sizeValidation: 1000000 }
+        { documentFilePath: '', documentFile: html_file, typeValidation: ['html'], sizeValidation: 1000000 }
       end
 
       it 'does not create a Document' do
@@ -981,17 +981,17 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file path unsupported type' do
-      let(:pptx_file) do
-        fixture_file_upload('test_pptx.pptx',
-                            'application/vnd.openxmlformats-officedocument.presentationml.presentation')
+      let(:html_file) do
+        fixture_file_upload('test_html.html',
+                            'text/html')
       end
-      let(:file_path) { 'https://www.example.com/test_pptx.pptx' }
+      let(:file_path) { 'https://www.example.com/test_html.html' }
       let(:invalid_attributes) do
-        { documentFilePath: file_path, typeValidation: ['pptx'], sizeValidation: 1000000 }
+        { documentFilePath: file_path, typeValidation: ['html'], sizeValidation: 1000000 }
       end
 
       before do
-        stub_request(:get, 'https://93.184.216.34/test_pptx.pptx')
+        stub_request(:get, 'https://93.184.216.34/test_html.html')
           .with(
             headers: {
               'Accept' => '*/*',
@@ -1000,7 +1000,7 @@ RSpec.describe 'DocumentUploads', type: :request do
               'User-Agent' => 'CarrierWave/2.2.2'
             }
           )
-          .to_return(status: 200, body: File.open(pptx_file), headers: {})
+          .to_return(status: 200, body: File.open(html_file), headers: {})
       end
 
       it 'does not create a Document' do
