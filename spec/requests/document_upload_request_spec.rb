@@ -586,6 +586,195 @@ RSpec.describe 'DocumentUploads', type: :request do
         end
       end
 
+      context 'when file is txt' do
+        let(:mime_type) { 'text/plain' }
+        let(:file_name) { 'test_txt.txt' }
+
+        it 'creates a Document' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'starts the check request background job' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+        end
+
+        it 'returns status code 201' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is xml' do
+        let(:mime_type) { 'application/xml' }
+        let(:file_name) { 'test_xml.xml' }
+
+        it 'creates a Document' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'starts the check request background job' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+        end
+
+        it 'returns status code 201' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is rtf' do
+        let(:mime_type) { 'application/rtf' }
+        let(:file_name) { 'test_rtf.rtf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'starts the check request background job' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+        end
+
+        it 'returns status code 201' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is ppt' do
+        let(:mime_type) { 'application/vnd.ms-powerpoint' }
+        let(:file_name) { 'test_ppt.ppt' }
+
+        it 'creates a Document' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'starts the check request background job' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+        end
+
+        it 'returns status code 201' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is pptx' do
+        let(:mime_type) { 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }
+        let(:file_name) { 'test_pptx.pptx' }
+
+        it 'creates a Document' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'starts the check request background job' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+        end
+
+        it 'returns status code 201' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is kml' do
+        let(:mime_type) { 'application/vnd' }
+        let(:file_name) { 'test_kml.kml' }
+
+        it 'creates a Document' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'starts the check request background job' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+        end
+
+        it 'returns status code 201' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when file is rdf' do
+        let(:mime_type) { 'application/rdf+xml' }
+        let(:file_name) { 'test_rdf.rdf' }
+
+        it 'creates a Document' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(Document, :count).by(1)
+        end
+
+        it 'creates an UncheckedDocument' do
+          expect do
+            post '/documents', params: valid_attributes, headers: headers
+          end.to change(UncheckedDocument, :count).by(1)
+        end
+
+        it 'starts the check request background job' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+        end
+
+        it 'returns status code 201' do
+          post '/documents', params: valid_attributes, headers: headers
+          expect(response).to have_http_status(201)
+        end
+      end
+
       context 'when posting a documentFilePath' do
         let(:file_path) { 'https://www.example.com/test_pdf.pdf' }
         let(:valid_attributes) do
@@ -757,12 +946,12 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file unsupported type' do
-      let(:pptx_file) do
-        fixture_file_upload('test_pptx.pptx',
-                            'application/vnd.openxmlformats-officedocument.presentationml.presentation')
+      let(:html_file) do
+        fixture_file_upload('test_html.html',
+                            'text/html')
       end
       let(:invalid_attributes) do
-        { documentFilePath: '', documentFile: pptx_file, typeValidation: ['pptx'], sizeValidation: 1000000 }
+        { documentFilePath: '', documentFile: html_file, typeValidation: ['html'], sizeValidation: 1000000 }
       end
 
       it 'does not create a Document' do
@@ -792,17 +981,17 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file path unsupported type' do
-      let(:pptx_file) do
-        fixture_file_upload('test_pptx.pptx',
-                            'application/vnd.openxmlformats-officedocument.presentationml.presentation')
+      let(:html_file) do
+        fixture_file_upload('test_html.html',
+                            'text/html')
       end
-      let(:file_path) { 'https://www.example.com/test_pptx.pptx' }
+      let(:file_path) { 'https://www.example.com/test_html.html' }
       let(:invalid_attributes) do
-        { documentFilePath: file_path, typeValidation: ['pptx'], sizeValidation: 1000000 }
+        { documentFilePath: file_path, typeValidation: ['html'], sizeValidation: 1000000 }
       end
 
       before do
-        stub_request(:get, 'https://93.184.216.34/test_pptx.pptx')
+        stub_request(:get, 'https://93.184.216.34/test_html.html')
           .with(
             headers: {
               'Accept' => '*/*',
@@ -811,7 +1000,7 @@ RSpec.describe 'DocumentUploads', type: :request do
               'User-Agent' => 'CarrierWave/2.2.2'
             }
           )
-          .to_return(status: 200, body: File.open(pptx_file), headers: {})
+          .to_return(status: 200, body: File.open(html_file), headers: {})
       end
 
       it 'does not create a Document' do
