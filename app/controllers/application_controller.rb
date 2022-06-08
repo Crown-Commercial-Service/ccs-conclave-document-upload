@@ -32,8 +32,8 @@ class ApplicationController < ActionController::API
 
   def validate_access_token
     decoded_token = validate_and_decode_token
-    validate_token = SecurityService::Auth.new(decoded_token[0]['aud'],
-                                               bearer_token(request.headers)).sec_api_validate_token
+    validate_token = sec_api_validate_token(decoded_token[0]['aud'],
+                                            bearer_token(request.headers)).sec_api_validate_token
     raise ActionController::BadRequest, 'Not authorized: Invalid Access Token' if validate_token.blank?
   end
 
@@ -42,6 +42,18 @@ class ApplicationController < ActionController::API
     raise ActionController::BadRequest, 'Not authorized: Missing Access Token' if decoded_token.blank?
 
     decoded_token
+  end
+
+  def sec_api_validate_token(client_id, access_token)
+    url = "/security/tokens/validation?client-id=#{client_id}"
+    conn = Faraday.new(url: ENV['SECURITY_SERVICE_URL'])
+    conn.authorization :Bearer, access_token
+    resp = conn.post(url, '', { 'Content-Type' => 'application/x-www-form-urlencoded' })
+    if resp.status == 200
+      true if resp.body == 'true'
+    else
+      false
+    end
   end
 
   def decode_token(request)
