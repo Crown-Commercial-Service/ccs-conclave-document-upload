@@ -43,6 +43,9 @@ gem 'httparty', '~> 0.18.1'
 # Manage secret keys on local
 gem 'figaro', '~> 1.2.0'
 
+# Handle json web tokens
+gem 'jwt'
+
 # Exception tracking
 gem 'rollbar', '~> 3.1.1'
 
@@ -53,7 +56,6 @@ gem 'vault', '~> 0.15.0'
 gem 'rubocop', '>= 1.7.0', require: false
 gem 'rubocop-rails', '>= 2.9.1', require: false
 
-# Sidekiq - using an older version that works with redis v3.2.6
 gem 'sidekiq', '~> 6.4.0'
 
 gem 'sidekiq-scheduler', '~> 3.0.1'

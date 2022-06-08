@@ -5,14 +5,30 @@ RSpec.describe 'DocumentUploads', type: :request do
 
   # Test suite for POST /documents
   describe 'POST /documents' do
-    let(:client) { create(:client, source_app: 'evidence_locker') }
+    let(:client) { create(:client, source_app: 'test_app') }
+    let(:clientid) { ENV['CLIENT_ID'] }
+    let(:jwt_token) { JWT.encode({ aud: ENV['CLIENT_ID'] }, 'test') }
 
     let(:headers) do
       {
         'ACCEPT' => 'application/json',
-        'x-api-key' => ActionController::HttpAuthentication::Basic.encode_credentials(client.source_app,
-                                                                                      client.api_key)
+        'x-api-key' => client.api_key,
+        'Authorization' => "Bearer #{jwt_token}"
       }
+    end
+
+    before do
+      stub_request(:post, "http://www.test.com/security/tokens/validation?client-id=#{clientid}")
+        .with(
+          headers: {
+            'Accept' => '*/*',
+            'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization' => "Bearer #{jwt_token}",
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'User-Agent' => 'Ruby'
+          }
+        )
+        .to_return(status: 200, body: 'true', headers: {})
     end
 
     context 'when success' do
@@ -37,7 +53,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -64,7 +81,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -91,7 +109,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -118,7 +137,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -145,7 +165,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -172,7 +193,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -199,7 +221,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -226,7 +249,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -253,7 +277,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -280,7 +305,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -307,7 +333,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -334,7 +361,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -361,7 +389,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -388,7 +417,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -415,7 +445,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -442,7 +473,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -469,7 +501,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -496,7 +529,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -523,7 +557,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -550,7 +585,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -577,7 +613,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -808,7 +845,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -836,7 +874,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
         it 'starts the check request background job' do
           post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                      "Bearer #{jwt_token}")
         end
 
         it 'returns status code 201' do
@@ -878,7 +917,8 @@ RSpec.describe 'DocumentUploads', type: :request do
 
       it 'starts the check request background job' do
         post '/documents', params: valid_attributes, headers: headers
-        expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
+        expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id, client.api_key,
+                                                                    "Bearer #{jwt_token}")
       end
 
       it 'returns status code 201' do
@@ -1271,7 +1311,8 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:headers) do
         {
           'ACCEPT' => 'application/json',
-          'x-api-key' => ActionController::HttpAuthentication::Basic.encode_credentials('test', 'test')
+          'x-api-key' => 'invalid',
+          'Authorization' => 'invalid'
         }
       end
 
