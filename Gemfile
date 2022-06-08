@@ -58,6 +58,14 @@ gem 'sidekiq', '~> 6.4.0'
 
 gem 'sidekiq-scheduler', '~> 3.0.1'
 
+# JWT - Decode access_token for Authorization.
+gem 'jwt'
+
+# Faraday - Make http request, used in calling Security Service, for Authorization.
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'faraday-http-cache'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
