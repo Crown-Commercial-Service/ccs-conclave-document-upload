@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Basic::ControllerMethods
   include ActionController::HttpAuthentication::Token::ControllerMethods
-  include SecurityService::Auth
   before_action :api_key_or_access_token_auth
 
   private
