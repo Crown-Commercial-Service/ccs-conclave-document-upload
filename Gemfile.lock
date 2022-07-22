@@ -295,7 +295,7 @@ GEM
     thwait (0.2.0)
       e2mmap
     tilt (2.0.10)
-    tzinfo (1.2.9)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     unicode-display_width (2.2.0)
     vault (0.15.0)
