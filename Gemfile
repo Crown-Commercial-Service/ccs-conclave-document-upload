@@ -38,7 +38,7 @@ gem 'i18n-tasks', '~> 0.9.37'
 gem 'rack-cors'
 
 # Make http requests
-gem 'httparty', '~> 0.18.1'
+gem 'httparty', '~> 0.21.0'
 
 # Manage secret keys on local
 gem 'figaro', '~> 1.2.0'
