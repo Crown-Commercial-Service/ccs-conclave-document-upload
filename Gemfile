@@ -53,10 +53,12 @@ gem 'vault', '~> 0.15.0'
 gem 'rubocop', '>= 1.7.0', require: false
 gem 'rubocop-rails', '>= 2.17.0', require: false
 
-# Sidekiq - using an older version that works with redis v3.2.6
-gem 'sidekiq', '~> 6.4.2'
+# Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
+# Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488
+gem 'sidekiq', '~> 6.5.6'
 
-gem 'sidekiq-scheduler', '~> 3.0.1'
+# Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
+gem 'sidekiq-scheduler', '~> 3.2.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
