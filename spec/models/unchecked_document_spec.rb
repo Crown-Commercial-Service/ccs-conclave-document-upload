@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe UncheckedDocument, type: :model do
-  let(:document_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
+  # let(:document_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
+  let(:document_file) { Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf') }
   let(:file_path) { 'http://www.example.com/test_pdf.pdf' }
 
   describe 'callbacks' do
@@ -93,7 +94,8 @@ RSpec.describe UncheckedDocument, type: :model do
     end
 
     context 'when type is unsupported by CLAMAV (xls)' do
-      let(:document_file) { fixture_file_upload('test_xls.xls') }
+      # let(:document_file) { fixture_file_upload('test_xls.xls') }
+      let(:document_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/test_xls.xls')) }
       let(:type_validation) { ['xls'] }
 
       it 'returns false' do

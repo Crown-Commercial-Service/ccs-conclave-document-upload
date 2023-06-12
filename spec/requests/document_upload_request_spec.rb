@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'DocumentUploads', type: :request do
-  let(:pdf_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
+  # let(:pdf_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
+  let(:pdf_file) { Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf') }
 
   # Test suite for POST /documents
   describe 'POST /documents' do
@@ -16,7 +17,8 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when success' do
-      let(:file) { fixture_file_upload(file_name, mime_type) }
+      # let(:file) { fixture_file_upload(file_name, mime_type) }
+      let(:file) { Rack::Test::UploadedFile.new("spec/fixtures/#{file_name}", mime_type) }
       let(:valid_attributes) { { documentFile: file, typeValidation: [mime_type], sizeValidation: 10000000 } }
 
       context 'when posting a pdf file' do
