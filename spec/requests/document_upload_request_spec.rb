@@ -948,9 +948,9 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file unsupported type' do
+      # fixture_file_upload('test_html.html', 'text/html')
       let(:html_file) do
-        fixture_file_upload('test_html.html',
-                            'text/html')
+        Rack::Test::UploadedFile.new('spec/fixtures/test_html.html', 'text/html')
       end
       let(:invalid_attributes) do
         { documentFilePath: '', documentFile: html_file, typeValidation: ['html'], sizeValidation: 1000000 }
@@ -983,9 +983,9 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file path unsupported type' do
+      # fixture_file_upload('test_html.html', 'text/html')
       let(:html_file) do
-        fixture_file_upload('test_html.html',
-                            'text/html')
+        Rack::Test::UploadedFile.new('spec/fixtures/test_html.html', 'text/html')
       end
       let(:file_path) { 'https://www.example.com/test_html.html' }
       let(:invalid_attributes) do
