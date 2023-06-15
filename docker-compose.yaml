@@ -9,6 +9,7 @@ services:
     depends_on:
       - db
       - redis
+      - sidekiq
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/ccs_conclave_document_upload_development
       - CHECK_ENDPOINT_URL=somehost:3000/documents
@@ -32,6 +33,15 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
-
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    depends_on:
+      - redis
+    environment:
+      - CORS_ORIGINS=*
+      - VCAP_SERVICES={"user-provided":[],"aws-s3-bucket":[{"credentials":{"bucket_name":"BUCKETNAME","aws_region":"AWSREGION","aws_access_key_id":"KEYID","aws_secret_access_key":"SECRETKEY"}}],"redis":[{"credentials":{"uri":"redis:127.0.0.1"}}]}
 volumes:
   postgres-data:
