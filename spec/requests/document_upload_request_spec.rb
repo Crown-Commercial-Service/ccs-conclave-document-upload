@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'DocumentUploads', type: :request do
-  let(:pdf_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
+  # let(:pdf_file) { fixture_file_upload('test_pdf.pdf', 'text/pdf') }
+  let(:pdf_file) { Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf') }
 
   # Test suite for POST /documents
   describe 'POST /documents' do
@@ -16,7 +17,8 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when success' do
-      let(:file) { fixture_file_upload(file_name, mime_type) }
+      # let(:file) { fixture_file_upload(file_name, mime_type) }
+      let(:file) { Rack::Test::UploadedFile.new("spec/fixtures/#{file_name}", mime_type) }
       let(:valid_attributes) { { documentFile: file, typeValidation: [mime_type], sizeValidation: 10000000 } }
 
       context 'when posting a pdf file' do
@@ -946,9 +948,9 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file unsupported type' do
+      # fixture_file_upload('test_html.html', 'text/html')
       let(:html_file) do
-        fixture_file_upload('test_html.html',
-                            'text/html')
+        Rack::Test::UploadedFile.new('spec/fixtures/test_html.html', 'text/html')
       end
       let(:invalid_attributes) do
         { documentFilePath: '', documentFile: html_file, typeValidation: ['html'], sizeValidation: 1000000 }
@@ -981,9 +983,9 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file path unsupported type' do
+      # fixture_file_upload('test_html.html', 'text/html')
       let(:html_file) do
-        fixture_file_upload('test_html.html',
-                            'text/html')
+        Rack::Test::UploadedFile.new('spec/fixtures/test_html.html', 'text/html')
       end
       let(:file_path) { 'https://www.example.com/test_html.html' }
       let(:invalid_attributes) do
