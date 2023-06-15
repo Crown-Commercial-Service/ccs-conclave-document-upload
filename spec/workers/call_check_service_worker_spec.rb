@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe CallCheckServiceWorker do
+  # document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'),
   let(:unchecked_document) do
     create(:unchecked_document,
-           document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'),
+           document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf'),
            type_validation: ['pdf'],
            size_validation: 1000000)
   end
