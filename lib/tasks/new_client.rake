@@ -1,5 +1,3 @@
-new_client.rake:
-
 desc "create a new Client record (and API key)"
 task :new_client, [:source_app] => :environment do |task, args|
   source_app = args[:source_app]
