@@ -22,7 +22,7 @@ gem 'puma', '~> 4.3', '>= 4.3.12'
 # aws ssm
 gem 'aws-sdk-ssm'
 
-#aws dynamodb
+# aws dynamodb
 gem 'aws-sdk-dynamodb'
 
 # Reduces boot times through caching; required in config/boot.rb
