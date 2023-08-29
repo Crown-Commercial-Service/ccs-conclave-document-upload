@@ -54,6 +54,24 @@ spec:
               mountPath: /workspace
             - name: repo
               mountPath: /tmp
+        - name: get-ecr-cred-helper
+          image: alpine:3.10
+          command:
+            - sh
+            - -c
+            - >-
+              wget
+              https://amazon-ecr-credential-helper-releases.s3.eu-west-2.amazonaws.com/0.7.1/linux-amd64/docker-credential-ecr-login
+              -O /usr/local/bin/docker-credential-ecr-login && chmod +x /usr/local/bin/docker-credential-ecr-login &&
+              echo '{ "credsStore": "ecr-login" }' > /docker/config.json
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          volumeMounts:
+            - name: docker
+              mountPath: /docker
+            - name: local-bin
+              mountPath: /usr/local/bin
         # Use for debugging the previous initContainers
         # - name: sh
         #   image: alpine:3.10
@@ -98,6 +116,8 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
           volumeMounts:
+            - name: docker-config
+              mountPath: /home/user/.docker
             - name: workspace
               readOnly: true
               mountPath: /workspace
@@ -110,10 +130,12 @@ spec:
       # To push the image, you also need to create `~/.docker/config.json` secret
       # and set $DOCKER_CONFIG to `/path/to/.docker` directory.
       volumes:
-        - name: workspace
-          emptyDir: {}
         - name: buildkitd
           persistentVolumeClaim:
             claimName: bar
+        - name: docker-config
+          emptyDir: {}
         - name: repo
+          emptyDir: {}
+        - name: workspace
           emptyDir: {}
