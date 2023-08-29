@@ -12,6 +12,7 @@ spec:
         container.apparmor.security.beta.kubernetes.io/buildkit: unconfined
     # see buildkit/docs/rootless.md for caveats of rootless mode
     spec:
+      serviceAccount: jenkins-agent
       restartPolicy: Never
       initContainers:
         - name: chown
