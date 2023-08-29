@@ -31,7 +31,7 @@ spec:
           command:
             - sh
             - -c
-            - sleep 600
+            - sleep 30
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
