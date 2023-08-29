@@ -3,6 +3,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   generateName: buildkit-
+  labels:
+    app.kubernetes.io/name: ccs-conclave-document-upload
 spec:
   template:
     metadata:

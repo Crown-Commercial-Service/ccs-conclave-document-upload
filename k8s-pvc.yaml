@@ -3,7 +3,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   generateName: buildkit-
-  # name: buildkit-workspace
+  labels:
+    app.kubernetes.io/name: ccs-conclave-document-upload
 spec:
   accessModes:
     - ReadWriteOnce
