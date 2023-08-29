@@ -112,5 +112,4 @@ spec:
           persistentVolumeClaim:
             claimName: bar
         - name: repo
-          configMap:
-            name: ccs-techops-kubernetes-jenkins
+          emptyDir: {}
