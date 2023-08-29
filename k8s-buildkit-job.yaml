@@ -68,7 +68,7 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
           volumeMounts:
-            - name: docker
+            - name: docker-config
               mountPath: /docker
             - name: local-bin
               mountPath: /usr/local/bin
@@ -134,6 +134,8 @@ spec:
           persistentVolumeClaim:
             claimName: bar
         - name: docker-config
+          emptyDir: {}
+        - name: local-bin
           emptyDir: {}
         - name: repo
           emptyDir: {}
