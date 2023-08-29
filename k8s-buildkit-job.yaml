@@ -40,7 +40,7 @@ spec:
           volumeMounts:
             - name: repo
               mountPath: /tmp
-        - name: extract
+        - name: extract-archive
           image: alpine:3.10
           command:
             - sh
@@ -83,6 +83,8 @@ spec:
             - context=/workspace
             - --local
             - dockerfile=/workspace
+            - --output
+            - type=image,name=473251818902.dkr.ecr.eu-west-2.amazonaws.com/document-upload,push=true
           # To push the image to a registry, add
           # `--output type=image,name=docker.io/username/image,push=true`
           securityContext:
