@@ -22,6 +22,9 @@ gem 'puma', '~> 5.6', '>= 5.6.7'
 # aws ssm
 gem 'aws-sdk-ssm'
 
+# aws dynamodb
+gem 'aws-sdk-dynamodb'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
@@ -83,7 +86,7 @@ group :test do
   gem 'faker'
   gem 'database_cleaner'
   gem 'webmock', '>= 3.10.0'
-  gem 'rspec-sidekiq', '>= 3.1.0'
+  gem 'rspec-sidekiq', '>= 4.0.0'
   gem 'simplecov', '0.20', require: false
   gem 'climate_control'
 end

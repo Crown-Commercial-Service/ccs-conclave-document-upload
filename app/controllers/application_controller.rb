@@ -6,6 +6,8 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate
+    return if request.path == '/health_check'
+
     request.headers['Authorization'] = request.headers['x-api-key']
     authenticate_or_request_with_http_basic do |source_app, api_key|
       @client = Client.find_by(source_app: source_app)
