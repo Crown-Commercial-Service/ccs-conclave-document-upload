@@ -52,22 +52,40 @@ spec:
         # Does an ECR login so that the image can be pushed
         # TODO: Change this to a custom image that includes aws-cli and docker, so we don't need
         # to install anything at runtime, which requires running as root, yuck!
-        - name: aws-ecr-login
-          image: docker:latest
+        # - name: aws-ecr-login
+        #   image: docker:latest
+        #   command:
+        #     - sh
+        #     - -c
+        #     - >-
+        #       apk add aws-cli && aws ecr get-login-password --region eu-west-2 |
+        #       docker --config /docker login
+        #       --username AWS --password-stdin 473251818902.dkr.ecr.eu-west-2.amazonaws.com
+        #       && chmod 640 /docker/config.json
+        #   # securityContext:
+        #   #   runAsUser: 1000
+        #   #   runAsGroup: 1000
+        #   volumeMounts:
+        #     - name: docker-config
+        #       mountPath: /docker
+        - name: aws-ecr-cred-helper-login
+          image: alpine:3.10
           command:
             - sh
             - -c
             - >-
-              apk add aws-cli && aws ecr get-login-password --region eu-west-2 |
-              docker --config /docker login
-              --username AWS --password-stdin 473251818902.dkr.ecr.eu-west-2.amazonaws.com
-              && chmod 640 /docker/config.json
-          # securityContext:
-          #   runAsUser: 1000
-          #   runAsGroup: 1000
+              wget
+              https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.7.1/linux-amd64/docker-credential-ecr-login
+              -O /usr/local/bin/docker-credential-ecr-login && chmod +x /usr/local/bin/docker-credential-ecr-login &&
+              echo '{ "credsStore": "ecr-login", "credHelpers": { "public.ecr.aws": "ecr-login", "473251818902.dkr.ecr.eu-west-2.amazonaws.com": "ecr-login" } }' > /docker/config.json
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
           volumeMounts:
             - name: docker-config
               mountPath: /docker
+            - name: local-bin
+              mountPath: /usr/local/bin
         # Use for debugging the previous initContainers
         # - name: sh
         #   image: alpine:3.10
@@ -121,6 +139,8 @@ spec:
               mountPath: /home/user/.local/share/buildkit
             - name: docker-config
               mountPath: /home/user/.docker
+            - name: local-bin
+              mountPath: /usr/local/bin
             - name: workspace
               readOnly: true
               mountPath: /workspace
@@ -129,6 +149,8 @@ spec:
           persistentVolumeClaim:
             claimName: PLACEHOLDER
         - name: docker-config
+          emptyDir: {}
+        - name: local-bin
           emptyDir: {}
         - name: repo
           emptyDir: {}
