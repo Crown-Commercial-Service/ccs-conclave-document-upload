@@ -2,11 +2,11 @@ FROM ruby:3.0.3
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-  build-essential \
-  nodejs
-
 # Temporarily comment out for speed
+# RUN apt-get update && apt-get install -y \
+#   build-essential \
+#   nodejs
+
 # COPY Gemfile Gemfile.lock ./
 # RUN gem install bundler && bundle install --jobs 20 --retry 5
 

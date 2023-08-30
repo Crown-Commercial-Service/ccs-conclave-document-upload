@@ -49,6 +49,25 @@ spec:
               mountPath: /workspace
             - name: repo
               mountPath: /tmp
+        # Does an ECR login so that the image can be pushed
+        # TODO: Change this to a custom image that includes aws-cli and docker, so we don't need
+        # to install anything at runtime, which requires running as root, yuck!
+        - name: aws-ecr-login
+          image: docker:latest
+          command:
+            - sh
+            - -c
+            - >-
+              apk add aws-cli && aws ecr get-login-password --region eu-west-2 |
+              docker --config /docker login
+              --username AWS --password-stdin 473251818902.dkr.ecr.eu-west-2.amazonaws.com
+              && chmod 640 /docker/config.json
+          # securityContext:
+          #   runAsUser: 1000
+          #   runAsGroup: 1000
+          volumeMounts:
+            - name: docker-config
+              mountPath: /docker
         # Use for debugging the previous initContainers
         # - name: sh
         #   image: alpine:3.10
@@ -100,6 +119,8 @@ spec:
             # https://github.com/moby/buildkit/issues/879#issuecomment-1240347038
             - name: buildkit
               mountPath: /home/user/.local/share/buildkit
+            - name: docker-config
+              mountPath: /home/user/.docker
             - name: workspace
               readOnly: true
               mountPath: /workspace
@@ -107,6 +128,8 @@ spec:
         - name: buildkit
           persistentVolumeClaim:
             claimName: PLACEHOLDER
+        - name: docker-config
+          emptyDir: {}
         - name: repo
           emptyDir: {}
         - name: workspace
