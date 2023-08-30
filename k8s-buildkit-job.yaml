@@ -79,14 +79,14 @@ spec:
             - --local
             - dockerfile=/workspace
             - --output
-            - type=image,name=473251818902.dkr.ecr.eu-west-2.amazonaws.com/document-upload,push=true
+            - type=image,name=473251818902.dkr.ecr.eu-west-2.amazonaws.com/document-upload:TAG_PLACEHOLDER,push=true
           # To push the image to a registry, add
           # `--output type=image,name=docker.io/username/image,push=true`
           securityContext:
             # TODO: Remove once confirm not required
-            # capabilities:
-            #   add:
-            #     - chown
+            capabilities:
+              add:
+                - chown
             # Needs Kubernetes >= 1.19
             seccompProfile:
               type: Unconfined
