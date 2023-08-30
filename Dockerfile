@@ -1,4 +1,4 @@
-# Temporarily comment out for speed
+# Temporarily use Alpine for speed
 FROM alpine:latest
 
 # FROM ruby:3.0.3
