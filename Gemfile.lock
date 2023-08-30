@@ -70,6 +70,9 @@ GEM
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
       jmespath (~> 1, >= 1.6.1)
+    aws-sdk-dynamodb (1.84.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-kms (1.64.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
@@ -335,6 +338,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-dynamodb
   aws-sdk-ssm
   bootsnap (>= 1.4.2)
   byebug
