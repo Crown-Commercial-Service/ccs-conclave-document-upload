@@ -29,12 +29,6 @@ spec:
             - sh
             - -c
             - sleep 30
-          readinessProbe:
-            exec:
-              command:
-                - "true"
-            initialDelaySeconds: 5
-            periodSeconds: 5
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
