@@ -1,8 +1,10 @@
-FROM ruby:3.0.3
-
-WORKDIR /app
-
 # Temporarily comment out for speed
+FROM alpine:latest
+
+# FROM ruby:3.0.3
+
+# WORKDIR /app
+
 # RUN apt-get update && apt-get install -y \
 #   build-essential \
 #   nodejs
