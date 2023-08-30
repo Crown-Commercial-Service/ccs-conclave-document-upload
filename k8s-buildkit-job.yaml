@@ -28,7 +28,7 @@ spec:
             privileged: true
           volumeMounts:
             - mountPath: /home/user/.local/share/buildkit
-              name: buildkitd
+              name: buildkit
         - name: receive-archive
           image: alpine:3.10
           command:
@@ -122,7 +122,7 @@ spec:
             # but the default VOLUME does not work with rootless on Google's Container-Optimized OS
             # as it is mounted with `nosuid,nodev`.
             # https://github.com/moby/buildkit/issues/879#issuecomment-1240347038
-            - name: buildkitd
+            - name: buildkit
               mountPath: /home/user/.local/share/buildkit
             - name: docker-config
               mountPath: /home/user/.docker
@@ -134,7 +134,7 @@ spec:
       # To push the image, you also need to create `~/.docker/config.json` secret
       # and set $DOCKER_CONFIG to `/path/to/.docker` directory.
       volumes:
-        - name: buildkitd
+        - name: buildkit
           persistentVolumeClaim:
             claimName: bar
         - name: docker-config
