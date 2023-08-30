@@ -12,23 +12,25 @@ spec:
         container.apparmor.security.beta.kubernetes.io/buildkit: unconfined
     # see buildkit/docs/rootless.md for caveats of rootless mode
     spec:
+      securityContext:
+        fsGroup: 1000
       serviceAccount: jenkins-agent
       restartPolicy: Never
       initContainers:
-        - name: chown
-          image: alpine:3.10
-          command:
-            - sh
-            - -c
-            - "chown -R 1000:1000 /home/user/.local/share/buildkit"
-          securityContext:
-            capabilities:
-              add:
-                - chown
-            privileged: true
-          volumeMounts:
-            - mountPath: /home/user/.local/share/buildkit
-              name: buildkit
+        # - name: chown
+        #   image: alpine:3.10
+        #   command:
+        #     - sh
+        #     - -c
+        #     - "chown -R 1000:1000 /home/user/.local/share/buildkit"
+        #   securityContext:
+        #     capabilities:
+        #       add:
+        #         - chown
+        #     privileged: true
+        #   volumeMounts:
+        #     - mountPath: /home/user/.local/share/buildkit
+        #       name: buildkit
         - name: receive-archive
           image: alpine:3.10
           command:
@@ -55,25 +57,6 @@ spec:
               mountPath: /workspace
             - name: repo
               mountPath: /tmp
-        - name: get-ecr-cred-helper
-          image: alpine:3.10
-          command:
-            - sh
-            - -c
-            - >-
-              wget
-              https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.7.1/linux-amd64/docker-credential-ecr-login
-              -O /usr/local/bin/docker-credential-ecr-login && chmod +x /usr/local/bin/docker-credential-ecr-login &&
-              echo '{ "credHelpers": { "473251818902.dkr.ecr.eu-west-2.amazonaws.com": "ecr-login",
-              "974531504241.dkr.ecr.eu-west-2.amazonaws.com": "ecr-login" } }' > /docker/config.json
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-          volumeMounts:
-            - name: docker-config
-              mountPath: /docker
-            - name: local-bin
-              mountPath: /usr/local/bin
         # Use for debugging the previous initContainers
         # - name: sh
         #   image: alpine:3.10
@@ -108,9 +91,10 @@ spec:
           # To push the image to a registry, add
           # `--output type=image,name=docker.io/username/image,push=true`
           securityContext:
-            capabilities:
-              add:
-                - chown
+            # TODO: Remove once confirm not required
+            # capabilities:
+            #   add:
+            #     - chown
             # Needs Kubernetes >= 1.19
             seccompProfile:
               type: Unconfined
@@ -124,23 +108,13 @@ spec:
             # https://github.com/moby/buildkit/issues/879#issuecomment-1240347038
             - name: buildkit
               mountPath: /home/user/.local/share/buildkit
-            - name: docker-config
-              mountPath: /home/user/.docker
-            - name: local-bin
-              mountPath: /usr/local/bin
             - name: workspace
               readOnly: true
               mountPath: /workspace
-      # To push the image, you also need to create `~/.docker/config.json` secret
-      # and set $DOCKER_CONFIG to `/path/to/.docker` directory.
       volumes:
         - name: buildkit
           persistentVolumeClaim:
-            claimName: bar
-        - name: docker-config
-          emptyDir: {}
-        - name: local-bin
-          emptyDir: {}
+            claimName: PLACEHOLDER
         - name: repo
           emptyDir: {}
         - name: workspace
