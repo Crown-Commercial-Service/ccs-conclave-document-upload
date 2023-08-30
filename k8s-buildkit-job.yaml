@@ -17,26 +17,18 @@ spec:
       serviceAccount: jenkins-agent
       restartPolicy: Never
       initContainers:
-        # - name: chown
-        #   image: alpine:3.10
-        #   command:
-        #     - sh
-        #     - -c
-        #     - "chown -R 1000:1000 /home/user/.local/share/buildkit"
-        #   securityContext:
-        #     capabilities:
-        #       add:
-        #         - chown
-        #     privileged: true
-        #   volumeMounts:
-        #     - mountPath: /home/user/.local/share/buildkit
-        #       name: buildkit
+        - name: started
+          image: alpine:3.10
+          command:
+            - sh
+            - -c
+            - "true"
         - name: receive-archive
           image: alpine:3.10
           command:
             - sh
             - -c
-            - sleep 120
+            - sleep 30
           readinessProbe:
             exec:
               command:
