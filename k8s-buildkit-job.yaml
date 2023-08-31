@@ -62,6 +62,13 @@ spec:
               https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.7.1/linux-amd64/docker-credential-ecr-login
               -O /usr/local/bin/docker-credential-ecr-login) && chmod +x /usr/local/bin/docker-credential-ecr-login &&
               echo '{ "credHelpers": { "public.ecr.aws": "ecr-login", "473251818902.dkr.ecr.eu-west-2.amazonaws.com": "ecr-login" } }' > /docker/config.json
+          resources:
+            limits:
+              cpu: "4"
+              memory: 4Gi
+            requests:
+              cpu: "4"
+              memory: 4Gi
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
