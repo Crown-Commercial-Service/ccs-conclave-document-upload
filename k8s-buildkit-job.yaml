@@ -106,7 +106,7 @@ spec:
             - --export-cache
             - type=local,mode=min,dest=/cache
             - --import-cache
-            - type=local,mode=min,dest=/cache
+            - type=local,mode=min,src=/cache
           # To push the image to a registry, add
           # `--output type=image,name=docker.io/username/image,push=true`
           securityContext:
