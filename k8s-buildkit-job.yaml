@@ -104,7 +104,7 @@ spec:
             - --output
             - type=image,name=473251818902.dkr.ecr.eu-west-2.amazonaws.com/conclave-document-upload:TAG_PLACEHOLDER,push=true
             - --export-cache
-            - type=local,mode=max,dest=/cache
+            - type=local,mode=max,dest=/cache,compression=zstd,compression-level=3,force-compression=true
             - --import-cache
             - type=local,src=/cache
           # To push the image to a registry, add
