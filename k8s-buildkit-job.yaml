@@ -50,6 +50,8 @@ spec:
             - name: repo
               mountPath: /tmp
               readOnly: true
+        # This initContainer downloads the Docker Credential helper for AWS ECR. For efficiency, it caches it to an EFS volume
+        # https://github.com/awslabs/amazon-ecr-credential-helper
         - name: aws-ecr-login
           image: alpine:3.10
           command:
@@ -101,6 +103,10 @@ spec:
             - dockerfile=/workspace
             - --output
             - type=image,name=473251818902.dkr.ecr.eu-west-2.amazonaws.com/conclave-document-upload:TAG_PLACEHOLDER,push=true
+            - --export-cache
+            - type=local,mode=min,dest=/cache
+            - --import-cache
+            - type=local,mode=min,dest=/cache
           # To push the image to a registry, add
           # `--output type=image,name=docker.io/username/image,push=true`
           securityContext:
@@ -121,6 +127,8 @@ spec:
             # https://github.com/moby/buildkit/issues/879#issuecomment-1240347038
             - name: buildkit
               mountPath: /home/user/.local/share/buildkit
+            - name: buildkit-cache
+              mountPath: /cache
             - name: docker-config
               mountPath: /home/user/.docker
               readOnly: true
@@ -131,12 +139,18 @@ spec:
               readOnly: true
               mountPath: /workspace
       volumes:
+        # EFS volume where binaries are stored for quick access. Retained.
         - name: binaries
           persistentVolumeClaim:
             claimName: binaries
+        # EBS volume used as the buildkit working directory. Needs to be big enough to do the build. Discarded at the of the job.
         - name: buildkit
           persistentVolumeClaim:
             claimName: PVC_PLACEHOLDER
+        # EFS volume for the local buildkit cache. Retained
+        - name: buildkit-cache
+          persistentVolumeClaim:
+            claimName: buildkit-cache
         - name: docker-config
           emptyDir: {}
         - name: local-bin
