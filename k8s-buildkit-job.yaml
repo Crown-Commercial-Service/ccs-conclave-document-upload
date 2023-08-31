@@ -14,7 +14,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000
-      serviceAccount: jenkins-agent
+      serviceAccount: buildkit
       restartPolicy: Never
       initContainers:
         - name: started
