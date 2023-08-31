@@ -49,6 +49,7 @@ spec:
               mountPath: /workspace
             - name: repo
               mountPath: /tmp
+              readOnly: true
         - name: aws-ecr-login
           image: alpine:3.10
           command:
@@ -122,8 +123,10 @@ spec:
               mountPath: /home/user/.local/share/buildkit
             - name: docker-config
               mountPath: /home/user/.docker
+              readOnly: true
             - name: local-bin
               mountPath: /usr/local/bin
+              readOnly: true
             - name: workspace
               readOnly: true
               mountPath: /workspace
