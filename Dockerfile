@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
   nodejs
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler && bundle install --jobs 20 --retry 5
+RUN gem install bundler && bundle install --jobs 4 --retry 5
 
 COPY . .
 
