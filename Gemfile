@@ -8,7 +8,7 @@ gem 'rails', '~> 6.1.7', '>= 6.1.7.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 4.3', '>= 4.3.12'
+gem 'puma', '~> 5.6', '>= 5.6.7'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
@@ -21,6 +21,9 @@ gem 'puma', '~> 4.3', '>= 4.3.12'
 
 # aws ssm
 gem 'aws-sdk-ssm'
+
+# aws dynamodb
+gem 'aws-sdk-dynamodb'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -83,7 +86,7 @@ group :test do
   gem 'faker'
   gem 'database_cleaner'
   gem 'webmock', '>= 3.10.0'
-  gem 'rspec-sidekiq', '>= 3.1.0'
+  gem 'rspec-sidekiq', '>= 4.0.0'
   gem 'simplecov', '0.20', require: false
   gem 'climate_control'
 end

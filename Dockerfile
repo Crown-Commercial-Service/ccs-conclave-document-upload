@@ -16,4 +16,5 @@ COPY --from=0 /usr/local/bundle /usr/local/bundle
 COPY . .
 
 EXPOSE 3000
+
 CMD ["rails", "server", "-b", "0.0.0.0"]
