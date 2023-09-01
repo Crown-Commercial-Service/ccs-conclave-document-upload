@@ -111,7 +111,7 @@ spec:
             - --output
             - type=image,name=473251818902.dkr.ecr.eu-west-2.amazonaws.com/conclave-document-upload:TAG_PLACEHOLDER,push=true
             - --export-cache
-            - type=local,mode=max,dest=/cache/conclave-document-upload,compression=zstd,compression-level=3,force-compression=true
+            - type=local,mode=max,dest=/cache/conclave-document-upload,force-compression=true
             - --import-cache
             - type=local,src=/cache/conclave-document-upload
             # TODO: Implement per-branch caching as per https://docs.docker.com/build/cache/backends/#multiple-caches
