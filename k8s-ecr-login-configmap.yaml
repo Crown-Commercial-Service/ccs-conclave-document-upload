@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ecr-login
+  name: ecr-login-document-upload
 data:
   config.json: |
     {
