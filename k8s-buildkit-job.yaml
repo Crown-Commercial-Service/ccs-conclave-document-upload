@@ -158,7 +158,6 @@ spec:
         - name: docker-config
           configMap:
             name: ecr-login
-          emptyDir: {}
         - name: local-bin
           emptyDir: {}
         - name: repo
