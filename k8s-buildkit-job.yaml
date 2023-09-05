@@ -98,8 +98,14 @@ spec:
             - context=/workspace
             - --local
             - dockerfile=/workspace
-            - --output
-            - type=image,name=473251818902.dkr.ecr.eu-west-2.amazonaws.com/conclave-document-upload:TAG_PLACEHOLDER,push=true
+            #SANDBOX_ECR- --output
+            #SANDBOX_ECR- type=image,name=157055423267.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
+            #DEV_ECR- --output
+            #DEV_ECR- type=image,name=671910228148.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
+            #PRE_PROD_ECR- --output
+            #PRE_PROD_ECR- type=image,name=321344124181.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
+            #PROD_ECR- --output
+            #PROD_ECR- type=image,name=321344124181.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
             - --export-cache
             - type=local,mode=max,dest=/cache/conclave-document-upload
             - --import-cache
