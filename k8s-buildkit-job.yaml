@@ -157,7 +157,7 @@ spec:
         - name: buildkit
           persistentVolumeClaim:
             claimName: PVC_PLACEHOLDER
-        # EFS volume for the local buildkit cache. Retained
+        # EFS volume for the local buildkit cache. Retained.
         - name: buildkit-cache
           persistentVolumeClaim:
             claimName: buildkit-cache
