@@ -107,9 +107,9 @@ spec:
             #PROD_ECR- --output
             #PROD_ECR- type=image,name=PRODUCTION.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
             - --export-cache
-            - type=local,mode=max,dest=/cache/conclave-document-upload
+            - type=local,mode=max,dest=/cache/conclave-document-upload-uploader
             - --import-cache
-            - type=local,src=/cache/conclave-document-upload
+            - type=local,src=/cache/conclave-document-upload-uploader
             # TODO: Implement per-branch caching as per https://docs.docker.com/build/cache/backends/#multiple-caches
             # - --import-cache
             # - type=local,src=/cache/conclave-document-upload-REF_PLACEHOLDER
