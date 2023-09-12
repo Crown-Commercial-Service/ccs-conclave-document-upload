@@ -29,7 +29,7 @@ gem 'aws-sdk-dynamodb'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # File uploader
-gem 'carrierwave', '~> 2.2', '>= 2.2.3'
+gem 'carrierwave', '~> 2.2', '>= 2.2.2'
 
 # for S3 storage of files
 gem 'carrierwave-aws', '~> 1.6.0'
