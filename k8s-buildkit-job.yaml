@@ -60,7 +60,8 @@ spec:
             - >-
               (ls /binaries/docker-credential-ecr-login && cp /binaries/docker-credential-ecr-login /usr/local/bin) || (wget
               https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.7.1/linux-amd64/docker-credential-ecr-login
-              -O /usr/local/bin/docker-credential-ecr-login) && chmod +x /usr/local/bin/docker-credential-ecr-login
+              -O /binaries/docker-credential-ecr-login) && cp /binaries/docker-credential-ecr-login /usr/local/bin/docker-credential-ecr-login
+              && chmod +x /usr/local/bin/docker-credential-ecr-login
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
