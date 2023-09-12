@@ -354,7 +354,7 @@ DEPENDENCIES
   aws-sdk-ssm
   bootsnap (>= 1.4.2)
   byebug
-  carrierwave (~> 2.2, >= 2.2.3)
+  carrierwave (~> 2.2, >= 2.2.2)
   carrierwave-aws (~> 1.6.0)
   climate_control
   database_cleaner
