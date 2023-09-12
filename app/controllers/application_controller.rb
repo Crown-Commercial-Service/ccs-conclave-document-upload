@@ -9,6 +9,8 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate
+    return if request.path == '/health_check'
+    
     auth_header = request.headers['Authorization']
     token = auth_header.split(' ').last if auth_header
 
