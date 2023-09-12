@@ -40,7 +40,7 @@ spec:
           command:
             - sh
             - -c
-            - "tar -zvxf /tmp/repo.tar.gz -C /workspace"
+            - "tar -zxf /tmp/repo.tar.gz -C /workspace"
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
