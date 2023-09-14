@@ -58,7 +58,7 @@ gem 'rubocop-rails', '>= 2.21.1', require: false
 
 # Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
 # Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488
-gem 'sidekiq', '~> 6.5.6'
+gem 'sidekiq', '~> 7.1.3'
 
 # Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
 gem 'sidekiq-scheduler', '~> 3.2.2'
