@@ -104,7 +104,7 @@ spec:
             #DEV_ECR- --output
             #DEV_ECR- "type=image,\"name=671910228148.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,671910228148.dkr.ecr.eu-west-2.amazonaws.com/uploader:latest\",push=true"
             #PRE_PROD_ECR- --output
-            #PRE_PROD_ECR- "type=image,\"name=321344124181.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,321344124181.dkr.ecr.eu-west-2.amazonaws.com/uploader:latest\",push=true"
+            #PRE_PROD_ECR- type=image,name=321344124181.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
             #PROD_ECR- --output
             #PROD_ECR- type=image,name=PRODUCTION.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
             - --export-cache
