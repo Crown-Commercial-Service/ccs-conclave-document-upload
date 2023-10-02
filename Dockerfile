@@ -1,17 +1,13 @@
-FROM ruby:3.0.3-alpine
+FROM ruby:3.0.3
+
 WORKDIR /app
 
-RUN apk add build-base libpq-dev
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  nodejs
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler && bundle install --jobs 4 --retry 5
-
-FROM ruby:3.0.3-alpine
-WORKDIR /app
-
-RUN apk add libpq-dev nodejs
-
-COPY --from=0 /usr/local/bundle /usr/local/bundle
+RUN gem install bundler && bundle install --jobs 20 --retry 5
 
 COPY . .
 
