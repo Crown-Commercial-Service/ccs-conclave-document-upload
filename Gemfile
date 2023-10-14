@@ -35,7 +35,7 @@ gem 'carrierwave', '~> 2.2.2', '>= 2.2.2'
 gem 'carrierwave-aws', '~> 1.5.0'
 
 # Helps you manage translations
-gem 'i18n-tasks', '~> 1.0.0'
+gem 'i18n-tasks', '~> 1.0.13'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
