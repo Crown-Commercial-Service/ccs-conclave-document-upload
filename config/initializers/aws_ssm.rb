@@ -13,11 +13,13 @@ def initialize_ssm_client
     vcap_services = JSON.parse(ENV['VCAP_SERVICES'])
   
     vcap_services['user-provided'].each do |user_service|
-      if user_service['credentials']['aws_access_key_id'].present?
+      if user_service['credentials']['region'].present?
+      # Note that aws_access_key_id and aws_secret_access_key are going to be blank if we are using a Task Role
+      # with IAM automatic temporary credentials
         ssm_client = Aws::SSM::Client.new(
           region: user_service['credentials']['region'],
-          access_key_id: user_service['credentials']['aws_access_key_id'],
-          secret_access_key: user_service['credentials']['aws_secret_access_key']
+          access_key_id: user_service['credentials']['aws_access_key_id'],  # Possibly blank
+          secret_access_key: user_service['credentials']['aws_secret_access_key']  # Possibly blank
         )
       end
     end
