@@ -1,4 +1,4 @@
-dist: bionic
+dist: jammy
 language: ruby
 rvm:
 - 3.0.3
