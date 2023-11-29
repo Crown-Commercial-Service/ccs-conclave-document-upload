@@ -9,7 +9,7 @@ RUN gem install bundler && bundle install --jobs 4 --retry 5
 FROM ruby:3.0.3-alpine
 WORKDIR /app
 
-RUN apk upgrade && apk add libpq-dev nodejs
+RUN apk upgrade --no-cache && apk add --no-cache libpq-dev nodejs
 
 COPY --from=0 /usr/local/bundle /usr/local/bundle
 
