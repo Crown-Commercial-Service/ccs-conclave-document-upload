@@ -54,7 +54,7 @@ gem 'vault', '~> 0.15.0'
 
 # static code analyzer
 gem 'rubocop', '>= 1.7.0', require: false
-gem 'rubocop-rails', '>= 2.20.0', require: false
+gem 'rubocop-rails', '>= 2.21.1', require: false
 
 # Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
 # Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488

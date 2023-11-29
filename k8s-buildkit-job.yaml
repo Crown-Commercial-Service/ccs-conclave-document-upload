@@ -40,7 +40,7 @@ spec:
           command:
             - sh
             - -c
-            - "tar -zvxf /tmp/repo.tar.gz -C /workspace"
+            - "tar -zxf /tmp/repo.tar.gz -C /workspace"
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
@@ -60,7 +60,8 @@ spec:
             - >-
               (ls /binaries/docker-credential-ecr-login && cp /binaries/docker-credential-ecr-login /usr/local/bin) || (wget
               https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.7.1/linux-amd64/docker-credential-ecr-login
-              -O /usr/local/bin/docker-credential-ecr-login) && chmod +x /usr/local/bin/docker-credential-ecr-login
+              -O /binaries/docker-credential-ecr-login) && cp /binaries/docker-credential-ecr-login /usr/local/bin/docker-credential-ecr-login
+              && chmod +x /usr/local/bin/docker-credential-ecr-login
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
@@ -99,9 +100,9 @@ spec:
             - --local
             - dockerfile=/workspace
             #SANDBOX_ECR- --output
-            #SANDBOX_ECR- type=image,name=157055423267.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
+            #SANDBOX_ECR- "type=image,\"name=157055423267.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,157055423267.dkr.ecr.eu-west-2.amazonaws.com/uploader:latest\",push=true"
             #DEV_ECR- --output
-            #DEV_ECR- type=image,name=671910228148.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
+            #DEV_ECR- "type=image,\"name=671910228148.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,671910228148.dkr.ecr.eu-west-2.amazonaws.com/uploader:latest\",push=true"
             #PRE_PROD_ECR- --output
             #PRE_PROD_ECR- type=image,name=321344124181.dkr.ecr.eu-west-2.amazonaws.com/uploader:TAG_PLACEHOLDER,push=true
             #PROD_ECR- --output
@@ -163,7 +164,7 @@ spec:
             claimName: buildkit-cache
         - name: docker-config
           configMap:
-            name: ecr-login-document-upload
+            name: buildkit-docker-config
         - name: local-bin
           emptyDir: {}
         - name: repo
