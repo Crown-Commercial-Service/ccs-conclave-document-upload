@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-alpine
+FROM ruby:3.0.3-alpine AS base
 WORKDIR /app
 
 RUN apk add build-base libpq-dev
@@ -11,7 +11,7 @@ WORKDIR /app
 
 RUN apk --no-cache upgrade && apk --no-cache add libpq-dev nodejs
 
-COPY --from=0 /usr/local/bundle /usr/local/bundle
+COPY --from=base /usr/local/bundle /usr/local/bundle
 
 COPY . .
 
