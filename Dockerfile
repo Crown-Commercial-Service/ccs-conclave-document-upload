@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-alpine
+FROM public.ecr.aws/docker/library/ruby:3.0.3-alpine
 WORKDIR /app
 RUN apk upgrade apk && apk add build-base curl libpq-dev nodejs
 COPY Gemfile Gemfile.lock ./
