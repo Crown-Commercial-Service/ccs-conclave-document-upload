@@ -53,8 +53,8 @@ gem 'rollbar', '~> 3.1.1'
 gem 'vault', '~> 0.15.0'
 
 # static code analyzer
-gem 'rubocop', '>= 1.7.0', require: false
-gem 'rubocop-rails', '>= 2.21.1', require: false
+gem 'rubocop', '>= 1.56.4', require: false
+gem 'rubocop-rails', '>= 2.21.2', require: false
 
 # Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
 # Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488
@@ -85,7 +85,7 @@ group :test do
   gem 'shoulda-matchers', '~> 4.5.0'
   gem 'faker'
   gem 'database_cleaner'
-  gem 'webmock', '>= 3.10.0'
+  gem 'webmock', '>= 3.20.0'
   gem 'rspec-sidekiq', '>= 4.0.0'
   gem 'simplecov', '0.20', require: false
   gem 'climate_control'
