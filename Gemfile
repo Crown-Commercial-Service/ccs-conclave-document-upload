@@ -61,7 +61,7 @@ gem 'rubocop-rails', '>= 2.21.1', require: false
 gem 'sidekiq', '~> 6.5.6'
 
 # Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
-gem 'sidekiq-scheduler', '~> 3.2.2'
+gem 'sidekiq-scheduler', '~> 4.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
