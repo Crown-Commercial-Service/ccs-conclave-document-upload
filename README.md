@@ -29,13 +29,13 @@ This is a Ruby on Rails application that takes a file or a file path, saves it i
 `echo 'eval "$(rbenv init -)"' >> ~/.bash_profile`
 `source ~/.bash_profile`
 
-##### 3. Build ruby 3.0.3 with rbenv
+##### 3. Build ruby 3.3.3 with rbenv
 
-`rbenv install 3.0.3`
-`rbenv global 3.0.3`
+`rbenv install 3.3.3`
+`rbenv global 3.3.3`
 
-##### 4. Install rails 6.1.7
-`gem install rails -v 6.1.7`
+##### 4. Install rails X.X.X
+`gem install rails -v X.X.X`
 
 #### 5. Download and install Postgresql 10
 Go to https://www.postgresql.org/ and download the installer
