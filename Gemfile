@@ -81,7 +81,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby ruby]
 
 group :test do
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 6.5.0'
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
