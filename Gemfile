@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.3.3'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle edge Rails instead: gem 'rails', '>= 8.0.2', github: 'rails/rails'
 gem 'rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -35,7 +35,7 @@ gem 'carrierwave'
 gem 'carrierwave-aws'
 
 # Helps you manage translations
-gem 'i18n-tasks'
+gem 'i18n-tasks', '>= 1.0.15'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
@@ -44,7 +44,7 @@ gem 'rack-cors'
 gem 'httparty'
 
 # Manage secret keys on local
-gem 'figaro'
+gem 'figaro', '>= 1.3.0'
 
 # Exception tracking
 gem 'rollbar'
@@ -67,7 +67,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Rspec
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 8.0.0'
 end
 
 group :development do
@@ -81,7 +81,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby ruby]
 
 group :test do
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 6.5.0'
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
