@@ -85,7 +85,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
-  gem 'webmock'
+  gem 'webmock', '>= 3.25.1'
   gem 'rspec-sidekiq'
   gem 'simplecov', require: false
   gem 'climate_control'
