@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.3.3'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle edge Rails instead: gem 'rails', '>= 8.0.2', github: 'rails/rails'
 gem 'rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -29,13 +29,13 @@ gem 'aws-sdk-dynamodb'
 gem 'bootsnap', require: false
 
 # File uploader
-gem 'carrierwave'
+gem 'carrierwave', '>= 3.1.2'
 
 # for S3 storage of files
 gem 'carrierwave-aws'
 
 # Helps you manage translations
-gem 'i18n-tasks'
+gem 'i18n-tasks', '>= 1.0.15'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
@@ -54,7 +54,7 @@ gem 'vault'
 
 # static code analyzer
 gem 'rubocop', require: false
-gem 'rubocop-rails', require: false
+gem 'rubocop-rails', '>= 2.30.0', require: false
 
 # Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
 # Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488
@@ -67,7 +67,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Rspec
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 8.0.0'
 end
 
 group :development do
@@ -81,8 +81,8 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby ruby]
 
 group :test do
-  gem 'factory_bot_rails'
-  gem 'shoulda-matchers'
+  gem 'factory_bot_rails', '>= 6.5.0'
+  gem 'shoulda-matchers', '>= 6.5.0'
   gem 'faker'
   gem 'database_cleaner'
   gem 'webmock'
