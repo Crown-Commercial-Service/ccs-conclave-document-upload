@@ -100,7 +100,7 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     benchmark (0.4.0)
-    bigdecimal (3.1.9)
+    bigdecimal (4.0.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
     builder (3.3.0)
@@ -122,7 +122,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    csv (3.3.2)
+    csv (3.3.5)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.2.0)
@@ -164,7 +164,7 @@ GEM
     hashdiff (1.1.2)
     highline (3.1.2)
       reline
-    httparty (0.22.0)
+    httparty (0.24.0)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -211,8 +211,8 @@ GEM
     mini_portile2 (2.8.8)
     minitest (5.25.4)
     msgpack (1.8.0)
-    multi_xml (0.7.1)
-      bigdecimal (~> 3.1)
+    multi_xml (0.8.0)
+      bigdecimal (>= 3.1, < 5)
     net-imap (0.5.6)
       date
       net-protocol
@@ -439,7 +439,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   figaro
-  httparty
+  httparty (>= 0.24.0)
   i18n-tasks
   listen
   pg
