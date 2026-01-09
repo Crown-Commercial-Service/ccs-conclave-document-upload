@@ -29,7 +29,7 @@ gem 'aws-sdk-dynamodb'
 gem 'bootsnap', require: false
 
 # File uploader
-gem 'carrierwave'
+gem 'carrierwave', '>= 3.1.2'
 
 # for S3 storage of files
 gem 'carrierwave-aws'
@@ -67,7 +67,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Rspec
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 8.0.0'
 end
 
 group :development do
