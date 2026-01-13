@@ -32,7 +32,7 @@ gem 'bootsnap', require: false
 gem 'carrierwave'
 
 # for S3 storage of files
-gem 'carrierwave-aws'
+gem 'carrierwave-aws', '>= 1.6.1'
 
 # Helps you manage translations
 gem 'i18n-tasks'
