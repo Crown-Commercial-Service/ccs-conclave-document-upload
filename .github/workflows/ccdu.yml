@@ -30,8 +30,12 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/ccs_conclave_document_upload_test
 
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v5
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y libpq-dev postgresql-client
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
