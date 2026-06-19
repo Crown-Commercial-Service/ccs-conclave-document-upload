@@ -1,10 +1,10 @@
-FROM public.ecr.aws/docker/library/ruby:3.3.3-alpine AS base
+FROM public.ecr.aws/docker/library/ruby:3.3.4-alpine AS base
 WORKDIR /app
 RUN apk --no-cache add build-base libpq-dev
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install --jobs 4 --retry 5
 
-FROM public.ecr.aws/docker/library/ruby:3.3.3-alpine
+FROM public.ecr.aws/docker/library/ruby:3.3.4-alpine
 WORKDIR /app
 RUN apk upgrade && apk add curl libpq nodejs && rm -rf /var/cache/apk/*
 COPY --from=base /usr/local/bundle /usr/local/bundle
