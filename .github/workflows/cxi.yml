@@ -29,7 +29,7 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/ccs_conclave_document_upload_test
-      CORS_ORIGINS: "http://localhost:3000" # Added to prevent the initializers/cors.rb KeyError
+      CORS_ORIGINS: "http://localhost:3000"
 
     steps:
       - name: Checkout code
@@ -51,7 +51,9 @@ jobs:
           fi
 
       - name: Setup DB
-        run: bundle exec rails db:create db:schema:load --trace
+        run: |
+          bundle exec rails db:drop || true
+          bundle exec rails db:create db:schema:load --trace
 
       - name: Run migrations
         run: bundle exec rails db:migrate RAILS_ENV=test
