@@ -29,6 +29,7 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/ccs_conclave_document_upload_test
+      CORS_ORIGINS: "http://localhost:3000" # Added to prevent the initializers/cors.rb KeyError
 
     steps:
       - name: Checkout code
