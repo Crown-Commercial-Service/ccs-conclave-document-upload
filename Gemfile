@@ -68,7 +68,7 @@ group :development, :test do
   gem 'rspec-rails'
   # Environment variable manager for local and testing configuration
   gem 'dotenv-rails'
-  
+
   # Static code analyzers are ONLY defined here once
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
