@@ -42,7 +42,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.4.4
-          bundler-cache: true
+          bundler-cache: false
 
       - name: Load .env.test if present
         run: |
