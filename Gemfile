@@ -52,10 +52,6 @@ gem 'rollbar'
 # Environment variables management
 gem 'vault'
 
-# static code analyzer
-gem 'rubocop', require: false
-gem 'rubocop-rails', require: false
-
 # Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
 # Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488
 gem 'sidekiq', '~> 6.5.6'
@@ -72,9 +68,10 @@ group :development, :test do
   gem 'rspec-rails'
   # Environment variable manager for local and testing configuration
   gem 'dotenv-rails'
+  
+  # Static code analyzers are ONLY defined here once
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
-  gem 'rubocop-rake', require: false
 end
 
 group :development do
