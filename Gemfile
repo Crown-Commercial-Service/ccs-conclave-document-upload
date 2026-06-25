@@ -72,6 +72,9 @@ group :development, :test do
   gem 'rspec-rails'
   # Environment variable manager for local and testing configuration
   gem 'dotenv-rails'
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rake', require: false
 end
 
 group :development do
