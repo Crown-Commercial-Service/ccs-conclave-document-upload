@@ -365,6 +365,8 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.52.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
+    rubocop-rake (0.6.0)
+      rubocop (~> 1.0)
     ruby-progressbar (1.13.0)
     ruby-vips (2.3.0)
       ffi (~> 1.12)
@@ -467,6 +469,7 @@ DEPENDENCIES
   rspec-sidekiq
   rubocop
   rubocop-rails
+  rubocop-rake
   shoulda-matchers
   sidekiq (~> 6.5.6)
   sidekiq-scheduler (~> 3.2.2)
