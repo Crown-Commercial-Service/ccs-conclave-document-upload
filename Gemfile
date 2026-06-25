@@ -63,11 +63,15 @@ gem 'sidekiq', '~> 6.5.6'
 # Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
 gem 'sidekiq-scheduler', '~> 3.2.2'
 gem 'net-pop', github: 'ruby/net-pop'
+
+# Shared development and test gems
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Rspec
   gem 'rspec-rails'
+  # Environment variable manager for local and testing configuration
+  gem 'dotenv-rails'
 end
 
 group :development do
