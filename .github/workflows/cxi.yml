@@ -44,12 +44,6 @@ jobs:
           ruby-version: 3.4.4
           bundler-cache: false
 
-      - name: Load .env.test if present
-        run: |
-          if [ -f .env.test ]; then
-            export $(grep -v '^#' .env.test | xargs -I {} echo "{}")
-          fi
-
       - name: Setup DB
         run: |
           bundle exec rails db:drop || true
