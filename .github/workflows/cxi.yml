@@ -42,7 +42,17 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.4.4
-          bundler-cache: false
+          bundler-cache: false # Forcing a non-cached clean boot to bypass bad paths
+
+      # Explicitly install the bundle so 'rails' and 'rubocop' commands exist
+      - name: Install Ruby Gems
+        run: |
+          gem install bundler
+          bundle install --jobs=4 --retry=3
+
+      # Explicitly force RuboCop to use your clean root configuration file 
+      - name: Run rubocop
+        run: bundle exec rubocop --config .rubocop.yml
 
       - name: Setup DB
         run: |
@@ -54,6 +64,3 @@ jobs:
 
       - name: Run tests
         run: bundle exec rspec
-
-      - name: Run rubocop
-        run: bundle exec rubocop
