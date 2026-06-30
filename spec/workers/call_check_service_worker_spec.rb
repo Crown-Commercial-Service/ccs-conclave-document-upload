@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CallCheckServiceWorker do
-  # document_file: fixture_file_upload('test_pdf.pdf', 'text/pdf'),
   let(:unchecked_document) do
     create(:unchecked_document,
            document_file: Rack::Test::UploadedFile.new('spec/fixtures/test_pdf.pdf', 'text/pdf'),
@@ -15,6 +14,10 @@ RSpec.describe CallCheckServiceWorker do
 
   before do
     allow(HTTParty).to receive(:put).and_return(put_response)
+
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with('CHECK_ENDPOINT_URL').and_return('https://api.example.com')
+    allow(ENV).to receive(:[]).with('AUTH_TOKEN').and_return('secret_token')
   end
 
   it { is_expected.to be_processed_in :upload }
@@ -29,9 +32,9 @@ RSpec.describe CallCheckServiceWorker do
 
   context 'when CHECK_ENDPOINT_URL is not present' do
     it 'does not call the put request' do
-      ENV['CHECK_ENDPOINT_URL'] = nil
+      allow(ENV).to receive(:[]).with('CHECK_ENDPOINT_URL').and_return(nil)
       CallCheckServiceWorker.new.perform(unchecked_document.id)
-      expect(HTTParty).to_not have_received(:put).with(request_url, headers: headers)
+      expect(HTTParty).to_not have_received(:put)
     end
   end
 end
