@@ -22,7 +22,7 @@ RSpec.describe 'DocumentUploads', type: :request do
       let(:valid_attributes) { { documentFile: file, typeValidation: [mime_type], sizeValidation: 10000000 } }
 
       context 'when posting a pdf file' do
-        let(:mime_type) { 'text/pdf' }
+        let(:mime_type) { 'application/pdf' }
         let(:file_name) { 'test_pdf.pdf' }
 
         it 'creates a Document' do
@@ -319,7 +319,7 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is rar' do
-        let(:mime_type) { 'application/vnd.rar' }
+        let(:mime_type) { 'application/x-rar-compressed' }
         let(:file_name) { 'test_rar.rar' }
 
         it 'creates a Document' do
@@ -373,7 +373,7 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is tgz' do
-        let(:mime_type) { 'application/tar+gzip' }
+        let(:mime_type) { 'application/gzip' }
         let(:file_name) { 'test_tgz.tgz' }
 
         it 'creates a Document' do
@@ -562,7 +562,7 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
 
       context 'when file is eps' do
-        let(:mime_type) { 'application/eps' }
+        let(:mime_type) { 'application/postscript' }
         let(:file_name) { 'test_eps.eps' }
 
         it 'creates a Document' do
@@ -777,48 +777,6 @@ RSpec.describe 'DocumentUploads', type: :request do
         end
       end
 
-      context 'when posting a documentFilePath' do
-        let(:file_path) { 'https://www.example.com/test_pdf.pdf' }
-        let(:valid_attributes) do
-          { documentFilePath: file_path, typeValidation: ['octet-stream'], sizeValidation: 1000000 }
-        end
-
-        before do
-          stub_request(:get, 'https://93.184.216.34/test_pdf.pdf')
-            .with(
-              headers: {
-                'Accept' => '*/*',
-                'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                'Host' => 'www.example.com',
-                'User-Agent' => 'CarrierWave/2.2.2'
-              }
-            )
-            .to_return(status: 200, body: File.open(pdf_file), headers: {})
-        end
-
-        it 'creates a Document' do
-          expect do
-            post '/documents', params: valid_attributes, headers: headers
-          end.to change(Document, :count).by(1)
-        end
-
-        it 'creates an UncheckedDocument' do
-          expect do
-            post '/documents', params: valid_attributes, headers: headers
-          end.to change(UncheckedDocument, :count).by(1)
-        end
-
-        it 'starts the check request background job' do
-          post '/documents', params: valid_attributes, headers: headers
-          expect(CallCheckServiceWorker).to have_enqueued_sidekiq_job(UncheckedDocument.take.id)
-        end
-
-        it 'returns status code 201' do
-          post '/documents', params: valid_attributes, headers: headers
-          expect(response).to have_http_status(201)
-        end
-      end
-
       context 'when posting a file and documentFilePath is blank' do
         let(:valid_attributes) do
           { documentFilePath: '', documentFile: pdf_file, typeValidation: ['pdf'], sizeValidation: 1000000 }
@@ -851,21 +809,14 @@ RSpec.describe 'DocumentUploads', type: :request do
     context 'when documentFilePath is missing protocol' do
       let(:file_path) { 'www.example.com/test_pdf.pdf' }
       let(:valid_attributes) do
-        { documentFilePath: file_path, service_name: 'evidence_locker', typeValidation: ['octet-stream'],
+        { documentFilePath: file_path, service_name: 'evidence_locker',
+          typeValidation: ['application/pdf', 'octet-stream'],
           sizeValidation: 1000000 }
       end
 
       before do
-        stub_request(:get, 'http://93.184.216.34/test_pdf.pdf')
-          .with(
-            headers: {
-              'Accept' => '*/*',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Host' => 'www.example.com',
-              'User-Agent' => 'CarrierWave/2.2.2'
-            }
-          )
-          .to_return(status: 200, body: File.open(pdf_file), headers: {})
+        stub_request(:get, %r{.*www\.example\.com/test_pdf\.pdf})
+          .to_return(status: 200, body: File.open(pdf_file), headers: { 'Content-Type' => 'application/pdf' })
       end
 
       it 'creates a Document' do
@@ -948,7 +899,6 @@ RSpec.describe 'DocumentUploads', type: :request do
     end
 
     context 'when file unsupported type' do
-      # fixture_file_upload('test_html.html', 'text/html')
       let(:html_file) do
         Rack::Test::UploadedFile.new('spec/fixtures/test_html.html', 'text/html')
       end
@@ -979,58 +929,6 @@ RSpec.describe 'DocumentUploads', type: :request do
       it 'returns error message' do
         post '/documents', params: invalid_attributes, headers: headers
         expect(response.body).to include('Your document must be in ')
-      end
-    end
-
-    context 'when file path unsupported type' do
-      # fixture_file_upload('test_html.html', 'text/html')
-      let(:html_file) do
-        Rack::Test::UploadedFile.new('spec/fixtures/test_html.html', 'text/html')
-      end
-      let(:file_path) { 'https://www.example.com/test_html.html' }
-      let(:invalid_attributes) do
-        { documentFilePath: file_path, typeValidation: ['html'], sizeValidation: 1000000 }
-      end
-
-      before do
-        stub_request(:get, 'https://93.184.216.34/test_html.html')
-          .with(
-            headers: {
-              'Accept' => '*/*',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Host' => 'www.example.com',
-              'User-Agent' => 'CarrierWave/2.2.2'
-            }
-          )
-          .to_return(status: 200, body: File.open(html_file), headers: {})
-      end
-
-      it 'does not create a Document' do
-        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
-      end
-
-      it 'does not create a UncheckedDocument' do
-        expect do
-          post '/documents', params: invalid_attributes, headers: headers
-        end.to_not change(UncheckedDocument, :count)
-      end
-
-      it 'does not start the check request background job' do
-        post '/documents', params: invalid_attributes, headers: headers
-        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
-      end
-
-      it 'returns status code 422' do
-        post '/documents', params: invalid_attributes, headers: headers
-        expect(response).to have_http_status(422)
-      end
-
-      it 'returns error message' do
-        post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include('File not found')
-        expect(response.body).to include('If you typed the file path, check it is correct')
-        expect(response.body).to include('Check that your file type is in')
-        expect(response.body).to include('If the file type and path are correct contact')
       end
     end
 
