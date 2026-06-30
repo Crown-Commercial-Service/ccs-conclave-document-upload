@@ -465,6 +465,9 @@ DEPENDENCIES
   httparty
   i18n-tasks
   listen
+  net-imap
+  net-pop
+  net-smtp
   pg
   puma
   rack-cors
