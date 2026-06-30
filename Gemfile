@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.3'
+ruby '3.4.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -29,10 +29,10 @@ gem 'aws-sdk-dynamodb'
 gem 'bootsnap', require: false
 
 # File uploader
-gem 'carrierwave'
+gem 'carrierwave', '>= 3.1.2'
 
 # for S3 storage of files
-gem 'carrierwave-aws'
+gem 'carrierwave-aws', '>= 1.6.1'
 
 # Helps you manage translations
 gem 'i18n-tasks'
@@ -52,22 +52,26 @@ gem 'rollbar'
 # Environment variables management
 gem 'vault'
 
-# static code analyzer
-gem 'rubocop', require: false
-gem 'rubocop-rails', require: false
-
 # Sidekiq - using an older version that works with redis v3.2.6 (Pre-June 2023)
 # Upgraded Sidekiq from 6.4.2 to 6.5.6, as advised (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5488
 gem 'sidekiq', '~> 6.5.6'
 
 # Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
 gem 'sidekiq-scheduler', '~> 3.2.2'
+gem 'net-pop', github: 'ruby/net-pop'
 
+# Shared development and test gems
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Rspec
   gem 'rspec-rails'
+  # Environment variable manager for local and testing configuration
+  gem 'dotenv-rails'
+
+  # Static code analyzers are ONLY defined here once
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :development do
@@ -85,7 +89,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
-  gem 'webmock'
+  gem 'webmock', '>= 3.25.1'
   gem 'rspec-sidekiq'
   gem 'simplecov', require: false
   gem 'climate_control'

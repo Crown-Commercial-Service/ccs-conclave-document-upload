@@ -20,7 +20,8 @@ RSpec.describe Client, type: :model do
 
     it 'can not be created if not unique' do
       create(:client, source_app: 'my_app')
-      expect(@client.valid?).to eq false
+      duplicate_client = build(:client, source_app: 'my_app')
+      expect(duplicate_client.valid?).to eq false
     end
   end
 

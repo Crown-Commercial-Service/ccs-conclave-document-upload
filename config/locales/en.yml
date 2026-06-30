@@ -4,8 +4,8 @@ en:
     base:
       check_file_path: If you typed the file path, check it is correct.
       check_file_type: Check that your file type is in pdf ppt pptx csv xls xlsx doc docx odt odp ods odg zip rar tar.gz tgz kml jpg jpeg png bmp tiff tif eps rdf rtf txt or xml format.
-      contact_customer_service: If the file type and path are correct contact the <a href="mailto:info@crowncommercial.gov.uk">CCS Customer Service Centre</a>
-      customer_service_centre_link: mailto:info@crowncommercial.gov.uk
+      contact_customer_service: If the file type and path are correct contact the <a href="mailto:info@gca.gov.uk">CCS Customer Service Centre</a>
+      customer_service_centre_link: mailto:info@gca.gov.uk
       file_too_big: File is too big.
       file_must_be_under_max: Files must be under 5GB
       max_file_size: Maximum file size is 5GB.
