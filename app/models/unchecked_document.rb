@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class UncheckedDocument < ApplicationRecord
+class UncheckedDocument < ApplicationRecord # rubocop:disable Metrics/ClassLength
   FIVE_GIGABITES_IN_BYTES = 5368709120
   CONTENT_TYPES = {
     'pdf' => [
