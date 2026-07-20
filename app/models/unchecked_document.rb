@@ -2,6 +2,33 @@ require 'open-uri'
 
 class UncheckedDocument < ApplicationRecord
   FIVE_GIGABITES_IN_BYTES = 5368709120
+  CONTENT_TYPES = {
+    'doc' => [
+      'application/msword',
+      'application/x-ole-storage',
+      'application/vnd.ms-word'
+    ],
+
+    'xls' => [
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/x-ole-storage',
+      'application/x-msexcel'
+    ],
+
+    'jpg' => ['image/jpeg', 'image/pjpeg'],
+    'jpeg' => ['image/jpeg', 'image/pjpeg'],
+
+    'ods' => [
+      'application/vnd.oasis.opendocument.spreadsheet',
+      'application/x-vnd.oasis.opendocument.spreadsheet'
+    ],
+
+    'odg' => [
+      'application/vnd.oasis.opendocument.graphics',
+      'application/x-vnd.oasis.opendocument.graphics'
+    ]
+  }.freeze
 
   belongs_to :document
   belongs_to :client
@@ -27,7 +54,7 @@ class UncheckedDocument < ApplicationRecord
   def file_xor_file_path
     valid_file_path
 
-    return if @errors.present?
+    return if errors.present?
 
     errors.add(:base, I18n.t('unchecked_document.base.no_file')) if document_file.file.blank?
   end
@@ -36,18 +63,31 @@ class UncheckedDocument < ApplicationRecord
     return unless document_file.file.present? && type_validation.present?
 
     valid_type
-    return if @errors.present?
+    return if errors.present?
 
-    errors.add(:base, I18n.t('unchecked_document.base.wrong_format')) if type_validation.none? do |t|
-                                                                           document_file.file.content_type.include?(t)
-                                                                         end
+    detected_content_type = document_file.file.content_type.to_s.downcase
+    extension = File.extname(document_file.file.filename).delete('.').downcase
+
+    allowed_content_types = accepted_content_types(extension)
+
+    unless allowed_content_types.map(&:downcase).include?(detected_content_type)
+      errors.add(:base, I18n.t('unchecked_document.base.wrong_format'))
+    end
+  end
+
+  def accepted_content_types(extension)
+    CONTENT_TYPES.fetch(extension) do
+      type_validation.map do |type|
+        Marcel::MimeType.for(extension: type)
+      end
+    end
   end
 
   def document_size
     return if document_file.file.blank?
 
     valid_number
-    return if @errors.present?
+    return if errors.present?
 
     if document_file.file.size > size_validation.to_i
       errors.add(:base, I18n.t('unchecked_document.base.file_too_big')) && errors.add(:base, I18n.t('unchecked_document.base.file_must_be_under_max'))
