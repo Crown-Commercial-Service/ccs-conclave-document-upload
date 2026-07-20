@@ -3,21 +3,64 @@ require 'open-uri'
 class UncheckedDocument < ApplicationRecord
   FIVE_GIGABITES_IN_BYTES = 5368709120
   CONTENT_TYPES = {
-    'doc' => [
-      'application/msword',
-      'application/x-ole-storage',
-      'application/vnd.ms-word'
+    'pdf' => [
+      'application/pdf'
+    ],
+
+    'ppt' => [
+      'application/vnd.ms-powerpoint',
+      'application/mspowerpoint',
+      'application/x-mspowerpoint',
+      'application/vnd.ms-office'
+    ],
+
+    'pptx' => [
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/zip'
+    ],
+
+    'csv' => [
+      'text/csv',
+      'application/csv',
+      'application/vnd.ms-excel',
+      'text/plain'
     ],
 
     'xls' => [
       'application/vnd.ms-excel',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'application/x-ole-storage',
-      'application/x-msexcel'
+      'application/x-msexcel',
+      'application/vnd.ms-office'
     ],
 
-    'jpg' => ['image/jpeg', 'image/pjpeg'],
-    'jpeg' => ['image/jpeg', 'image/pjpeg'],
+    'xlsx' => [
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-excel',
+      'application/zip'
+    ],
+
+    'doc' => [
+      'application/msword',
+      'application/x-ole-storage',
+      'application/vnd.ms-word',
+      'application/vnd.ms-office'
+    ],
+
+    'docx' => [
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-word',
+      'application/zip'
+    ],
+
+    'odt' => [
+      'application/vnd.oasis.opendocument.text',
+      'application/x-vnd.oasis.opendocument.text'
+    ],
+
+    'odp' => [
+      'application/vnd.oasis.opendocument.presentation',
+      'application/x-vnd.oasis.opendocument.presentation'
+    ],
 
     'ods' => [
       'application/vnd.oasis.opendocument.spreadsheet',
@@ -27,6 +70,97 @@ class UncheckedDocument < ApplicationRecord
     'odg' => [
       'application/vnd.oasis.opendocument.graphics',
       'application/x-vnd.oasis.opendocument.graphics'
+    ],
+
+    'zip' => [
+      'application/zip',
+      'application/x-zip-compressed'
+    ],
+
+    'rar' => [
+      'application/vnd.rar',
+      'application/x-rar-compressed',
+      'application/x-rar'
+    ],
+
+    'tar.gz' => [
+      'application/gzip',
+      'application/x-gzip',
+      'application/x-tar',
+      'application/octet-stream'
+    ],
+
+    'tgz' => [
+      'application/gzip',
+      'application/x-gzip',
+      'application/x-compressed-tar'
+    ],
+
+    'gz' => [
+      'application/gzip',
+      'application/x-gzip',
+      'application/x-tar',
+      'application/octet-stream'
+    ],
+
+    'kml' => [
+      'application/vnd.google-earth.kml+xml',
+      'application/xml',
+      'text/xml'
+    ],
+
+    'jpg' => [
+      'image/jpeg',
+      'image/pjpeg'
+    ],
+
+    'jpeg' => [
+      'image/jpeg',
+      'image/pjpeg'
+    ],
+
+    'png' => [
+      'image/png'
+    ],
+
+    'bmp' => [
+      'image/bmp',
+      'image/x-ms-bmp'
+    ],
+
+    'tiff' => [
+      'image/tiff'
+    ],
+
+    'tif' => [
+      'image/tiff'
+    ],
+
+    'eps' => [
+      'application/postscript',
+      'image/eps',
+      'image/x-eps'
+    ],
+
+    'rdf' => [
+      'application/rdf+xml',
+      'application/xml',
+      'text/xml'
+    ],
+
+    'rtf' => [
+      'application/rtf',
+      'text/rtf'
+    ],
+
+    'txt' => [
+      'text/plain'
+    ],
+
+    'xml' => [
+      'application/xml',
+      'text/xml',
+      'application/xml-dtd'
     ]
   }.freeze
 
@@ -65,7 +199,7 @@ class UncheckedDocument < ApplicationRecord
     valid_type
     return if errors.present?
 
-    detected_content_type = document_file.file.content_type.to_s.downcase
+    detected_content_type = document_file.file.content_type.to_s.downcase.split(';').first.strip
     extension = File.extname(document_file.file.filename).delete('.').downcase
 
     allowed_content_types = accepted_content_types(extension)

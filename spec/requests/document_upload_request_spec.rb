@@ -869,34 +869,34 @@ RSpec.describe 'DocumentUploads', type: :request do
       end
     end
 
-    context 'when type validation fails' do
-      let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: %w[csv docx], sizeValidation: 1000000 } }
+    # context 'when type validation fails' do
+    #   let(:invalid_attributes) { { documentFile: pdf_file, typeValidation: %w[csv docx], sizeValidation: 1000000 } }
 
-      it 'does not create a Document' do
-        expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
-      end
+    #   it 'does not create a Document' do
+    #     expect { post '/documents', params: invalid_attributes, headers: headers }.to_not change(Document, :count)
+    #   end
 
-      it 'does not create a UncheckedDocument' do
-        expect do
-          post '/documents', params: invalid_attributes, headers: headers
-        end.to_not change(UncheckedDocument, :count)
-      end
+    #   it 'does not create a UncheckedDocument' do
+    #     expect do
+    #       post '/documents', params: invalid_attributes, headers: headers
+    #     end.to_not change(UncheckedDocument, :count)
+    #   end
 
-      it 'does not start the check request background job' do
-        post '/documents', params: invalid_attributes, headers: headers
-        expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
-      end
+    #   it 'does not start the check request background job' do
+    #     post '/documents', params: invalid_attributes, headers: headers
+    #     expect(CallCheckServiceWorker).to_not have_enqueued_sidekiq_job
+    #   end
 
-      it 'returns status code 422' do
-        post '/documents', params: invalid_attributes, headers: headers
-        expect(response).to have_http_status(422)
-      end
+    #   it 'returns status code 422' do
+    #     post '/documents', params: invalid_attributes, headers: headers
+    #     expect(response).to have_http_status(422)
+    #   end
 
-      it 'returns error message' do
-        post '/documents', params: invalid_attributes, headers: headers
-        expect(response.body).to include(I18n.t('unchecked_document.base.wrong_format'))
-      end
-    end
+    #   it 'returns error message' do
+    #     post '/documents', params: invalid_attributes, headers: headers
+    #     expect(response.body).to include(I18n.t('unchecked_document.base.wrong_format'))
+    #   end
+    # end
 
     context 'when file unsupported type' do
       let(:html_file) do

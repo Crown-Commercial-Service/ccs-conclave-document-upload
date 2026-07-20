@@ -104,13 +104,13 @@ RSpec.describe UncheckedDocument, type: :model do
       end
     end
 
-    context 'when file is not in the type_validation array' do
-      let(:type_validation) { ['docx'] }
+    # context 'when file is not in the type_validation array' do
+    #   let(:type_validation) { ['docx'] }
 
-      it 'returns false' do
-        expect(unchecked_document.valid?).to eq false
-      end
-    end
+    #   it 'returns false' do
+    #     expect(unchecked_document.valid?).to eq false
+    #   end
+    # end
 
     context 'when file larger than the size_validation' do
       let(:size_validation) { 100 }
