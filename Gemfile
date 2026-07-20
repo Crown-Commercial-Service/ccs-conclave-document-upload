@@ -58,7 +58,7 @@ gem 'sidekiq', '~> 6.5.6'
 
 # Updated from 3.0.1 to 3.2.2, to match Sidekiq version upgrade (June 2023). See: https://github.com/sidekiq/sidekiq/issues/5372
 gem 'sidekiq-scheduler', '~> 3.2.2'
-gem 'net-pop', github: 'ruby/net-pop'
+gem 'net-pop', '~> 0.1.2'
 
 # Shared development and test gems
 group :development, :test do
