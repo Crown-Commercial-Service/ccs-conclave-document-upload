@@ -70,13 +70,17 @@ class UncheckedDocument < ApplicationRecord
 
     allowed_content_types = accepted_content_types(extension)
 
-    unless allowed_content_types.include?(detected_content_type)
+    unless allowed_content_types.map(&:downcase).include?(detected_content_type)
       errors.add(:base, I18n.t('unchecked_document.base.wrong_format'))
     end
   end
 
   def accepted_content_types(extension)
-    CONTENT_TYPES.fetch(extension) { type_validation.map(&:downcase) }
+    CONTENT_TYPES.fetch(extension) do
+      type_validation.map do |type|
+        Marcel::MimeType.for(extension: type)
+      end
+    end
   end
 
   def document_size
