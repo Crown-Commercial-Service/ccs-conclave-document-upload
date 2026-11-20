@@ -41,7 +41,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.4
+          ruby-version: 3.4.13
           bundler-cache: false # Forcing a non-cached clean boot to bypass bad paths
 
       # Explicitly install the bundle so 'rails' and 'rubocop' commands exist
